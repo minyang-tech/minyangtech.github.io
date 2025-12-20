@@ -13,7 +13,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
 
-        /* [Header] - NEWS.html 스타일 복사 */
+        /* [Header] - NEWS.html 상단바 스타일 100% 동일 적용 */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; height: 80px; background: var(--header-bg);
@@ -41,7 +41,7 @@
         input:checked + .slider:before { transform: translateX(22px); }
         .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* [Hero Slider] */
+        /* [Hero Slider] - 점 클릭 안되는 문제 해결 */
         .hero-container { position: relative; width: 100%; height: 500px; overflow: hidden; user-select: none; }
         .hero-wrapper { display: flex; width: 500%; height: 100%; transition: transform 0.6s ease-in-out; }
         .hero-slide { 
@@ -50,9 +50,17 @@
             background-color: #1a1a1a; color: white;
         }
         .hero-slide h1 { font-size: 3rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.7); }
-        .slide-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
-        .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; }
-        .dot.active { background: #fff; width: 30px; border-radius: 10px; }
+
+        /* 슬라이드 점 디자인 및 클릭 영역 확보 */
+        .slide-dots { 
+            position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); 
+            display: flex; gap: 15px; z-index: 1002; /* 가장 위로 올림 */
+        }
+        .dot { 
+            width: 12px; height: 12px; background: rgba(255,255,255,0.4); 
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
+        }
+        .dot.active { background: #fff; width: 35px; border-radius: 10px; }
 
         /* [Content] */
         .news-section { padding: 80px 5%; text-align: center; }
@@ -60,7 +68,7 @@
         .news-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; transition: 0.3s; }
         .news-card img { width: 100%; height: 180px; object-fit: cover; }
         .news-card-body { padding: 20px; }
-        .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; }
+        .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; cursor: pointer; }
 
         /* [Logo Slider] */
         .slider-container { width: 100%; overflow: hidden; padding: 50px 0; border-top: 1px solid var(--border-color); }
@@ -68,9 +76,11 @@
         .slider-track img { width: 120px; margin: 0 40px; opacity: 0.5; filter: grayscale(1); }
         @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 5)); } }
 
-        footer { padding: 50px 5%; background: var(--footer-bg); text-align: center; }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; gap: 25px; }
-        .footer-sns a { font-size: 30px; color: var(--text-color); text-decoration: none; }
+        /* [Footer] */
+        footer { padding: 50px 5%; background: var(--footer-bg); text-align: center; border-top: 1px solid var(--border-color); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
+        .footer-sns a { font-size: 30px; color: var(--text-color); text-decoration: none; transition: 0.3s; }
+        .footer-sns a:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -114,7 +124,13 @@
             <div class="hero-slide"><h1>Trigger Card</h1></div>
             <div class="hero-slide"><h1>Future Tech</h1></div>
         </div>
-        <div class="slide-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+        <div class="slide-dots">
+            <div class="dot active" onclick="moveSlide(0)"></div>
+            <div class="dot" onclick="moveSlide(1)"></div>
+            <div class="dot" onclick="moveSlide(2)"></div>
+            <div class="dot" onclick="moveSlide(3)"></div>
+            <div class="dot" onclick="moveSlide(4)"></div>
+        </div>
     </section>
 
     <section class="news-section">
@@ -152,6 +168,7 @@
             'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!' }
         };
 
+        // 언어 변경 함수
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
             document.getElementById('nav-news').textContent = translations[lang].news;
@@ -170,6 +187,29 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
+        // 슬라이드 이동 함수
+        let currentIdx = 0;
+        let slideInterval;
+
+        function moveSlide(idx) {
+            currentIdx = idx;
+            document.getElementById('hero-wrapper').style.transform = `translateX(-${idx * 20}%)`;
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach(d => d.classList.remove('active'));
+            dots[idx].classList.add('active');
+            
+            // 클릭 시 자동 슬라이드 타이머 리셋
+            clearInterval(slideInterval);
+            startAutoSlide();
+        }
+
+        function startAutoSlide() {
+            slideInterval = setInterval(() => {
+                currentIdx = (currentIdx + 1) % 5;
+                moveSlide(currentIdx);
+            }, 3000);
+        }
+
         async function loadNews() {
             const grid = document.getElementById('latest-news-grid');
             try {
@@ -185,22 +225,15 @@
                         </div>
                     </div>
                 `).join('');
-            } catch (e) { grid.innerHTML = "<p>News Loading...</p>"; }
+            } catch (e) { grid.innerHTML = "<p>뉴스 데이터를 불러올 수 없습니다.</p>"; }
         }
-
-        // 슬라이드 기능
-        let currentIdx = 0;
-        setInterval(() => {
-            currentIdx = (currentIdx + 1) % 5;
-            document.getElementById('hero-wrapper').style.transform = `translateX(-${currentIdx * 20}%)`;
-            const dots = document.querySelectorAll('.dot');
-            dots.forEach(d => d.classList.remove('active'));
-            dots[currentIdx].classList.add('active');
-        }, 3000);
 
         window.onload = () => {
             changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
+            startAutoSlide();
         };
     </script>
 </body>
