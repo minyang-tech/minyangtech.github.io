@@ -25,10 +25,41 @@
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
 
         .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* [수정] 드롭다운 마우스 끊김 방지 핵심 CSS */
+        .lang-dropdown { 
+            position: relative; 
+            cursor: pointer; 
+            font-size: 14px; 
+            font-weight: 600;
+            padding: 10px 0; 
+        }
+        .lang-menu { 
+            display: none; 
+            position: absolute; 
+            right: 0; 
+            top: 35px; 
+            background: var(--header-bg); 
+            border: 1px solid var(--border-color); 
+            border-radius: 4px; 
+            list-style: none; 
+            min-width: 100px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+            padding: 5px 0;
+            z-index: 1001;
+        }
+        /* 드롭다운과 텍스트 사이의 투명한 가상 다리 */
+        .lang-dropdown::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            height: 15px;
+        }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li:hover { background: var(--border-color); }
 
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
@@ -41,65 +72,14 @@
 
         /* 제품 페이지 스타일 */
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
-        
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 40px;
-            max-width: 1200px;
-            margin: 40px auto 80px;
-            padding: 0 5%;
-        }
-
-        .product-card {
-            background: var(--header-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 15px;
-            overflow: hidden;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .product-img {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .product-info {
-            padding: 20px;
-        }
-
-        .product-info h3 {
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            color: #007bff;
-        }
-
-        .product-info p {
-            font-size: 0.95rem;
-            opacity: 0.8;
-            line-height: 1.5;
-        }
-
-        .status-tag {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: 15px;
-            background: #ffc107;
-            color: #000;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 40px auto 80px; padding: 0 5%; }
+        .product-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 15px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .product-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .product-info { padding: 20px; }
+        .product-info h3 { font-size: 1.4rem; margin-bottom: 10px; color: #007bff; }
+        .product-info p { font-size: 0.95rem; opacity: 0.8; line-height: 1.5; }
+        .status-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 15px; background: #ffc107; color: #000; }
     </style>
 </head>
 <body>
@@ -140,18 +120,18 @@
 
     <div class="product-grid" id="product-list">
         <a href="https://store.steampowered.com/" target="_blank" class="product-card">
-            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png">
+            <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png" class="product-img">
             <div class="product-info">
-                <h3 class="prod-name">프로젝트 A</h3>
-                <p class="prod-desc">제품명 : Trigger Card <br> 개발 시작 : 2025년 12월 20일 <br> 출시 플랫폼 : 스팀 <br> 제작 플랫폼 : Unity3D Free Plan <br> 라이선스 : MIT License <br> 소스코드 공개 여부 : O <br> *Github에 올라올 예정입니다.</p>
+                <h3 class="prod-name">Trigger Card</h3>
+                <p class="prod-desc">불러오는 중...</p>
                 <span class="status-tag">Coming Soon</span>
             </div>
         </a>
 
         <a href="https://store.steampowered.com/" target="_blank" class="product-card">
-            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png" class="product-img" alt="game2">
+            <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png" class="product-img">
             <div class="product-info">
-                <h3 class="prod-name">추가예정</h3>
+                <h3 class="prod-name">추가 예정</h3>
                 <p class="prod-desc">idk.</p>
                 <span class="status-tag">In Development</span>
             </div>
@@ -163,14 +143,16 @@
             'ko': { 
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
                 'pageTitle': '제품',
-                'p1Name': '제품명 : Trigger Card <br> 개발 시작 : 2025년 12월 20일 <br> 출시 플랫폼 : 스팀 <br> 제작 플랫폼 : Unity3D Free Plan <br> 라이선스 : MIT License <br> 소스코드 공개 여부 : O <br> *Github에 올라올 예정입니다.',
-                'p2Name': '추가 예정', 'p2Desc': 'idk'
+                'p1Name': 'Trigger Card',
+                'p1Desc': '제품명 : Trigger Card <br> 개발 시작 : 2025년 12월 20일 <br> 출시 플랫폼 : 스팀 <br> 제작 플랫폼 : Unity3D Free Plan <br> 라이선스 : MIT License <br> 소스코드 공개 여부 : O <br> *Github에 올라올 예정입니다.',
+                'p2Name': '추가 예정', 'p2Desc': 'idk.'
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
                 'pageTitle': 'Product',
-                'p1Name': 'Project A', 'p1Desc': 'Product Name : Trigger Card <br> Development Start : Dec 20, 2025 <br> Release Platform : Steam <br> Dev Platform : Unity3D Free Plan <br> License : MIT License <br> Open Source : Yes <br> *To be released on GitHub.',
-                'p2Name': 'UNKNOWN', 'p2Desc': 'idk'
+                'p1Name': 'Trigger Card',
+                'p1Desc': 'Product Name : Trigger Card <br> Development Start : Dec 20, 2025 <br> Release Platform : Steam <br> Dev Platform : Unity3D Free Plan <br> License : MIT License <br> Open Source : Yes <br> *To be released on GitHub.',
+                'p2Name': 'UNKNOWN', 'p2Desc': 'idk.'
             }
         };
 
@@ -182,16 +164,17 @@
             document.getElementById('nav-products').textContent = translations[lang].products;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
-            
             document.getElementById('page-title').textContent = translations[lang].pageTitle;
             
-            // 제품명 및 설명 번역
             const names = document.querySelectorAll('.prod-name');
             const descs = document.querySelectorAll('.prod-desc');
+            
             names[0].textContent = translations[lang].p1Name;
             names[1].textContent = translations[lang].p2Name;
-            descs[0].textContent = translations[lang].p1Desc;
-            descs[1].textContent = translations[lang].p2Desc;
+            
+            // [수정] <br> 태그 인식을 위해 innerHTML 사용
+            descs[0].innerHTML = translations[lang].p1Desc;
+            descs[1].innerHTML = translations[lang].p2Desc;
         }
 
         function toggleDarkMode() {
