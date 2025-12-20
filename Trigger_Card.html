@@ -13,9 +13,22 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
 
-        /* 하단 섹션들에만 적용할 스크롤 애니메이션 */
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        /* [수정] reveal 초기값을 투명하게 하지 않고 기본적으로 보이게 설정 */
+        .reveal { 
+            opacity: 1; 
+            transform: translateY(0); 
+            transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); 
+        }
+
+        /* 스크립트가 준비되었을 때 하단 섹션들에만 애니메이션 준비 */
+        .js-enabled .reveal-later { 
+            opacity: 0; 
+            transform: translateY(30px); 
+        }
+        .js-enabled .reveal-later.active { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
 
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
@@ -61,7 +74,7 @@
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
         .info-table th { width: 110px; color: var(--accent); font-size: 0.9rem; }
         
-        /* 라이선스 링크 스타일 */
+        /* 라이선스 클릭 링크 스타일 */
         .info-table td a { color: var(--accent); text-decoration: none; font-weight: bold; }
         .info-table td a:hover { text-decoration: underline; }
 
@@ -127,7 +140,7 @@
             </div>
         </div>
 
-        <div class="specs-section reveal">
+        <div class="specs-section reveal-later">
             <h2 class="section-header" id="spec-title">시스템 요구 사항</h2>
             <div class="specs-grid">
                 <div class="spec-box">
@@ -141,7 +154,7 @@
             </div>
         </div>
 
-        <div class="reviews-section reveal">
+        <div class="reviews-section reveal-later">
             <h2 class="section-header" id="review-title">사용자 리뷰</h2>
             <div class="empty-review-box" id="empty-review-text">등록된 사용자 리뷰가 없습니다.</div>
         </div>
@@ -149,6 +162,9 @@
 
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // JS가 로드되었음을 알림 (CSS 제어용)
+        document.body.classList.add('js-enabled');
+
         const translations = {
             'ko': {
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
@@ -208,6 +224,7 @@
 
         function initMedia() {
             const list = document.getElementById('thumb-list');
+            list.innerHTML = '';
             mediaData.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = `thumb-item ${i === 0 ? 'active' : ''}`;
@@ -250,7 +267,7 @@
         }
 
         function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
+            document.querySelectorAll(".reveal-later").forEach(el => {
                 if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
             });
         }
@@ -263,7 +280,7 @@
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             window.addEventListener("scroll", reveal);
-            reveal(); // 초기 체크
+            reveal(); // 로드 시점 체크
         };
     </script>
 </body>
