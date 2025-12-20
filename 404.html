@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found - 민양테크</title>
+    <style>
+        /* 기본 테마 및 상단바 설정 (기존 페이지와 동일) */
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
+        
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: 80px; background: var(--header-bg);
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
+        }
+        .header-left { display: flex; align-items: center; gap: 40px; }
+        .logo-link img { height: 40px; width: auto; display: block; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
+
+        .controls { display: flex; align-items: center; gap: 25px; }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+        .lang-menu { 
+            display: none; position: absolute; right: 0; top: 35px; 
+            background: var(--header-bg); border: 1px solid var(--border-color); 
+            border-radius: 4px; list-style: none; min-width: 100px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; 
+        }
+        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
+        .lang-dropdown:hover .lang-menu { display: block; }
+        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+
+        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4cd964; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .toggle-label { font-size: 10px; font-weight: bold; }
+
+        /* 404 안내 영역 (중앙 정렬) */
+        .error-container {
+            min-height: calc(100vh - 80px);
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 40px 5%;
+        }
+
+        /* 이미지 스타일 */
+        .error-images { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-bottom: 20px; }
+        .img-404 { width: 300px; max-width: 80%; height: auto; }
+        .img-mascot { width: 200px; max-width: 60%; height: auto; margin-top: -20px; }
+
+        .error-msg { font-size: 1.5rem; margin: 10px 0 40px; opacity: 0.8; font-weight: 500; }
+        .home-btn {
+            padding: 15px 40px; background: #007bff; color: white;
+            text-decoration: none; border-radius: 50px; font-weight: bold;
+            transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+        }
+        .home-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4); }
+    </style>
+</head>
+<body>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
+    </script>
+
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="controls">
+            <div class="lang-dropdown">
+                <span id="current-lang-label">Language ▾</span>
+                <ul class="lang-menu">
+                    <li onclick="changeLanguage('en')">English</li>
+                    <li onclick="changeLanguage('ko')">한국어</li>
+                </ul>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="error-container">
+        <div class="error-images">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/404.png?raw=true" alt="404 Error" class="img-404">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png?raw=true" alt="Mascot" class="img-mascot">
+        </div>
+        
+        <p class="error-msg" id="error-text">페이지를 찾을 수 없습니다.</p>
+        <a href="index.html" class="home-btn" id="home-btn-text">홈으로 돌아가기</a>
+    </main>
+
+    <script>
+        const translations = {
+            'ko': { 
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 
+                'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
+                'error': '요청하신 페이지를 찾을 수 없습니다.', 'home': '홈으로 돌아가기'
+            },
+            'en': { 
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 
+                'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
+                'error': "The page you requested could not be found.", 'home': 'Back to Home'
+            }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.getElementById('nav-news').textContent = translations[lang].news;
+            document.getElementById('nav-about').textContent = translations[lang].about;
+            document.getElementById('nav-products').textContent = translations[lang].products;
+            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
+            document.getElementById('toggle-text').textContent = translations[lang].toggle;
+            document.getElementById('error-text').textContent = translations[lang].error;
+            document.getElementById('home-btn-text').textContent = translations[lang].home;
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+        }
+
+        window.onload = () => {
+            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
+        };
+    </script>
+</body>
+</html>
