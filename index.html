@@ -2,35 +2,30 @@
 <html lang="ko">
 <head>
     <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>민양테크 - Home</title>
     <style>
-        /* [핵심 수정] 기본 상태(화이트 모드) 변수를 확실하게 지정 */
         :root { 
-            --bg-color: #ffffff; 
-            --text-color: #333333; 
-            --header-bg: #ffffff; 
-            --border-color: #eeeeee; 
+            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
+            --border-color: #eeeeee; --card-bg: #f9f9f9;
         }
-
-        /* 다크 모드 클래스가 붙었을 때의 색상 */
         body.dark-mode { 
-            --bg-color: #121212; 
-            --text-color: #e0e0e0; 
-            --header-bg: #1e1e1e; 
-            --border-color: #333333; 
+            --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; 
+            --border-color: #333333; --card-bg: #1e1e1e;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { 
             font-family: 'Pretendard', sans-serif; 
-            background-color: var(--bg-color); 
-            color: var(--text-color); 
-            transition: background 0.3s ease, color 0.3s ease; 
+            background-color: var(--bg-color); color: var(--text-color); 
+            transition: background 0.3s, color 0.3s; overflow-x: hidden;
         }
         
+        /* [스크롤 애니메이션 설정] */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; height: 80px; background: var(--header-bg);
@@ -39,55 +34,69 @@
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
 
         .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 35px; 
             background: var(--header-bg); border: 1px solid var(--border-color); 
-            border-radius: 4px; list-style: none; min-width: 100px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; 
+            list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1001; 
         }
-        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
         .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li { padding: 10px 15px; }
 
-        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .toggle-label { font-size: 10px; font-weight: bold; }
 
         .hero-banner { 
-            width: 100%; height: 500px; 
-            display: flex; justify-content: center; align-items: center; 
-            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                              url('https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true');
+            width: 100%; height: 500px; display: flex; justify-content: center; align-items: center; 
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true');
             background-size: cover; background-position: center; color: white;
         }
         .hero-banner h1 { font-size: 3.5rem; font-weight: 800; }
 
-        .separator { width: 100%; height: 1px; background-color: var(--border-color); }
-        
-        .sub-content { 
-            padding: 100px 5%; 
-            text-align: center; 
-            background-color: var(--bg-color); 
+        .sub-content { padding: 100px 5%; text-align: center; }
+        .sub-content h2 { font-size: 2.5rem; margin-bottom: 20px; }
+
+        /* [최신 뉴스 섹션] */
+        .news-section { padding: 80px 5%; background: var(--bg-color); text-align: center; }
+        .news-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px; margin-top: 50px; 
         }
-        .sub-content h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
-        .sub-content p { font-size: 1.5rem; font-weight: 400; opacity: 0.8; margin-bottom: 10px; }
+        .news-card { 
+            background: var(--card-bg); border-radius: 15px; overflow: hidden; 
+            border: 1px solid var(--border-color); text-align: left; transition: transform 0.3s;
+        }
+        .news-card:hover { transform: translateY(-10px); }
+        .news-card img { width: 100%; height: 200px; object-fit: cover; }
+        .news-card-body { padding: 20px; }
+        .news-card-body h3 { margin-bottom: 10px; font-size: 1.2rem; }
+        .news-card-body p { opacity: 0.7; font-size: 0.9rem; margin-bottom: 15px; white-space: pre-wrap; }
+        
+        .more-btn { 
+            display: inline-block; margin-top: 40px; padding: 12px 30px; 
+            border: 2px solid var(--text-color); color: var(--text-color); 
+            text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s;
+        }
+        .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
+
+        /* [무한 루프 슬라이더] */
+        .slider-container { width: 100%; overflow: hidden; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .slider-track { display: flex; width: calc(250px * 12); animation: scroll 20s linear infinite; }
+        .slider-track img { width: 180px; margin: 0 40px; opacity: 0.6; transition: 0.3s; }
+        .slider-track img:hover { opacity: 1; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
     </style>
 </head>
 <body>
     <script>
-        // 초기 로드 시 다크모드 적용 (깜빡임 방지용 상단 배치)
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-        }
+        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
     </script>
 
     <header>
@@ -109,60 +118,94 @@
                     <li onclick="changeLanguage('ko')">한국어</li>
                 </ul>
             </div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                    <span class="slider"></span>
-                </label>
-                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
-            </div>
+            <label class="switch">
+                <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                <span class="slider"></span>
+            </label>
         </div>
     </header>
 
     <section class="hero-banner">
-        <h1 id="hero-main-text">민양테크</h1>
+        <h1 id="hero-main-text" class="reveal">민양테크</h1>
     </section>
 
-    <div class="separator"></div>
-
-    <section class="sub-content">
+    <section class="sub-content reveal">
         <h2 id="sub-title">민양테크</h2>
         <p id="sub-desc">민양, 함께 만드는 무한한 가능성</p>
         <p id="hi">만나서 반가워요!</p>
     </section>
 
+    <section class="news-section reveal">
+        <h2 id="news-head-title">최신 뉴스</h2>
+        <div id="latest-news-grid" class="news-grid">
+            </div>
+        <a href="NEWS.html" class="more-btn" id="more-link">더 알아보기</a>
+    </section>
+
+    <div class="slider-container reveal">
+        <div class="slider-track">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+        </div>
+    </div>
+
     <script>
         const translations = {
             'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 
-                'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
-                'mainText': '민양테크',
-                'subTitle': '민양테크',
-                'subDesc': '민양, 함께 만드는 무한한 가능성', // 쉼표 추가 완료
-                'hi': '만나서 반가워요!'
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
+                'mainText': '민양테크', 'subTitle': '민양테크', 'subDesc': '민양, 함께 만드는 무한한 가능성', 
+                'hi': '만나서 반가워요!', 'newsHead': '최신 뉴스', 'more': '더 알아보기'
             },
             'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 
-                'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
-                'mainText': 'MinYang Tech',
-                'subTitle': 'MinYang Tech',
-                'subDesc': 'MinYang, Creating Infinite Possibilities Together', // 쉼표 추가 완료
-                'hi': 'Nice To Meet You!'
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
+                'mainText': 'MinYang Tech', 'subTitle': 'MinYang Tech', 'subDesc': 'Creating Infinite Possibilities Together', 
+                'hi': 'Nice To Meet You!', 'newsHead': 'Latest News', 'more': 'View More'
             }
         };
 
+        // [스크롤 애니메이션 함수]
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) reveals[i].classList.add("active");
+            }
+        }
+        window.addEventListener("scroll", reveal);
+
+        // [최신 뉴스 불러오기]
+        async function loadLatestNews() {
+            const lang = localStorage.getItem('selectedLang') || 'ko';
+            const grid = document.getElementById('latest-news-grid');
+            
+            try {
+                const response = await fetch('new_data.json');
+                const data = await response.json();
+                const latest = data.slice(0, 3); // 상위 3개만
+
+                grid.innerHTML = latest.map(item => `
+                    <div class="news-card">
+                        <img src="${item.image}" onerror="this.src='https://via.placeholder.com/400x200?text=MinYang+Tech'">
+                        <div class="news-card-body">
+                            <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
+                            <p>${lang === 'ko' ? item.content_ko : item.content_en}</p>
+                            <small>${item.date}</small>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) {
+                grid.innerHTML = '<p>뉴스를 불러올 수 없습니다.</p>';
+            }
+        }
+
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
-            document.getElementById('nav-news').textContent = translations[lang].news;
-            document.getElementById('nav-about').textContent = translations[lang].about;
-            document.getElementById('nav-products').textContent = translations[lang].products;
-            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('toggle-text').textContent = translations[lang].toggle;
-            
-            document.getElementById('hero-main-text').textContent = translations[lang].mainText;
-            document.getElementById('sub-title').textContent = translations[lang].subTitle;
-            document.getElementById('sub-desc').textContent = translations[lang].subDesc;
-            document.getElementById('hi').textContent = translations[lang].hi;
+            location.reload(); // 뉴스 데이터를 다시 로드하기 위해 새로고침
         }
 
         function toggleDarkMode() {
@@ -171,11 +214,22 @@
         }
 
         window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            // 토글 스위치 상태 반영
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                document.getElementById('dark-mode-toggle').checked = true;
-            }
+            const lang = localStorage.getItem('selectedLang') || 'ko';
+            document.getElementById('nav-news').textContent = translations[lang].news;
+            document.getElementById('nav-about').textContent = translations[lang].about;
+            document.getElementById('nav-products').textContent = translations[lang].products;
+            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
+            document.getElementById('hero-main-text').textContent = translations[lang].mainText;
+            document.getElementById('sub-title').textContent = translations[lang].subTitle;
+            document.getElementById('sub-desc').textContent = translations[lang].subDesc;
+            document.getElementById('hi').textContent = translations[lang].hi;
+            document.getElementById('news-head-title').textContent = translations[lang].newsHead;
+            document.getElementById('more-link').textContent = translations[lang].more;
+
+            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            
+            loadLatestNews();
+            reveal(); // 초기 실행
         };
     </script>
 </body>
