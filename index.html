@@ -44,7 +44,7 @@
         .dot { width: 12px; height: 12px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .dot.active { background: #fff; width: 35px; border-radius: 10px; }
 
-        /* [About Section] */
+        /* [About Section - 스크롤 애니메이션 효과] */
         .about-intro-section { padding: 100px 10%; display: flex; align-items: center; gap: 50px; background-color: var(--bg-color); }
         .about-image { flex: 1; max-width: 500px; border-radius: 20px; overflow: hidden; opacity: 0; transform: translateX(-50px); transition: 1s; }
         .about-image img { width: 100%; display: block; }
@@ -53,7 +53,7 @@
         .about-text .highlight-box { background-color: var(--accent-color); color: white; padding: 15px 20px; border-radius: 5px; margin-bottom: 20px; line-height: 1.6; font-weight: 600; }
         .about-text p { line-height: 1.8; opacity: 0.8; }
 
-        /* 애니메이션 클래스 */
+        /* 애니메이션 실행 클래스 */
         .reveal.active { opacity: 1; transform: translate(0); }
 
         /* [News Section] */
@@ -65,14 +65,21 @@
         .news-card-body { padding: 20px; }
         .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; }
 
+        /* [Footer & SNS] */
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; gap: 30px; }
-        .footer-sns a { font-size: 30px; color: var(--text-color); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        
+        /* X 로고 이미지 스타일 */
+        .x-logo-img { height: 30px; width: auto; transition: 0.3s; filter: grayscale(1); opacity: 0.7; }
+        body.dark-mode .x-logo-img { filter: invert(1) grayscale(1); } /* 다크모드 대응 */
+        .footer-sns a:hover .x-logo-img { filter: none; opacity: 1; transform: scale(1.1); }
+        
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
 
         @media (max-width: 900px) {
             .about-intro-section { flex-direction: column; text-align: center; }
-            .about-text { transform: translateY(30px); }
-            .about-image { transform: translateY(30px); }
+            .about-text, .about-image { transform: translateY(30px); }
         }
     </style>
 </head>
@@ -103,9 +110,9 @@
         <div class="hero-wrapper" id="hero-wrapper">
             <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png');"><h1>민양테크</h1></div>
             <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA.png');"><h1>창의적인 아이디어</h1></div>
-            <div class="hero-slide"><h1>추가 예정</h1></div>
-            <div class="hero-slide"><h1>추가 예정</h1></div>
-            <div class="hero-slide"><h1>추가 예정</h1></div>
+            <div class="hero-slide"><h1>미래를 여는 기술</h1></div>
+            <div class="hero-slide"><h1>사용자 중심의 경험</h1></div>
+            <div class="hero-slide"><h1>민양테크와 함께하세요</h1></div>
         </div>
         <div class="slide-dots">
             <div class="dot active" onclick="moveSlide(0)"></div><div class="dot" onclick="moveSlide(1)"></div><div class="dot" onclick="moveSlide(2)"></div><div class="dot" onclick="moveSlide(3)"></div><div class="dot" onclick="moveSlide(4)"></div>
@@ -113,10 +120,10 @@
     </section>
 
     <section class="about-intro-section">
-        <div class="about-image reveal" id="intro-img-box">
+        <div class="about-image reveal">
             <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png" alt="Minyang Mascot">
         </div>
-        <div class="about-text reveal" id="intro-text-box">
+        <div class="about-text reveal">
             <h2 id="intro-title">민양테크?</h2>
             <div class="highlight-box" id="intro-highlight">
                 민양테크는 창의적인 아이디어를 기반으로 <br>
@@ -140,7 +147,9 @@
     <footer>
         <h3 id="footer-contact">저희와 연락하세요!</h3>
         <div class="footer-sns">
-            <a href="https://x.com/minyang_tech" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
             <a href="https://www.youtube.com/@minyangtech" target="_blank"><i class="fa-brands fa-youtube"></i></a>
         </div>
     </footer>
@@ -155,8 +164,8 @@
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!',
-                'introT': 'Innovation Leaders, MinYang Tech',
-                'introH': 'MinYang Tech is an innovative group <br> creating a new future based on creative technology.',
+                'introT': 'Introducing MinYang Tech',
+                'introH': 'MinYang Tech is where new futures are created <br> based on creative ideas.',
                 'introD': 'We go beyond simple products to provide new experiences to users.'
             }
         };
@@ -170,7 +179,6 @@
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
             document.getElementById('more-btn').textContent = translations[lang].more;
             document.getElementById('footer-contact').textContent = translations[lang].contact;
-            
             document.getElementById('intro-title').textContent = translations[lang].introT;
             document.getElementById('intro-highlight').innerHTML = translations[lang].introH;
             document.getElementById('intro-desc').textContent = translations[lang].introD;
@@ -182,17 +190,14 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
-        // 스크롤 감지 애니메이션 (Reveal)
-        const observerOptions = { threshold: 0.2 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
-        }, observerOptions);
+        }, { threshold: 0.2 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 슬라이드 기능
         let currentIdx = 0;
         function moveSlide(idx) {
             currentIdx = idx;
