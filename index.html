@@ -68,21 +68,19 @@
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         
-        /* SNS 아이콘 공통 스타일 */
-        .footer-sns a { text-decoration: none; }
-        .footer-sns a i { 
-            font-size: 32px; 
-            color: var(--text-color); /* 라이트: 검정 / 다크: 흰색 자동 */
-            opacity: 0.7; 
-            transition: 0.3s; 
-        }
-
-        /* 호버 시 빨간색 효과 */
-        .footer-sns a:hover i { 
+        /* X 로고 이미지 스타일 (필터 제어) */
+        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); } /* 기본 검정 */
+        body.dark-mode .x-logo-img { filter: brightness(0) invert(1); } /* 다크모드: 흰색 */
+        
+        /* 호버 효과: 빨간색으로 변경 */
+        .footer-sns a:hover .x-logo-img { 
             opacity: 1; 
-            color: #ff0000; 
+            filter: invert(15%) sepia(95%) saturate(6932%) hue-rotate(358deg) brightness(95%) contrast(112%); 
             transform: scale(1.1); 
         }
+
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
 
         @media (max-width: 900px) {
             .about-intro-section { flex-direction: column; text-align: center; }
@@ -155,7 +153,7 @@
         <h3 id="footer-contact">저희와 연락하세요!</h3>
         <div class="footer-sns">
             <a href="https://x.com/minyang_tech" target="_blank">
-                <i class="fa-brands fa-x-twitter"></i>
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
             </a>
             <a href="https://www.youtube.com/@minyangtech" target="_blank">
                 <i class="fa-brands fa-youtube"></i>
@@ -210,10 +208,11 @@
         let currentIdx = 0;
         function moveSlide(idx) {
             currentIdx = idx;
-            document.getElementById('hero-wrapper').style.transform = `translateX(-${idx * 20}%)`;
+            const wrapper = document.getElementById('hero-wrapper');
+            if (wrapper) wrapper.style.transform = `translateX(-${idx * 20}%)`;
             const dots = document.querySelectorAll('.dot');
             dots.forEach(d => d.classList.remove('active'));
-            dots[idx].classList.add('active');
+            if (dots[idx]) dots[idx].classList.add('active');
         }
 
         async function loadNews() {
