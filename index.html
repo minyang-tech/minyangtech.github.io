@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>민양테크 (MinYang Tech)</title>
+    <style>
+        /* 기본 스타일 초기화 */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; line-height: 1.6; color: #333; }
+        
+        /* 헤더 / 내비게이션 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; transition: color 0.3s; }
+        .nav-links a:hover { color: #007bff; }
+
+        /* 언어 선택 드롭다운 */
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .lang-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            list-style: none;
+            min-width: 100px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .lang-menu li { padding: 10px 15px; }
+        .lang-menu li:hover { background: #f8f9fa; }
+        .lang-dropdown:hover .lang-menu { display: block; }
+
+        /* 메인 히어로 섹션 */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover;
+            color: white;
+        }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
+        .hero p { font-size: 1.5rem; font-weight: 300; opacity: 0.9; }
+
+        /* 하단 여백용 컨텐츠 */
+        .content-placeholder { padding: 50px 5%; text-align: center; color: #999; border: 2px dashed #eee; margin: 20px 5%; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <ul class="nav-links">
+                <li><a href="#news">NEWS</a></li>
+                <li><a href="#about">ABOUT US</a></li>
+                <li><a href="#products">PRODUCTS</a></li>
+            </ul>
+        </nav>
+        
+        <div class="lang-dropdown">
+            Language ▾
+            <ul class="lang-menu">
+                <li><a href="#" onclick="alert('English selected')">English</a></li>
+                <li><a href="#" onclick="alert('한국어가 선택되었습니다')">한국어</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <section class="hero">
+        <h1>민양테크</h1>
+        <p>민양, 함께 만드는 무한한 가능성</p>
+    </section>
+
+    <div class="content-placeholder">
+        <p>idk</p>
+    </div>
+
+</body>
+</html>
