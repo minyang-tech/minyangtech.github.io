@@ -7,13 +7,12 @@
     <title>Trigger Card - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; }
-        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --card-bg: #1e1e1e; }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; --slider-bar: #cccccc; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --card-bg: #1e1e1e; --slider-bar: #444444; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
 
-        /* [Reveal Animation] */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -23,11 +22,6 @@
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
         .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1001; }
-        .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; }
-        .lang-menu li:hover { background: var(--border-color); }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -36,96 +30,51 @@
         input:checked + .slider:before { transform: translateX(22px); }
 
         .detail-container { max-width: 1200px; margin: 50px auto; padding: 0 5%; }
-        .back-nav { margin-bottom: 20px; }
-        .back-link { text-decoration: none; color: var(--text-color); font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; }
-        .back-link:hover { color: var(--accent); transform: translateX(-5px); }
-
         .product-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); }
-        .product-main { display: flex; gap: 30px; align-items: stretch; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
+        .product-main { display: flex; gap: 30px; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
         
         /* [Media Section] */
-        .product-media-side { flex: 1.5; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
-        .main-viewer { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; transition: opacity 0.4s ease; }
+        .product-media-side { flex: 1.5; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+        .main-viewer { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; transition: opacity 0.3s; }
         
-        /* [애니메이션 슬라이더 바] */
-        .thumb-wrapper { 
-            position: relative; 
-            padding: 10px 40px; 
-            background: rgba(0,0,0,0.03); 
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-        }
+        /* [썸네일 & 스크롤바 디자인] */
+        .thumb-container { position: relative; background: rgba(0,0,0,0.05); border-radius: 12px; padding: 15px 40px; }
         .thumb-list { 
-            display: flex; 
-            gap: 12px; 
-            overflow-x: hidden; /* 버튼 클릭 제어를 위해 hidden */
-            scroll-behavior: smooth; 
-            padding: 5px 0;
-            width: 100%;
+            display: flex; gap: 10px; overflow-x: auto; scroll-behavior: smooth; 
+            padding-bottom: 15px; cursor: grab;
+            scrollbar-width: thin; scrollbar-color: var(--accent) transparent;
         }
-        .thumb-item { 
-            width: 140px; 
-            aspect-ratio: 16 / 9; 
-            flex-shrink: 0; 
-            cursor: pointer; 
-            border-radius: 6px; 
-            opacity: 0.4; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            overflow: hidden; 
-            border: 2px solid transparent;
-        }
-        .thumb-item:hover { opacity: 0.8; transform: translateY(-3px); }
-        .thumb-item.active { opacity: 1; border-color: var(--accent); transform: scale(1.05) translateY(-3px); box-shadow: 0 5px 15px rgba(0,123,255,0.3); }
+        /* 커스텀 스크롤바 (Webkit) */
+        .thumb-list::-webkit-scrollbar { height: 8px; }
+        .thumb-list::-webkit-scrollbar-track { background: var(--slider-bar); border-radius: 10px; }
+        .thumb-list::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        .thumb-list:active { cursor: grabbing; }
+
+        .thumb-item { width: 130px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 6px; opacity: 0.5; transition: 0.3s; border: 2px solid transparent; overflow: hidden; }
+        .thumb-item.active { opacity: 1; border-color: var(--accent); transform: scale(1.05); }
         .thumb-item img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
 
         .slide-btn { 
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: var(--header-bg); color: var(--text-color); border: 1px solid var(--border-color);
-            width: 34px; height: 34px; cursor: pointer; z-index: 10;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: absolute; top: calc(50% - 10px); transform: translateY(-50%);
+            background: var(--header-bg); border: 1px solid var(--border-color); width: 34px; height: 34px;
+            border-radius: 50%; cursor: pointer; z-index: 5; display: flex; align-items: center; justify-content: center;
         }
-        .slide-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
-        .prev-btn { left: 5px; }
-        .next-btn { right: 5px; }
+        .prev-btn { left: 5px; } .next-btn { right: 5px; }
+        .slide-btn:hover { background: var(--accent); color: white; }
 
-        /* [Info Side] */
+        /* [나머지 스타일] */
         .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
         .info-table th { width: 100px; color: var(--accent); font-size: 0.9rem; }
-        .info-table td { font-size: 0.95rem; }
-
         .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px; border-radius: 8px; font-weight: 700; transition: 0.3s; }
         .buy-button:hover { background: #2a475e; transform: translateY(-3px); }
 
-        /* [System Requirements] */
-        .specs-section { background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
-        .section-header { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; border-left: 5px solid var(--accent); padding-left: 15px; }
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-        .spec-box h3 { font-size: 1.2rem; margin-bottom: 20px; color: var(--accent); }
-        .spec-list { list-style: none; }
-        .spec-list li { margin-bottom: 12px; line-height: 1.5; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
-        .spec-list li b { color: var(--accent); margin-right: 5px; }
-
-        /* [Reviews] */
-        .reviews-section { margin-bottom: 80px; }
-        .empty-review-box { padding: 40px; text-align: center; background: var(--card-bg); border-radius: 12px; border: 1px dashed var(--border-color); opacity: 0.6; }
-
-        @media (max-width: 1000px) {
-            .product-main { flex-direction: column; }
-            .specs-grid { grid-template-columns: 1fr; }
-            .thumb-wrapper { padding: 10px 5px; }
-            .slide-btn { display: none; }
-            .thumb-list { overflow-x: auto; } /* 모바일은 터치 스크롤 허용 */
-        }
+        @media (max-width: 1000px) { .product-main { flex-direction: column; } .slide-btn { display: none; } }
     </style>
 </head>
 <body>
-    <script>if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');</script>
-    
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
@@ -136,91 +85,44 @@
             </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown"><span>Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
             <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
         </div>
     </header>
 
     <div class="detail-container">
-        <div class="back-nav reveal">
-            <a href="Product.html" class="back-link"><i class="fa-solid fa-arrow-left"></i> 목록으로 돌아가기</a>
-        </div>
-
         <h1 class="product-title reveal">Trigger Card</h1>
-        
         <div class="product-main reveal">
             <div class="product-media-side">
                 <div class="main-viewer" id="main-viewer"></div>
-                <div class="thumb-wrapper">
-                    <button class="slide-btn prev-btn" onclick="slideThumb('left')"><i class="fa-solid fa-chevron-left"></i></button>
+                <div class="thumb-container">
+                    <button class="slide-btn prev-btn" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                     <div class="thumb-list" id="thumb-list"></div>
-                    <button class="slide-btn next-btn" onclick="slideThumb('right')"><i class="fa-solid fa-chevron-right"></i></button>
+                    <button class="slide-btn next-btn" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
-
             <div class="product-info-side">
                 <table class="info-table">
                     <tr><th>개발 시작</th><td>2025년 12월 20일</td></tr>
                     <tr><th>플랫폼</th><td>Steam (Windows)</td></tr>
                     <tr><th>엔진</th><td>Unity3D</td></tr>
                     <tr><th>라이선스</th><td>MIT License</td></tr>
-                    <tr><th>소스코드</th><td>GitHub 공개 (예정)</td></tr>
                 </table>
-                <a href="https://store.steampowered.com/" target="_blank" class="buy-button">
-                    <i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기
-                </a>
+                <a href="#" class="buy-button"><i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기</a>
             </div>
-        </div>
-
-        <div class="specs-section reveal">
-            <h2 class="section-header">시스템 요구 사항</h2>
-            <div class="specs-grid">
-                <div class="spec-box">
-                    <h3>최소 사양</h3>
-                    <ul class="spec-list">
-                        <li><b>운영체제:</b> Windows 10 (64-bit)</li>
-                        <li><b>프로세서:</b> Intel Core i3-6100 / AMD FX-8350</li>
-                        <li><b>메모리:</b> 4 GB RAM</li>
-                        <li><b>그래픽:</b> NVIDIA GTX 750 Ti / AMD HD 7850</li>
-                        <li><b>저장공간:</b> 2 GB 사용 가능 공간</li>
-                    </ul>
-                </div>
-                <div class="spec-box">
-                    <h3>권장 사양</h3>
-                    <ul class="spec-list">
-                        <li><b>운영체제:</b> Windows 11 (64-bit)</li>
-                        <li><b>프로세서:</b> Intel Core i5-9600K / AMD Ryzen 5 3600</li>
-                        <li><b>메모리:</b> 8 GB RAM</li>
-                        <li><b>그래픽:</b> NVIDIA GTX 1060 / AMD RX 580</li>
-                        <li><b>저장공간:</b> 2 GB 사용 가능 공간</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="reviews-section reveal">
-            <h2 class="section-header">사용자 리뷰</h2>
-            <div class="empty-review-box">등록된 사용자 리뷰가 없습니다.</div>
         </div>
     </div>
 
     <script>
-        function reveal() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
-            });
-        }
-        window.addEventListener("scroll", reveal);
-
         const mediaData = [
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' },
-            { type: 'image', url: 'https://via.placeholder.com/800x450/007bff/ffffff?text=Slide+1' },
-            { type: 'image', url: 'https://via.placeholder.com/800x450/28a745/ffffff?text=Slide+2' },
-            { type: 'image', url: 'https://via.placeholder.com/800x450/ffc107/000000?text=Slide+3' },
-            { type: 'image', url: 'https://via.placeholder.com/800x450/dc3545/ffffff?text=Slide+4' },
-            { type: 'image', url: 'https://via.placeholder.com/800x450/6f42c1/ffffff?text=Slide+5' },
+            { type: 'image', url: 'https://via.placeholder.com/800x450/007bff/ffffff?text=Scene+1' },
+            { type: 'image', url: 'https://via.placeholder.com/800x450/28a745/ffffff?text=Scene+2' },
+            { type: 'image', url: 'https://via.placeholder.com/800x450/ffc107/000000?text=Scene+3' },
+            { type: 'image', url: 'https://via.placeholder.com/800x450/dc3545/ffffff?text=Scene+4' },
             { type: 'video', url: 'dQw4w9WgXcQ' }
         ];
+
+        let currentIndex = 0;
 
         function initMedia() {
             const list = document.getElementById('thumb-list');
@@ -229,48 +131,72 @@
                 div.className = `thumb-item ${i === 0 ? 'active' : ''}`;
                 const img = item.type === 'video' ? `https://img.youtube.com/vi/${item.url}/mqdefault.jpg` : item.url;
                 div.innerHTML = `<img src="${img}">`;
-                div.onclick = () => {
-                    setMainMedia(i);
-                    div.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                };
+                div.onclick = () => setMainMedia(i);
                 list.appendChild(div);
             });
             setMainMedia(0);
         }
 
         function setMainMedia(index) {
+            currentIndex = index;
             const v = document.getElementById('main-viewer');
             const item = mediaData[index];
-            v.style.opacity = '0'; // 페이드 아웃
+            v.style.opacity = '0';
             setTimeout(() => {
                 v.innerHTML = item.type === 'video' 
                     ? `<iframe src="https://www.youtube.com/embed/${item.url}?autoplay=1&mute=1" allowfullscreen></iframe>`
                     : `<img src="${item.url}">`;
-                v.style.opacity = '1'; // 페이드 인
+                v.style.opacity = '1';
             }, 200);
-            document.querySelectorAll('.thumb-item').forEach((t, i) => t.classList.toggle('active', i === index));
+
+            const thumbs = document.querySelectorAll('.thumb-item');
+            thumbs.forEach((t, i) => t.classList.toggle('active', i === index));
+            
+            // 활성화된 썸네일로 스크롤 이동
+            thumbs[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
 
-        function slideThumb(direction) {
-            const list = document.getElementById('thumb-list');
-            const step = 200;
-            list.scrollBy({ left: direction === 'left' ? -step : step, behavior: 'smooth' });
+        // 무한 슬라이드 로직
+        function moveSlide(step) {
+            let newIndex = currentIndex + step;
+            if (newIndex < 0) newIndex = mediaData.length - 1; // 처음에서 이전 누르면 끝으로
+            if (newIndex >= mediaData.length) newIndex = 0; // 끝에서 다음 누르면 처음으로
+            setMainMedia(newIndex);
         }
+
+        // 마우스 드래그로 밀기 기능
+        const slider = document.getElementById('thumb-list');
+        let isDown = false; let startX; let scrollLeft;
+        slider.addEventListener('mousedown', (e) => { isDown = true; slider.classList.add('active'); startX = e.pageX - slider.offsetLeft; scrollLeft = slider.scrollLeft; });
+        slider.addEventListener('mouseleave', () => { isDown = false; });
+        slider.addEventListener('mouseup', () => { isDown = false; });
+        slider.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - slider.offsetLeft;
+            const walk = (x - startX) * 2;
+            slider.scrollLeft = scrollLeft - walk;
+        });
 
         function toggleDarkMode() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled');
         }
 
-        function changeLanguage(l) { localStorage.setItem('selectedLang', l); location.reload(); }
+        function reveal() {
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
+            });
+        }
 
         window.onload = () => {
             initMedia();
             if (localStorage.getItem('darkMode') === 'enabled') {
-                document.getElementById('dark-mode-toggle').checked = true;
                 document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
             }
-            setTimeout(reveal, 100);
+            window.addEventListener("scroll", reveal);
+            reveal();
         };
     </script>
 </body>
