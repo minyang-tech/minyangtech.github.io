@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "date": "2025-12-20",
+    "title_ko": "테스트 메시지",
+    "title_en": "Test Message",
+    "content_ko": "신경 쓸 필요없어요.",
+    "content_en": "You Don't Have to care it.",
+    "image": "https://example.com"
+  }
+]
