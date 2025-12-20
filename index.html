@@ -11,7 +11,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
         
-        /* 상단바 (기존 디자인 유지) */
+        /* [1. 상단 바] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; height: 80px; background: var(--header-bg);
@@ -23,8 +23,6 @@
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
 
         .controls { display: flex; align-items: center; gap: 25px; }
-
-        /* 드롭다운 가상 다리 (전태산님 전용 UX 개선) */
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 35px; 
@@ -45,28 +43,34 @@
         input:checked + .slider:before { transform: translateX(22px); }
         .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* [Hero 섹션] 사진 배경 + 문구 */
-        .hero { 
-            height: calc(100vh - 80px); 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: center; 
-            align-items: center; 
-            text-align: center; 
+        /* [2. 이미지 영역 및 중앙 텍스트] */
+        .hero-banner { 
+            width: 100%; height: 500px; /* 높이 조절 가능 */
+            display: flex; justify-content: center; align-items: center; 
             background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
                               url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png');
             background-size: cover;
             background-position: center;
-            color: white; 
+            color: white;
         }
-        .hero h1 { font-size: 4.5rem; margin-bottom: 10px; font-weight: 800; }
-        .hero p { font-size: 1.5rem; opacity: 0.9; font-weight: 400; }
+        .hero-banner h1 { font-size: 3.5rem; font-weight: 800; }
+
+        /* [3. 구분선 및 하단 idk 영역] */
+        .separator { width: 100%; height: 1px; background-color: var(--border-color); }
+        
+        .sub-content { 
+            padding: 100px 5%; 
+            text-align: center; 
+            background-color: var(--bg-color); 
+        }
+        .sub-content p { font-size: 2rem; font-weight: 500; opacity: 0.8; }
     </style>
 </head>
 <body>
     <script>
         if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
     </script>
+
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
@@ -96,9 +100,14 @@
         </div>
     </header>
 
-    <section class="hero">
-        <h1 id="hero-title">MinYang Tech (민양테크)</h1>
-        <p id="hero-subtitle">idk.</p>
+    <section class="hero-banner">
+        <h1>민양테크 (영문: MinYang Tech)</h1>
+    </section>
+
+    <div class="separator"></div>
+
+    <section class="sub-content">
+        <p>idk.</p>
     </section>
 
     <script>
