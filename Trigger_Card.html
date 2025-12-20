@@ -22,7 +22,6 @@
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
         
-        /* 언어 드롭다운 스타일 */
         .controls { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
         .lang-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
@@ -61,6 +60,7 @@
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
         .info-table th { width: 110px; color: var(--accent); font-size: 0.9rem; }
         .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px; border-radius: 8px; font-weight: 700; transition: 0.3s; }
+        .buy-button:hover { background: #2a303b; }
 
         .specs-section { background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
         .section-header { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; border-left: 5px solid var(--accent); padding-left: 15px; }
@@ -117,7 +117,7 @@
                     <tr><th id="info-engine">엔진</th><td>Unity3D</td></tr>
                     <tr><th id="info-license">라이선스</th><td>MIT License</td></tr>
                 </table>
-                <a href="#" class="buy-button" id="steam-btn"><i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기</a>
+                <a href="https://store.steampowered.com/" target="_blank" class="buy-button" id="steam-btn"><i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기</a>
             </div>
         </div>
 
@@ -183,6 +183,8 @@
             document.getElementById('info-platform').textContent = t.platform;
             document.getElementById('info-engine').textContent = t.engine;
             document.getElementById('info-license').textContent = t.license;
+            
+            // [수정됨] 텍스트 업데이트 시 아이콘 유지를 위해 innerHTML 사용
             document.getElementById('steam-btn').innerHTML = `<i class="fa-brands fa-steam"></i> ${t.steamBtn}`;
             
             document.getElementById('spec-title').textContent = t.specTitle;
@@ -191,7 +193,6 @@
             document.getElementById('review-title').textContent = t.reviewTitle;
             document.getElementById('empty-review-text').textContent = t.noReview;
 
-            // 사양 리스트 업데이트
             const minSpecHtml = `<li><b>${t.os}:</b> Windows 10 (64-bit)</li><li><b>${t.cpu}:</b> i3-6100</li><li><b>${t.ram}:</b> 4 GB</li><li><b>${t.gpu}:</b> GTX 750 Ti</li>`;
             const recSpecHtml = `<li><b>${t.os}:</b> Windows 11 (64-bit)</li><li><b>${t.cpu}:</b> i5-9600K</li><li><b>${t.ram}:</b> 8 GB</li><li><b>${t.gpu}:</b> GTX 1060</li>`;
             document.getElementById('min-spec-list').innerHTML = minSpecHtml;
