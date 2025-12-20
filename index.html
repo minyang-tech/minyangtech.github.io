@@ -27,7 +27,6 @@
         .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* [Header] */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; height: 80px; background: var(--header-bg);
@@ -58,106 +57,76 @@
         /* [Hero Slider] */
         .hero-container { 
             position: relative; width: 100%; height: 550px; overflow: hidden; cursor: grab; 
-            user-select: none; -webkit-user-select: none; /* 텍스트 선택 방지 */
+            user-select: none; -webkit-user-select: none; /* 드래그시 선택 방지 */
         }
         .hero-wrapper { display: flex; width: 500%; height: 100%; transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .hero-slide { 
             width: 20%; height: 100%; display: flex; justify-content: center; 
-            align-items: center; background-size: cover; background-position: center;
-            color: white; text-align: center;
+            align-items: center; background-size: contain; background-repeat: no-repeat; background-position: center;
+            color: white; text-align: center; background-color: #1a1a1a;
         }
-        .hero-slide h1 { font-size: 3.5rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+        .hero-slide h1 { font-size: 3.5rem; font-weight: 800; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
         
         .slide-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; }
         .dot { width: 12px; height: 12px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .dot.active { background: #ffffff; width: 35px; border-radius: 10px; }
 
         /* [Content Sections] */
-        .sub-content { padding: 120px 5%; text-align: center; }
-        .sub-content h2 { font-size: 2.8rem; margin-bottom: 25px; }
-        
-        .news-section { padding: 100px 5%; text-align: center; background-color: var(--bg-color); }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 50px; }
+        .sub-content { padding: 100px 5%; text-align: center; }
+        .news-section { padding: 60px 5%; text-align: center; background-color: var(--bg-color); }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; min-height: 200px; }
         .news-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; transition: 0.3s; }
-        .news-card:hover { transform: translateY(-10px); }
-        .news-card img { width: 100%; height: 220px; object-fit: cover; }
-        .news-card-body { padding: 25px; }
-
+        .news-card img { width: 100%; height: 200px; object-fit: cover; }
+        .news-card-body { padding: 20px; }
+        
         .more-btn { 
-            display: inline-block; margin-top: 50px; padding: 15px 40px; 
+            display: inline-block; margin-top: 40px; padding: 12px 35px; 
             border: 2px solid var(--text-color); color: var(--text-color); 
-            text-decoration: none; font-weight: bold; border-radius: 40px; transition: 0.3s;
+            text-decoration: none; font-weight: bold; border-radius: 30px; transition: 0.3s;
         }
-        .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
-        /* [Infinite Logo Slider] 공백 제거 버전 */
-        .slider-container { width: 100%; overflow: hidden; padding: 80px 0; border-top: 1px solid var(--border-color); }
-        .slider-track { display: flex; width: fit-content; animation: scroll 25s linear infinite; }
-        .slider-track img { width: 160px; margin: 0 50px; opacity: 0.5; filter: grayscale(1); flex-shrink: 0; }
+        /* [Infinite Logo Slider] 공백 완전 제거 */
+        .slider-container { width: 100%; overflow: hidden; padding: 60px 0; border-top: 1px solid var(--border-color); }
+        .slider-track { display: flex; width: fit-content; animation: scroll 20s linear infinite; }
+        .slider-track img { width: 150px; margin: 0 50px; opacity: 0.5; filter: grayscale(1); flex-shrink: 0; }
 
         @keyframes scroll {
             0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-260px * 5)); } /* (이미지폭160 + 마진100) * 로고개수5 */
+            100% { transform: translateX(calc(-250px * 5)); } /* 이미지(150)+여백(100) * 로고수(5) */
         }
 
         /* [Footer] */
-        footer { padding: 80px 5%; background: var(--footer-bg); text-align: center; border-top: 1px solid var(--border-color); }
-        .footer-sns { margin-top: 25px; display: flex; justify-content: center; gap: 30px; }
-        .footer-sns a { font-size: 28px; color: var(--text-color); transition: 0.3s; opacity: 0.6; }
-        .footer-sns a:hover { opacity: 1; transform: translateY(-5px); }
-        .footer-copy { margin-top: 40px; font-size: 14px; opacity: 0.4; }
+        footer { padding: 60px 5%; background: var(--footer-bg); text-align: center; border-top: 1px solid var(--border-color); }
+        .footer-sns { margin-top: 20px; display: flex; justify-content: center; gap: 30px; }
+        .footer-sns a { font-size: 28px; color: var(--text-color); transition: 0.3s; }
+        .footer-sns a:hover { transform: scale(1.2); }
     </style>
 </head>
 <body>
-    <script>
-        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
-    </script>
-
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                <li><a href="Product.html" id="nav-products">제품</a></li>
+            </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown">
-                <span id="current-lang-label">Language ▾</span>
-                <ul class="lang-menu">
-                    <li onclick="changeLanguage('en')">English</li>
-                    <li onclick="changeLanguage('ko')">한국어</li>
-                </ul>
-            </div>
-            <label class="switch">
-                <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                <span class="slider"></span>
-            </label>
+            <div class="lang-dropdown"><span id="current-lang-label">Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
+            <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
         </div>
     </header>
 
     <section class="hero-container" id="hero-slider">
         <div class="hero-wrapper" id="hero-wrapper">
-            <div class="hero-slide" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true');">
-                <h1 class="main-text">민양테크</h1>
-            </div>
-            <div class="hero-slide" style="background-color: #1a1a1a;">
-                <h1 class="main-text">Creative Innovation</h1>
-            </div>
-            <div class="hero-slide" style="background-color: #2c3e50;">
-                <h1 class="main-text">Trigger Card</h1>
-            </div>
-            <div class="hero-slide" style="background-color: #000;">
-                <h1 class="main-text">Global Network</h1>
-            </div>
-            <div class="hero-slide" style="background-color: #27ae60;">
-                <h1 class="main-text">Future Tech</h1>
-            </div>
+            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png');"><h1>민양테크</h1></div>
+            <div class="hero-slide"><h1>Creative Innovation</h1></div>
+            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90.png');"><h1>Smart Solutions</h1></div>
+            <div class="hero-slide"><h1>Trigger Card</h1></div>
+            <div class="hero-slide"><h1>Future with MinYang</h1></div>
         </div>
-        <div class="slide-dots" id="slide-dots">
+        <div class="slide-dots">
             <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
         </div>
     </section>
@@ -165,12 +134,13 @@
     <section class="sub-content reveal">
         <h2 id="sub-title">민양테크</h2>
         <p id="sub-desc">민양, 함께 만드는 무한한 가능성</p>
-        <p id="hi">만나서 반가워요!</p>
     </section>
 
     <section class="news-section reveal">
         <h2 id="news-head-title">최신 뉴스</h2>
-        <div id="latest-news-grid" class="news-grid"></div>
+        <div id="latest-news-grid" class="news-grid">
+            <p>뉴스를 불러오는 중입니다...</p>
+        </div>
         <a href="NEWS.html" class="more-btn" id="more-link">더 알아보기</a>
     </section>
 
@@ -195,53 +165,36 @@
             <a href="https://x.com/minyang_tech" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
             <a href="https://www.youtube.com/@minyangtech" target="_blank"><i class="fa-brands fa-youtube"></i></a>
         </div>
-        <div class="footer-copy">
-            <p>© 2025 MinYang Tech. All rights reserved.</p>
-        </div>
+        <div class="footer-copy"><p>© 2025 MinYang Tech. All rights reserved.</p></div>
     </footer>
 
     <script>
-        const translations = {
-            'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
-                'mainText': '민양테크', 'subTitle': '민양테크', 'subDesc': '민양, 함께 만드는 무한한 가능성', 
-                'hi': '만나서 반가워요!', 'newsHead': '최신 뉴스', 'more': '더 알아보기', 'contact': '저희와 연락하세요!'
-            },
-            'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
-                'mainText': 'MinYang Tech', 'subTitle': 'MinYang Tech', 'subDesc': 'Creating Infinite Possibilities Together', 
-                'hi': 'Nice To Meet You!', 'newsHead': 'Latest News', 'more': 'View More', 'contact': 'Connect with us!'
-            }
-        };
+        // 뉴스 로딩 실패 시 보여줄 예시 데이터
+        const fallbackNews = [
+            { title_ko: "민양테크 공식 홈페이지 개편", content_ko: "더 나은 서비스를 위해 홈페이지가 새롭게 단장되었습니다.", date: "2025-01-01", image: "" },
+            { title_ko: "신규 마스코트 공개", content_ko: "민양테크를 대표하는 새로운 얼굴을 확인해보세요.", date: "2025-01-05", image: "" }
+        ];
 
-        // [Hero Slider Logic]
         const wrapper = document.getElementById('hero-wrapper');
         const dots = document.querySelectorAll('.dot');
         let currentIdx = 0;
-        let startX = 0;
         let isDragging = false;
-        let autoSlideTimer;
+        let startX = 0;
 
         function moveSlide(idx) {
             currentIdx = idx;
             wrapper.style.transform = `translateX(-${idx * 20}%)`;
             dots.forEach(d => d.classList.remove('active'));
             dots[idx].classList.add('active');
-            resetTimer();
         }
 
-        function startTimer() {
-            autoSlideTimer = setInterval(() => {
-                currentIdx = (currentIdx + 1) % 5;
-                moveSlide(currentIdx);
-            }, 3000);
-        }
+        // 3초 자동 슬라이드
+        setInterval(() => {
+            currentIdx = (currentIdx + 1) % 5;
+            moveSlide(currentIdx);
+        }, 3000);
 
-        function resetTimer() {
-            clearInterval(autoSlideTimer);
-            startTimer();
-        }
-
+        // 드래그 기능
         wrapper.addEventListener('mousedown', e => { startX = e.pageX; isDragging = true; });
         window.addEventListener('mouseup', e => {
             if (!isDragging) return;
@@ -253,65 +206,44 @@
             }
         });
 
-        dots.forEach((dot, i) => { dot.addEventListener('click', () => moveSlide(i)); });
-
-        // [Scroll Reveal]
-        function reveal() {
-            let items = document.querySelectorAll(".reveal");
-            items.forEach(item => {
-                if (item.getBoundingClientRect().top < window.innerHeight - 100) item.classList.add("active");
-            });
-        }
-        window.addEventListener("scroll", reveal);
-
-        // [News Data Load]
-        async function loadLatestNews() {
-            const lang = localStorage.getItem('selectedLang') || 'ko';
+        async function loadNews() {
+            const grid = document.getElementById('latest-news-grid');
             try {
                 const res = await fetch('new_data.json');
+                if (!res.ok) throw new Error();
                 const data = await res.json();
-                document.getElementById('latest-news-grid').innerHTML = data.slice(0, 3).map(item => `
-                    <div class="news-card">
-                        <img src="${item.image}" onerror="this.src='https://via.placeholder.com/400x200?text=MinYang+Tech'">
-                        <div class="news-card-body">
-                            <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
-                            <p>${lang === 'ko' ? item.content_ko : item.content_en}</p>
-                            <small>${item.date}</small>
-                        </div>
-                    </div>
-                `).join('');
-            } catch (e) { console.error("News load error"); }
+                renderNews(data.slice(0, 3));
+            } catch (e) {
+                renderNews(fallbackNews); // 파일 없으면 예시 데이터 표시
+            }
         }
 
-        function changeLanguage(lang) {
-            localStorage.setItem('selectedLang', lang);
-            location.reload();
+        function renderNews(data) {
+            const grid = document.getElementById('latest-news-grid');
+            grid.innerHTML = data.map(item => `
+                <div class="news-card">
+                    <img src="${item.image || 'https://via.placeholder.com/400x200?text=MinYang+Tech'}" onerror="this.src='https://via.placeholder.com/400x200?text=MinYang+Tech'">
+                    <div class="news-card-body">
+                        <h3>${item.title_ko}</h3>
+                        <p>${item.content_ko}</p>
+                        <small>${item.date}</small>
+                    </div>
+                </div>
+            `).join('');
         }
 
         function toggleDarkMode() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            document.body.classList.toggle('dark-mode');
         }
 
         window.onload = () => {
-            const lang = localStorage.getItem('selectedLang') || 'ko';
-            document.querySelectorAll('.main-text').forEach(el => el.textContent = translations[lang].mainText);
-            document.getElementById('nav-news').textContent = translations[lang].news;
-            document.getElementById('nav-about').textContent = translations[lang].about;
-            document.getElementById('nav-products').textContent = translations[lang].products;
-            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('sub-title').textContent = translations[lang].subTitle;
-            document.getElementById('sub-desc').textContent = translations[lang].subDesc;
-            document.getElementById('hi').textContent = translations[lang].hi;
-            document.getElementById('news-head-title').textContent = translations[lang].newsHead;
-            document.getElementById('more-link').textContent = translations[lang].more;
-            document.getElementById('footer-contact').textContent = translations[lang].contact;
-
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
-            
-            loadLatestNews();
-            reveal();
-            startTimer();
+            loadNews();
+            // 스크롤 이벤트
+            window.onscroll = () => {
+                document.querySelectorAll('.reveal').forEach(el => {
+                    if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add('active');
+                });
+            };
         };
     </script>
 </body>
