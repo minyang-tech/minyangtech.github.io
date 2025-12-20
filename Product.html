@@ -2,67 +2,25 @@
 <html lang="ko">
 <head>
     <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product - 민양테크</title>
     <style>
-        /* 기존 페이지와 CSS 100% 동일 유지 (상단바 고정) */
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
-        
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 80px; background: var(--header-bg);
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link { display: flex; align-items: center; }
         .logo-link img { height: 40px; width: auto; display: block; }
-        
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
-
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
         .controls { display: flex; align-items: center; gap: 25px; }
-
-        /* [수정] 드롭다운 마우스 끊김 방지 핵심 CSS */
-        .lang-dropdown { 
-            position: relative; 
-            cursor: pointer; 
-            font-size: 14px; 
-            font-weight: 600;
-            padding: 10px 0; 
-        }
-        .lang-menu { 
-            display: none; 
-            position: absolute; 
-            right: 0; 
-            top: 35px; 
-            background: var(--header-bg); 
-            border: 1px solid var(--border-color); 
-            border-radius: 4px; 
-            list-style: none; 
-            min-width: 100px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
-            padding: 5px 0;
-            z-index: 1001;
-        }
-        /* 드롭다운과 텍스트 사이의 투명한 가상 다리 */
-        .lang-dropdown::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            height: 15px;
-        }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li { padding: 10px 15px; }
         .lang-menu li:hover { background: var(--border-color); }
-
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -70,124 +28,49 @@
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* 제품 페이지 스타일 */
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 40px auto 80px; padding: 0 5%; }
-        .product-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 15px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 40px auto; padding: 0 5%; }
+        .product-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 15px; overflow: hidden; text-decoration: none; color: inherit; transition: 0.3s; display: block; }
         .product-card:hover { transform: translateY(-10px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .product-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-bottom: 1px solid var(--border-color); }
+        .product-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-bottom: 1px solid var(--border-color); }
         .product-info { padding: 20px; }
-        .product-info h3 { font-size: 1.4rem; margin-bottom: 10px; color: #007bff; }
-        .product-info p { font-size: 0.95rem; opacity: 0.8; line-height: 1.5; }
-        .status-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-top: 15px; background: #ffc107; color: #000; }
+        .product-info h3 { color: var(--accent); margin-bottom: 10px; }
+        .status-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #ffc107; color: #000; margin-top: 10px; }
     </style>
 </head>
 <body>
-    <script>
-        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
-    </script>
-
+    <script>if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');</script>
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products" style="color:#007bff">제품</a></li>
-                </ul>
-            </nav>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html">뉴스</a></li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="Product.html" style="color:var(--accent)">제품</a></li>
+            </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown">
-                <span id="current-lang-label">Language ▾</span>
-                <ul class="lang-menu">
-                    <li onclick="changeLanguage('en')">English</li>
-                    <li onclick="changeLanguage('ko')">한국어</li>
-                </ul>
-            </div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                    <span class="slider"></span>
-                </label>
-                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
-            </div>
+            <div class="lang-dropdown"><span>Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
+            <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
         </div>
     </header>
 
-    <h1 id="page-title" class="page-title">제품</h1>
-
-    <div class="product-grid" id="product-list">
-        <a href="https://store.steampowered.com/" target="_blank" class="product-card">
+    <h1 class="page-title">제품</h1>
+    <div class="product-grid">
+        <a href="Trigger_Card.html" class="product-card">
             <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true" class="product-img">
             <div class="product-info">
-                <h3 class="prod-name">Trigger Card</h3>
-                <p class="prod-desc">불러오는 중...</p>
+                <h3>Trigger Card</h3>
+                <p>혁신적인 카드 시스템</p>
                 <span class="status-tag">Coming Soon</span>
-            </div>
-        </a>
-
-        <a href="https://store.steampowered.com/" target="_blank" class="product-card">
-            <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true" class="product-img">
-            <div class="product-info">
-                <h3 class="prod-name">추가 예정</h3>
-                <p class="prod-desc">idk.</p>
-                <span class="status-tag">In Development</span>
             </div>
         </a>
     </div>
 
     <script>
-        const translations = {
-            'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
-                'pageTitle': '제품',
-                'p1Name': 'Trigger Card',
-                'p1Desc': '제품명 : Trigger Card <br> 개발 시작 : 2025년 12월 20일 <br> 출시 플랫폼 : 스팀 <br> 제작 플랫폼 : Unity3D Free Plan <br> 라이선스 : MIT License <br> 소스코드 공개 여부 : O <br> *Github에 올라올 예정입니다.',
-                'p2Name': '추가 예정', 'p2Desc': 'idk.'
-            },
-            'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
-                'pageTitle': 'Product',
-                'p1Name': 'Trigger Card',
-                'p1Desc': 'Product Name : Trigger Card <br> Development Start : Dec 20, 2025 <br> Release Platform : Steam <br> Dev Platform : Unity3D Free Plan <br> License : MIT License <br> Open Source : Yes <br> *To be released on GitHub.',
-                'p2Name': 'UNKNOWN', 'p2Desc': 'idk.'
-            }
-        };
-
-        function changeLanguage(lang) {
-            localStorage.setItem('selectedLang', lang);
-            document.documentElement.lang = lang;
-            document.getElementById('nav-news').textContent = translations[lang].news;
-            document.getElementById('nav-about').textContent = translations[lang].about;
-            document.getElementById('nav-products').textContent = translations[lang].products;
-            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('toggle-text').textContent = translations[lang].toggle;
-            document.getElementById('page-title').textContent = translations[lang].pageTitle;
-            
-            const names = document.querySelectorAll('.prod-name');
-            const descs = document.querySelectorAll('.prod-desc');
-            
-            names[0].textContent = translations[lang].p1Name;
-            names[1].textContent = translations[lang].p2Name;
-            
-            // [수정] <br> 태그 인식을 위해 innerHTML 사용
-            descs[0].innerHTML = translations[lang].p1Desc;
-            descs[1].innerHTML = translations[lang].p2Desc;
-        }
-
-        function toggleDarkMode() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-        }
-
-        window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
-        };
+        function changeLanguage(lang) { localStorage.setItem('selectedLang', lang); location.reload(); }
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); }
     </script>
 </body>
 </html>
