@@ -35,47 +35,36 @@
 
         /* [Product Detail Section] */
         .detail-container { max-width: 1100px; margin: 50px auto; padding: 0 5%; position: relative; }
-        
-        /* 뒤로 가기 버튼 스타일 */
         .back-nav { margin-bottom: 20px; }
-        .back-link { 
-            text-decoration: none; 
-            color: var(--text-color); 
-            font-size: 1.1rem; 
-            font-weight: 600; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: 0.3s;
-            opacity: 0.8;
-        }
+        .back-link { text-decoration: none; color: var(--text-color); font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; opacity: 0.8; }
         .back-link:hover { opacity: 1; color: var(--accent); transform: translateX(-5px); }
 
         .product-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); }
-        
-        .product-main { display: flex; gap: 50px; align-items: flex-start; background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .product-main { display: flex; gap: 50px; align-items: flex-start; background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
         .product-image-side { flex: 1; }
         .product-image-side img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        
         .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 350px; }
         .info-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
         .info-table th { width: 120px; font-weight: 700; color: var(--accent); }
         .info-table td { opacity: 0.9; line-height: 1.6; }
 
-        /* 구매 버튼 */
-        .buy-button { 
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-            background: #171a21; color: #fff; text-decoration: none; padding: 18px 30px; 
-            border-radius: 8px; font-weight: 700; font-size: 1.1rem; transition: 0.3s;
-            align-self: flex-end; 
-        }
+        .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px 30px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; transition: 0.3s; align-self: flex-end; }
         .buy-button:hover { background: #2a475e; transform: translateY(-3px); }
-        .buy-button i { font-size: 1.4rem; }
+
+        /* [System Requirements Section] */
+        .specs-section { background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); }
+        .specs-header { font-size: 1.8rem; font-weight: 700; margin-bottom: 30px; border-left: 5px solid var(--accent); padding-left: 15px; }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .spec-box h3 { font-size: 1.2rem; margin-bottom: 20px; color: var(--accent); }
+        .spec-list { list-style: none; }
+        .spec-list li { margin-bottom: 12px; line-height: 1.5; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .spec-list li b { color: var(--accent); margin-right: 5px; }
 
         @media (max-width: 900px) {
             .product-main { flex-direction: column; }
             .buy-button { align-self: center; width: 100%; }
+            .specs-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -130,6 +119,32 @@
                 </a>
             </div>
         </div>
+
+        <div class="specs-section">
+            <h2 class="specs-header" id="specs-title">시스템 요구 사항</h2>
+            <div class="specs-grid">
+                <div class="spec-box">
+                    <h3 id="min-title">최소 사양</h3>
+                    <ul class="spec-list">
+                        <li><b class="s-os">운영체제:</b> Windows 10 (64-bit)</li>
+                        <li><b class="s-cpu">프로세서:</b> Intel Core i3-6100 / AMD FX-8350</li>
+                        <li><b class="s-ram">메모리:</b> 4 GB RAM</li>
+                        <li><b class="s-gpu">그래픽:</b> NVIDIA GTX 750 Ti / AMD HD 7850</li>
+                        <li><b class="s-storage">저장공간:</b> 2 GB 사용 가능 공간</li>
+                    </ul>
+                </div>
+                <div class="spec-box">
+                    <h3 id="rec-title">권장 사양</h3>
+                    <ul class="spec-list">
+                        <li><b class="s-os">운영체제:</b> Windows 11 (64-bit)</li>
+                        <li><b class="s-cpu">프로세서:</b> Intel Core i5-9600K / AMD Ryzen 5 3600</li>
+                        <li><b class="s-ram">메모리:</b> 8 GB RAM</li>
+                        <li><b class="s-gpu">그래픽:</b> NVIDIA GTX 1060 / AMD RX 580</li>
+                        <li><b class="s-storage">저장공간:</b> 2 GB 사용 가능 공간</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -141,7 +156,9 @@
                 'plat': '플랫폼', 'platD': 'Steam (Windows)',
                 'license': '라이선스',
                 'source': '소스코드', 'sourceD': 'GitHub 공개 (예정)',
-                'buy': 'Steam 상점에서 확인하기'
+                'buy': 'Steam 상점에서 확인하기',
+                'specs': '시스템 요구 사항', 'min': '최소 사양', 'rec': '권장 사양',
+                's-os': '운영체제:', 's-cpu': '프로세서:', 's-ram': '메모리:', 's-gpu': '그래픽:', 's-storage': '저장공간:'
             },
             'en': {
                 'title': 'Trigger Card',
@@ -150,7 +167,9 @@
                 'plat': 'Platform', 'platD': 'Steam (Windows)',
                 'license': 'License',
                 'source': 'Source', 'sourceD': 'Open on GitHub (TBA)',
-                'buy': 'View on Steam Store'
+                'buy': 'View on Steam Store',
+                'specs': 'System Requirements', 'min': 'Minimum', 'rec': 'Recommended',
+                's-os': 'OS:', 's-cpu': 'Processor:', 's-ram': 'Memory:', 's-gpu': 'Graphics:', 's-storage': 'Storage:'
             }
         };
 
@@ -167,6 +186,16 @@
             document.getElementById('th-source').textContent = t.source;
             document.getElementById('td-source').textContent = t.sourceD;
             document.getElementById('buy-text').textContent = t.buy;
+            
+            // 사양 텍스트 업데이트
+            document.getElementById('specs-title').textContent = t.specs;
+            document.getElementById('min-title').textContent = t.min;
+            document.getElementById('rec-title').textContent = t.rec;
+            document.querySelectorAll('.s-os').forEach(el => el.textContent = t['s-os']);
+            document.querySelectorAll('.s-cpu').forEach(el => el.textContent = t['s-cpu']);
+            document.querySelectorAll('.s-ram').forEach(el => el.textContent = t['s-ram']);
+            document.querySelectorAll('.s-gpu').forEach(el => el.textContent = t['s-gpu']);
+            document.querySelectorAll('.s-storage').forEach(el => el.textContent = t['s-storage']);
         }
 
         function toggleDarkMode() {
