@@ -5,85 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
     <style>
+        /* CSS는 index.html과 동일하게 설정 (헤더 일관성) */
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; }
-        
-        /* 공통 헤더 스타일 */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            height: 70px;
-            background: #fff;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.3s; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 30px; }
-        .logo-link img { height: 40px; width: auto; display: block; }
+        .logo-link img { height: 40px; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; transition: color 0.3s; }
-        .nav-links a:hover { color: #007bff; }
-
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ddd; border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .lang-menu li { padding: 10px 15px; cursor: pointer; }
-        .lang-menu li:hover { background: #f8f9fa; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 14px; }
+        .controls { display: flex; align-items: center; gap: 25px; }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; }
         .lang-dropdown:hover .lang-menu { display: block; }
+        .lang-menu li { padding: 10px 15px; }
+        
+        /* 토글 스위치 */
+        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4cd964; }
+        input:checked + .slider:before { transform: translateX(22px); }
+        .toggle-label { font-size: 10px; font-weight: bold; color: var(--text-color); }
 
-        /* 뉴스 페이지 스타일 수정 */
+        /* 뉴스 스타일 */
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
         .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
-        .news-item { display: flex; gap: 30px; margin-bottom: 60px; border-bottom: 1px solid #eee; padding-bottom: 40px; align-items: flex-start; }
-        .news-image { width: 350px; height: auto; max-height: 250px; object-fit: cover; border-radius: 8px; }
-        .news-content { flex: 1; }
-        .news-date { color: #888; font-size: 0.9rem; margin-bottom: 8px; }
-        .news-item h2 { margin-bottom: 15px; font-size: 1.8rem; color: #007bff; line-height: 1.3; }
-        
-        /* [중요] 5줄 제한 제거 및 줄바꿈 허용 */
-        .news-full-content { 
-            color: #444; 
-            font-size: 1.05rem; 
-            white-space: pre-wrap; /* JSON의 \n 줄바꿈을 화면에 그대로 표시 */
-            word-break: break-all;
-        }
-        
-        @media (max-width: 768px) { .news-item { flex-direction: column; } .news-image { width: 100%; } }
+        .news-item { display: flex; gap: 30px; margin-bottom: 60px; border-bottom: 1px solid var(--border-color); padding-bottom: 40px; }
+        .news-image { width: 350px; height: auto; border-radius: 8px; }
+        .news-full-content { white-space: pre-wrap; margin-top: 15px; color: var(--text-color); opacity: 0.8; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png" alt="로고">
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news" style="color:#007bff">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" id="nav-news" style="color:#007bff">뉴스</a></li>
+                <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                <li><a href="Product.html" id="nav-products">제품</a></li>
+            </ul></nav>
         </div>
-        <div class="lang-dropdown">
-            <span id="current-lang-label">Language ▾</span>
-            <ul class="lang-menu">
-                <li onclick="changeLanguage('en')">English</li>
-                <li onclick="changeLanguage('ko')">한국어</li>
-            </ul>
+        <div class="controls">
+            <div class="lang-dropdown">
+                <span id="current-lang-label">Language ▾</span>
+                <ul class="lang-menu">
+                    <li onclick="changeLanguage('en')">English</li>
+                    <li onclick="changeLanguage('ko')">한국어</li>
+                </ul>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
+            </div>
         </div>
     </header>
 
     <h1 id="page-title" class="page-title">뉴스</h1>
-
     <div id="news-list" class="news-container"></div>
 
     <script>
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾' }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle' }
         };
 
         function changeLanguage(lang) {
@@ -94,39 +84,43 @@
             document.getElementById('nav-products').textContent = translations[lang].products;
             document.getElementById('page-title').textContent = translations[lang].news;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
+            document.getElementById('toggle-text').textContent = translations[lang].toggle;
             loadNews();
         }
 
-        async function loadNews() {
-            try {
-                const lang = localStorage.getItem('selectedLang') || 'ko';
-                const response = await fetch('news-data.json');
-                const newsData = await response.json();
-                const newsList = document.getElementById('news-list');
-                newsList.innerHTML = '';
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+        }
 
-                newsData.forEach(item => {
-                    const title = lang === 'ko' ? item.title_ko : item.title_en;
-                    const content = lang === 'ko' ? item.content_ko : item.content_en;
-                    newsList.innerHTML += `
-                        <div class="news-item">
-                            <img src="${item.image}" class="news-image" alt="news">
-                            <div class="news-content">
-                                <p class="news-date">${item.date}</p>
-                                <h2>${title}</h2>
-                                <div class="news-full-content">${content}</div>
-                            </div>
+        async function loadNews() {
+            const lang = localStorage.getItem('selectedLang') || 'ko';
+            const response = await fetch('news-data.json');
+            const newsData = await response.json();
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = '';
+            newsData.forEach(item => {
+                const title = lang === 'ko' ? item.title_ko : item.title_en;
+                const content = lang === 'ko' ? item.content_ko : item.content_en;
+                newsList.innerHTML += `
+                    <div class="news-item">
+                        <img src="${item.image}" class="news-image">
+                        <div class="news-content">
+                            <p>${item.date}</p>
+                            <h2>${title}</h2>
+                            <div class="news-full-content">${content}</div>
                         </div>
-                    `;
-                });
-            } catch (e) {
-                console.error("데이터 로드 실패");
-            }
+                    </div>`;
+            });
         }
 
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
         };
     </script>
 </body>
