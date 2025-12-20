@@ -5,83 +5,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>민양테크 (MinYang Tech)</title>
     <style>
-        /* 기본 변수 설정 */
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --header-bg: #ffffff;
-            --border-color: #eeeeee;
-        }
-
-        /* 다크 모드 변수 */
-        body.dark-mode {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --header-bg: #1e1e1e;
-            --border-color: #333333;
-        }
-
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg-color); transition: background 0.3s; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
         
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 5%;
-            height: 80px; /* 토글 문구 때문에 높이를 살짝 키움 */
-            background: var(--header-bg);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; height: 80px; background: var(--header-bg);
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
         }
         .header-left { display: flex; align-items: center; gap: 30px; }
-        .logo-link img { height: 40px; width: auto; display: block; }
+        .logo-link img { height: 40px; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 14px; }
 
-        /* 우측 컨트롤 영역 */
         .controls { display: flex; align-items: center; gap: 25px; }
-        
-        /* 언어 드롭다운 */
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; }
         .lang-menu li:hover { background: var(--border-color); }
 
-        /* 토글 스위치 스타일 */
+        /* 토글 스위치 */
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider {
-            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #333; transition: .4s; border-radius: 34px;
-        }
-        .slider:before {
-            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
-            background-color: white; transition: .4s; border-radius: 50%;
-        }
-        input:checked + .slider { background-color: #4cd964; } /* 켜졌을 때 초록색 */
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .toggle-label { font-size: 10px; font-weight: bold; color: var(--text-color); }
+        .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* 메인 콘텐츠 */
         .hero {
-            height: 60vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover;
+            height: 60vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover;
             color: white;
         }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; }
+        .content-placeholder { padding: 50px 5%; text-align: center; color: #999; border: 2px dashed #eee; margin: 20px 5%; }
     </style>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
+    </script>
+
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
@@ -113,11 +83,12 @@
         <h1 id="hero-title">민양테크</h1>
         <p id="hero-subtitle">민양, 함께 만드는 무한한 가능성</p>
     </section>
+    <div class="content-placeholder"><p id="placeholder-text">내용 준비 중</p></div>
 
     <script>
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'title': '민양테크', 'subtitle': '민양, 함께 만드는 무한한 가능성', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'title': 'MinYang Tech', 'subtitle': 'MinYang, creating infinite possibilities together', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle' }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'title': '민양테크', 'subtitle': '민양, 함께 만드는 무한한 가능성', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환', 'placeholder': '내용을 준비 중입니다.' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'title': 'MinYang Tech', 'subtitle': 'MinYang, creating infinite possibilities together', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'placeholder': 'Under construction.' }
         };
 
         function changeLanguage(lang) {
@@ -130,6 +101,7 @@
             document.getElementById('hero-subtitle').textContent = translations[lang].subtitle;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
+            document.getElementById('placeholder-text').textContent = translations[lang].placeholder;
         }
 
         function toggleDarkMode() {
@@ -138,12 +110,8 @@
         }
 
         window.onload = () => {
-            const savedLang = localStorage.getItem('selectedLang') || 'ko';
-            changeLanguage(savedLang);
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('dark-mode-toggle').checked = true;
-            }
+            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
+            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
         };
     </script>
 </body>
