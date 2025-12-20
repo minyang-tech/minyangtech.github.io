@@ -11,7 +11,7 @@
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --input-bg: #2a2a2a; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
         
         /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
@@ -32,6 +32,10 @@
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
+
+        /* [Scroll Reveal 애니메이션] */
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
 
         /* [Filter Bar] */
         .filter-section { max-width: 1400px; margin: 20px auto; padding: 0 5%; }
@@ -83,9 +87,9 @@
         </div>
     </header>
 
-    <h1 id="page-title" style="text-align: center; padding-top: 50px; font-size: 2.5rem;">뉴스</h1>
+    <h1 id="page-title" class="reveal" style="text-align: center; padding-top: 50px; font-size: 2.5rem;">뉴스</h1>
 
-    <section class="filter-section" id="filter-area">
+    <section class="filter-section reveal" id="filter-area">
         <div class="filter-bar">
             <div class="search-wrapper">
                 <i class="fa-solid fa-magnifying-glass"></i>
@@ -105,8 +109,22 @@
     <div id="news-content" class="news-container"></div>
 
     <script>
+        // [Scroll Reveal 로직]
+        function reveal() {
+            const reveals = document.querySelectorAll(".reveal");
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const elementTop = el.getBoundingClientRect().top;
+                const elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    el.classList.add("active");
+                }
+            });
+        }
+        window.addEventListener("scroll", reveal);
+
         let allNewsData = [];
-        let isDesc = true; // 최신순 여부
+        let isDesc = true; 
         const lang = localStorage.getItem('selectedLang') || 'ko';
 
         const translations = {
@@ -133,7 +151,7 @@
                 const item = allNewsData.find(n => n.id == detailId);
                 if (item) {
                     container.innerHTML = `
-                        <div class="news-detail">
+                        <div class="news-detail reveal">
                             <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${translations[lang].back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
                             <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
@@ -146,6 +164,7 @@
                 applyFilters();
                 updateStaticUI();
             }
+            setTimeout(reveal, 100);
         }
 
         function applyFilters() {
@@ -153,20 +172,16 @@
             const startDate = document.getElementById('date-start').value;
             const endDate = document.getElementById('date-end').value;
 
-            // 1. 검색 및 날짜 필터링
             let filtered = allNewsData.filter(item => {
                 const title = (lang === 'ko' ? item.title_ko : item.title_en).toLowerCase();
                 const content = (lang === 'ko' ? item.content_ko : item.content_en).toLowerCase();
                 const matchesSearch = title.includes(searchText) || content.includes(searchText);
-                
                 const itemDate = item.date;
                 const matchesStart = !startDate || itemDate >= startDate;
                 const matchesEnd = !endDate || itemDate <= endDate;
-
                 return matchesSearch && matchesStart && matchesEnd;
             });
 
-            // 2. 정렬 (최신순 vs 오래된순)
             filtered.sort((a, b) => {
                 const dateA = new Date(a.date);
                 const dateB = new Date(b.date);
@@ -174,7 +189,6 @@
                 return isDesc ? b.id - a.id : a.id - b.id;
             });
 
-            // 3. 렌더링
             const container = document.getElementById('news-content');
             if (filtered.length === 0) {
                 container.innerHTML = `<p style="text-align:center; padding: 100px 0; opacity:0.6;">${translations[lang]['no-result']}</p>`;
@@ -184,7 +198,7 @@
             let html = '<div class="news-grid">';
             filtered.forEach(item => {
                 html += `
-                    <div class="news-card" onclick="location.href='NEWS.html?id=${item.id}'">
+                    <div class="news-card reveal" onclick="location.href='NEWS.html?id=${item.id}'">
                         <img src="${item.image}" alt="news">
                         <div class="news-card-body">
                             <small>${item.date}</small>
@@ -193,6 +207,7 @@
                     </div>`;
             });
             container.innerHTML = html + '</div>';
+            setTimeout(reveal, 50);
         }
 
         function toggleSort() {
