@@ -7,12 +7,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - 민양테크</title>
     <style>
-        /* 상단바 및 기본 테마 설정 (전 페이지 공통) */
-        :root { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --accent-color: #007bff; }
-        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        /* [수정] 라이트 모드(기본)와 다크 모드 변수 분리 */
+        :root { 
+            --bg-color: #ffffff; 
+            --text-color: #333333; 
+            --header-bg: #ffffff; 
+            --border-color: #eeeeee; 
+            --accent-color: #007bff;
+            --content-text: #555555; /* 본문용 약간 연한 검정 */
+        }
+
+        body.dark-mode { 
+            --bg-color: #121212; 
+            --text-color: #e0e0e0; 
+            --header-bg: #1e1e1e; 
+            --border-color: #333333; 
+            --content-text: #b0b0b0; /* 다크모드 본문 회색 */
+        }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s, color 0.2s; }
         
         header {
             display: flex; justify-content: space-between; align-items: center;
@@ -26,15 +40,13 @@
 
         .controls { display: flex; align-items: center; gap: 25px; }
 
-        /* [가상 다리 적용] 드롭다운 마우스 끊김 방지 */
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
         .lang-menu { 
             display: none; position: absolute; right: 0; top: 40px; 
             background: var(--header-bg); border: 1px solid var(--border-color); 
             border-radius: 4px; list-style: none; min-width: 100px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5); padding: 5px 0; z-index: 1001; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; 
         }
-        /* 드롭다운과 버튼 사이의 빈 공간을 메워주는 가상 다리 */
         .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
@@ -43,7 +55,7 @@
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
@@ -51,16 +63,22 @@
 
         /* 소개 페이지 스타일 */
         .about-section { max-width: 900px; margin: 60px auto; padding: 0 5%; line-height: 1.8; }
-        .about-section h1 { font-size: 3rem; margin-bottom: 50px; text-align: center; font-weight: 700; }
-        .about-content { font-size: 1.15rem; color: #b0b0b0; text-align: justify; }
+        .about-section h1 { font-size: 3rem; margin-bottom: 50px; text-align: center; font-weight: 700; color: var(--text-color); }
+        
+        /* [수정] 고정 색상 #b0b0b0 대신 변수 사용 */
+        .about-content { font-size: 1.15rem; color: var(--content-text); text-align: justify; }
         .about-content p { margin-bottom: 30px; }
         
-        /* 강조 문구 파란색 (이미지에 있는 스타일 재현) */
         .highlight { color: var(--accent-color); font-weight: 600; }
+
+        /* 모바일 대응 */
+        @media (max-width: 768px) {
+            .about-section h1 { font-size: 2rem; margin-bottom: 30px; }
+            .about-content { font-size: 1rem; }
+        }
     </style>
 </head>
-<body class="dark-mode">
-    <header>
+<body> <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
             <nav>
@@ -81,7 +99,7 @@
             </div>
             <div class="toggle-container">
                 <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" checked onclick="toggleDarkMode()">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
                     <span class="slider"></span>
                 </label>
                 <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
@@ -91,8 +109,7 @@
 
     <main class="about-section">
         <h1 id="about-title">About Us</h1>
-        <div id="about-text" class="about-content">
-            </div>
+        <div id="about-text" class="about-content"></div>
     </main>
 
     <script>
@@ -135,8 +152,13 @@
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
+            
+            // 다크모드 초기화 로직 수정
             const darkMode = localStorage.getItem('darkMode');
-            if (darkMode === 'disabled') {
+            if (darkMode === 'enabled' || darkMode === null) { // 초기 접속 시 다크모드 권장 시
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
+            } else {
                 document.body.classList.remove('dark-mode');
                 document.getElementById('dark-mode-toggle').checked = false;
             }
