@@ -55,7 +55,7 @@
         }
         .hero-banner h1 { font-size: 3.5rem; font-weight: 800; }
 
-        /* [3. 구분선 및 하단 idk 영역] */
+        /* [3. 구분선 및 하단 문구 영역] */
         .separator { width: 100%; height: 1px; background-color: var(--border-color); }
         
         .sub-content { 
@@ -63,7 +63,8 @@
             text-align: center; 
             background-color: var(--bg-color); 
         }
-        .sub-content p { font-size: 2rem; font-weight: 500; opacity: 0.8; }
+        .sub-content h2 { font-size: 2.5rem; font-weight: 700; margin-bottom: 20px; }
+        .sub-content p { font-size: 1.5rem; font-weight: 400; opacity: 0.8; }
     </style>
 </head>
 <body>
@@ -107,7 +108,8 @@
     <div class="separator"></div>
 
     <section class="sub-content">
-        <p>idk.</p>
+        <h2 id="sub-title">민양테크</h2>
+        <p id="sub-desc">민양, 함께 만드는 무한한 가능성</p>
     </section>
 
     <script>
@@ -115,12 +117,16 @@
             'ko': { 
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 
                 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
-                'mainText': '민양테크' 
+                'mainText': '민양테크',
+                'subTitle': '민양테크',
+                'subDesc': '민양, 함께 만드는 무한한 가능성'
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 
                 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
-                'mainText': 'MinYang Tech' 
+                'mainText': 'MinYang Tech',
+                'subTitle': 'MinYang Tech',
+                'subDesc': 'MinYang, Creating Infinite Possibilities Together'
             }
         };
 
@@ -132,8 +138,10 @@
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
             
-            // 이미지 중앙 문구 번역 적용
+            // 텍스트 번역 적용
             document.getElementById('hero-main-text').textContent = translations[lang].mainText;
+            document.getElementById('sub-title').textContent = translations[lang].subTitle;
+            document.getElementById('sub-desc').textContent = translations[lang].subDesc;
         }
 
         function toggleDarkMode() {
