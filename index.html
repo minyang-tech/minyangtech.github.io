@@ -7,23 +7,13 @@
     <title>민양테크 - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { 
-            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
-            --border-color: #eeeeee; --card-bg: #f9f9f9; --footer-bg: #f1f1f1;
-        }
-        body.dark-mode { 
-            --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; 
-            --border-color: #333333; --card-bg: #1e1e1e; --footer-bg: #0a0a0a;
-        }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --card-bg: #f9f9f9; --footer-bg: #f1f1f1; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --card-bg: #1e1e1e; --footer-bg: #0a0a0a; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            font-family: 'Pretendard', sans-serif; 
-            background-color: var(--bg-color); color: var(--text-color); 
-            transition: background 0.3s, color 0.3s; overflow-x: hidden;
-        }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
 
-        /* [Header & Controls] */
+        /* [Header] - NEWS.html 스타일 복사 */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 5%; height: 80px; background: var(--header-bg);
@@ -32,100 +22,108 @@
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
 
-        .controls { display: flex; align-items: center; gap: 15px; }
-        .dark-mode-label { font-size: 13px; font-weight: 600; color: var(--text-color); }
-        
-        /* 토글 스위치 */
-        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .controls { display: flex; align-items: center; gap: 25px; }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
+        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
+        .lang-dropdown:hover .lang-menu { display: block; }
+        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li:hover { background: var(--border-color); }
+
+        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
+        .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* [Hero Slider] 텍스트 선택 금지 및 자동화 */
-        .hero-container { 
-            position: relative; width: 100%; height: 500px; overflow: hidden; 
-            user-select: none; -webkit-user-select: none; /* 드래그 선택 방지 */
-        }
+        /* [Hero Slider] */
+        .hero-container { position: relative; width: 100%; height: 500px; overflow: hidden; user-select: none; }
         .hero-wrapper { display: flex; width: 500%; height: 100%; transition: transform 0.6s ease-in-out; }
         .hero-slide { 
-            width: 20%; height: 100%; display: flex; flex-direction: column; justify-content: center; 
-            align-items: center; background-size: contain; background-repeat: no-repeat; background-position: center;
+            width: 20%; height: 100%; display: flex; justify-content: center; align-items: center; 
+            background-size: contain; background-repeat: no-repeat; background-position: center;
             background-color: #1a1a1a; color: white;
         }
-        .hero-slide h1 { font-size: 3rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.7); z-index: 2; }
-        
+        .hero-slide h1 { font-size: 3rem; font-weight: 800; text-shadow: 0 4px 10px rgba(0,0,0,0.7); }
         .slide-dots { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; }
         .dot { width: 10px; height: 10px; background: rgba(255,255,255,0.3); border-radius: 50%; cursor: pointer; }
         .dot.active { background: #fff; width: 30px; border-radius: 10px; }
 
-        /* [News Section] */
+        /* [Content] */
         .news-section { padding: 80px 5%; text-align: center; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
-        .news-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; }
-        .news-card img { width: 100%; height: 180px; object-fit: cover; background: #eee; }
+        .news-card { background: var(--card-bg); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; transition: 0.3s; }
+        .news-card img { width: 100%; height: 180px; object-fit: cover; }
         .news-card-body { padding: 20px; }
         .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; }
 
-        /* [Logo Loop] 끊김 없는 뺑뺑이 */
+        /* [Logo Slider] */
         .slider-container { width: 100%; overflow: hidden; padding: 50px 0; border-top: 1px solid var(--border-color); }
-        .slider-track { display: flex; width: fit-content; animation: scroll 15s linear infinite; }
-        .slider-track img { width: 120px; margin: 0 40px; opacity: 0.6; filter: grayscale(1); }
+        .slider-track { display: flex; width: fit-content; animation: scroll 20s linear infinite; }
+        .slider-track img { width: 120px; margin: 0 40px; opacity: 0.5; filter: grayscale(1); }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(calc(-200px * 5)); } }
 
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(calc(-200px * 5)); } /* (이미지120+마진80) * 5개 */
-        }
-
-        /* [Footer SNS] */
         footer { padding: 50px 5%; background: var(--footer-bg); text-align: center; }
-        .footer-sns { margin-top: 20px; display: flex; justify-content: center; gap: 25px; }
-        .footer-sns a { font-size: 30px; color: var(--text-color); opacity: 0.7; transition: 0.3s; text-decoration: none; }
-        .footer-sns a:hover { opacity: 1; transform: scale(1.1); }
-
-        .reveal { opacity: 0; transform: translateY(30px); transition: 0.8s; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; gap: 25px; }
+        .footer-sns a { font-size: 30px; color: var(--text-color); text-decoration: none; }
     </style>
 </head>
 <body>
+    <script>
+        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
+    </script>
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav><ul class="nav-links"><li><a href="NEWS.html">뉴스</a></li><li><a href="AboutUs.html">About Us</a></li><li><a href="Product.html">제품</a></li></ul></nav>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
-            <span class="dark-mode-label">다크 모드 전환</span>
-            <label class="switch">
-                <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                <span class="slider"></span>
-            </label>
+            <div class="lang-dropdown">
+                <span id="current-lang-label">Language ▾</span>
+                <ul class="lang-menu">
+                    <li onclick="changeLanguage('en')">English</li>
+                    <li onclick="changeLanguage('ko')">한국어</li>
+                </ul>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
+            </div>
         </div>
     </header>
 
     <section class="hero-container">
         <div class="hero-wrapper" id="hero-wrapper">
-            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png');"><h1>민양테크</h1></div>
-            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA.png');"><h1>Creative Innovation</h1></div>
+            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA%90%EB%A6%AD%ED%84%B0.png');"><h1 id="hero-1">민양테크</h1></div>
+            <div class="hero-slide" style="background-image: url('https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/image/%EB%AF%BC%EC%96%91%20%EB%A7%88%EC%8A%A4%EC%BD%94%ED%8A%B8%20%EC%BA.png');"><h1 id="hero-2">Creative Innovation</h1></div>
             <div class="hero-slide"><h1>Smart Solutions</h1></div>
             <div class="hero-slide"><h1>Trigger Card</h1></div>
             <div class="hero-slide"><h1>Future Tech</h1></div>
         </div>
-        <div class="slide-dots">
-            <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-        </div>
+        <div class="slide-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
     </section>
 
-    <section class="news-section reveal">
-        <h2>최신 뉴스</h2>
-        <div id="news-grid" class="news-grid">
-            </div>
-        <a href="NEWS.html" class="more-btn">더 알아보기</a>
+    <section class="news-section">
+        <h2 id="news-title">최신 뉴스</h2>
+        <div id="latest-news-grid" class="news-grid"></div>
+        <a href="NEWS.html" class="more-btn" id="more-btn">더 알아보기</a>
     </section>
 
-    <div class="slider-container reveal">
+    <div class="slider-container">
         <div class="slider-track">
             <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true">
             <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true">
@@ -141,74 +139,68 @@
     </div>
 
     <footer>
-        <h3>저희와 연락하세요!</h3>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
         <div class="footer-sns">
             <a href="https://x.com/minyang_tech" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
             <a href="https://www.youtube.com/@minyangtech" target="_blank"><i class="fa-brands fa-youtube"></i></a>
         </div>
-        <p style="margin-top:20px; font-size:12px; opacity:0.5;">© 2025 MinYang Tech. All rights reserved.</p>
     </footer>
 
     <script>
-        // 뉴스 데이터가 없을 때 보여줄 예시 데이터
-        const demoNews = [
-            { title: "민양테크 홈페이지 오픈", content: "민양테크의 새로운 소식을 만나보세요.", date: "2025-01-01" },
-            { title: "트리거 카드 출시 임박", content: "혁신적인 트리거 카드가 곧 공개됩니다.", date: "2025-01-10" }
-        ];
+        const translations = {
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환', 'latest': '최신 뉴스', 'more': '더 알아보기', 'contact': '저희와 연락하세요!' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!' }
+        };
 
-        let currentIdx = 0;
-        const wrapper = document.getElementById('hero-wrapper');
-        const dots = document.querySelectorAll('.dot');
-
-        function moveSlide(idx) {
-            currentIdx = idx;
-            wrapper.style.transform = `translateX(-${idx * 20}%)`;
-            dots.forEach(d => d.classList.remove('active'));
-            dots[idx].classList.add('active');
-        }
-
-        // 3초 자동 슬라이드
-        setInterval(() => {
-            currentIdx = (currentIdx + 1) % 5;
-            moveSlide(currentIdx);
-        }, 3000);
-
-        async function loadNews() {
-            const grid = document.getElementById('news-grid');
-            try {
-                const res = await fetch('new_data.json');
-                if(!res.ok) throw new Error();
-                const data = await res.json();
-                renderNews(data.slice(0, 3));
-            } catch {
-                renderNews(demoNews); // 로드 실패 시 예시 뉴스 표시
-            }
-        }
-
-        function renderNews(data) {
-            document.getElementById('news-grid').innerHTML = data.map(n => `
-                <div class="news-card">
-                    <img src="${n.image || 'https://via.placeholder.com/400x200?text=MinYang+Tech'}">
-                    <div class="news-card-body">
-                        <h3>${n.title || n.title_ko}</h3>
-                        <p>${n.content || n.content_ko}</p>
-                        <small>${n.date}</small>
-                    </div>
-                </div>
-            `).join('');
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.getElementById('nav-news').textContent = translations[lang].news;
+            document.getElementById('nav-about').textContent = translations[lang].about;
+            document.getElementById('nav-products').textContent = translations[lang].products;
+            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
+            document.getElementById('toggle-text').textContent = translations[lang].toggle;
+            document.getElementById('news-title').textContent = translations[lang].latest;
+            document.getElementById('more-btn').textContent = translations[lang].more;
+            document.getElementById('footer-contact').textContent = translations[lang].contact;
+            loadNews();
         }
 
         function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
+        async function loadNews() {
+            const grid = document.getElementById('latest-news-grid');
+            try {
+                const lang = localStorage.getItem('selectedLang') || 'ko';
+                const res = await fetch('news-data.json');
+                const data = await res.json();
+                grid.innerHTML = data.slice(0, 3).map(item => `
+                    <div class="news-card">
+                        <img src="${item.image || 'https://via.placeholder.com/400x200'}">
+                        <div class="news-card-body">
+                            <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
+                            <small>${item.date}</small>
+                        </div>
+                    </div>
+                `).join('');
+            } catch (e) { grid.innerHTML = "<p>News Loading...</p>"; }
+        }
+
+        // 슬라이드 기능
+        let currentIdx = 0;
+        setInterval(() => {
+            currentIdx = (currentIdx + 1) % 5;
+            document.getElementById('hero-wrapper').style.transform = `translateX(-${currentIdx * 20}%)`;
+            const dots = document.querySelectorAll('.dot');
+            dots.forEach(d => d.classList.remove('active'));
+            dots[currentIdx].classList.add('active');
+        }, 3000);
+
         window.onload = () => {
-            loadNews();
-            window.addEventListener('scroll', () => {
-                document.querySelectorAll('.reveal').forEach(el => {
-                    if(el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add('active');
-                });
-            });
+            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
+            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
         };
     </script>
 </body>
