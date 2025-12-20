@@ -34,22 +34,34 @@
         input:checked + .slider:before { transform: translateX(22px); }
 
         /* [Product Detail Section] */
-        .detail-container { max-width: 1100px; margin: 50px auto; padding: 0 5%; position: relative; }
+        .detail-container { max-width: 1200px; margin: 50px auto; padding: 0 5%; position: relative; }
         .back-nav { margin-bottom: 20px; }
         .back-link { text-decoration: none; color: var(--text-color); font-size: 1.1rem; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; opacity: 0.8; }
         .back-link:hover { opacity: 1; color: var(--accent); transform: translateX(-5px); }
 
         .product-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 40px; text-align: center; color: var(--accent); }
-        .product-main { display: flex; gap: 50px; align-items: flex-start; background: var(--card-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
-        .product-image-side { flex: 1; }
-        .product-image-side img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-        .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 350px; }
+        .product-main { display: flex; gap: 30px; align-items: stretch; background: var(--card-bg); padding: 30px; border-radius: 20px; border: 1px solid var(--border-color); margin-bottom: 50px; }
+        
+        /* [Media Side - Slider] */
+        .product-media-side { flex: 1.5; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
+        .main-viewer { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
+        
+        .thumb-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 5px; }
+        .thumb-list::-webkit-scrollbar { height: 6px; }
+        .thumb-list::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 10px; }
+        .thumb-item { width: 100px; aspect-ratio: 16 / 9; flex-shrink: 0; cursor: pointer; border-radius: 4px; opacity: 0.6; transition: 0.3s; overflow: hidden; border: 2px solid transparent; }
+        .thumb-item:hover, .thumb-item.active { opacity: 1; border-color: var(--accent); }
+        .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* [Info Side] */
+        .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: space-between; padding: 10px 0; }
         .info-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
-        .info-table th { width: 120px; font-weight: 700; color: var(--accent); }
-        .info-table td { opacity: 0.9; line-height: 1.6; }
+        .info-table th { width: 100px; font-weight: 700; color: var(--accent); font-size: 0.95rem; }
+        .info-table td { opacity: 0.9; line-height: 1.6; font-size: 0.95rem; }
 
-        .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px 30px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; transition: 0.3s; align-self: flex-end; }
+        .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px 30px; border-radius: 8px; font-weight: 700; font-size: 1.1rem; transition: 0.3s; margin-top: auto; }
         .buy-button:hover { background: #2a475e; transform: translateY(-3px); }
 
         /* [System Requirements Section] */
@@ -61,9 +73,9 @@
         .spec-list li { margin-bottom: 12px; line-height: 1.5; font-size: 0.95rem; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
         .spec-list li b { color: var(--accent); margin-right: 5px; }
 
-        @media (max-width: 900px) {
+        @media (max-width: 1000px) {
             .product-main { flex-direction: column; }
-            .buy-button { align-self: center; width: 100%; }
+            .buy-button { width: 100%; }
             .specs-grid { grid-template-columns: 1fr; }
         }
     </style>
@@ -100,8 +112,11 @@
         <h1 class="product-title" id="p-title">Trigger Card</h1>
         
         <div class="product-main">
-            <div class="product-image-side">
-                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true" alt="Trigger Card Game Image">
+            <div class="product-media-side">
+                <div class="main-viewer" id="main-viewer">
+                    </div>
+                <div class="thumb-list" id="thumb-list">
+                    </div>
             </div>
 
             <div class="product-info-side">
@@ -148,30 +163,75 @@
     </div>
 
     <script>
+        // [미디어 데이터 설정] 여기에 이미지나 유튜브 ID를 넣으세요.
+        // 비어있으면( [] ) 자동으로 로고 배경화면이 출력됩니다.
+        const mediaData = [
+            // { type: 'image', url: '이미지주소' },
+            // { type: 'video', url: '유튜브ID' }
+        ];
+
+        const defaultLogo = "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true";
+
         const translations = {
             'ko': {
-                'title': 'Trigger Card',
-                'back': '목록으로 돌아가기',
+                'title': 'Trigger Card', 'back': '목록으로 돌아가기',
                 'start': '개발 시작', 'startD': '2025년 12월 20일',
                 'plat': '플랫폼', 'platD': 'Steam (Windows)',
-                'license': '라이선스',
-                'source': '소스코드', 'sourceD': 'GitHub 공개 (예정)',
-                'buy': 'Steam 상점에서 확인하기',
-                'specs': '시스템 요구 사항', 'min': '최소 사양', 'rec': '권장 사양',
+                'license': '라이선스', 'source': '소스코드', 'sourceD': 'GitHub 공개 (예정)',
+                'buy': 'Steam 상점에서 확인하기', 'specs': '시스템 요구 사항', 'min': '최소 사양', 'rec': '권장 사양',
                 's-os': '운영체제:', 's-cpu': '프로세서:', 's-ram': '메모리:', 's-gpu': '그래픽:', 's-storage': '저장공간:'
             },
             'en': {
-                'title': 'Trigger Card',
-                'back': 'Back to List',
+                'title': 'Trigger Card', 'back': 'Back to List',
                 'start': 'Dev Start', 'startD': 'Dec 20, 2025',
                 'plat': 'Platform', 'platD': 'Steam (Windows)',
-                'license': 'License',
-                'source': 'Source', 'sourceD': 'Open on GitHub (TBA)',
-                'buy': 'View on Steam Store',
-                'specs': 'System Requirements', 'min': 'Minimum', 'rec': 'Recommended',
+                'license': 'License', 'source': 'Source', 'sourceD': 'Open on GitHub (TBA)',
+                'buy': 'View on Steam Store', 'specs': 'System Requirements', 'min': 'Minimum', 'rec': 'Recommended',
                 's-os': 'OS:', 's-cpu': 'Processor:', 's-ram': 'Memory:', 's-gpu': 'Graphics:', 's-storage': 'Storage:'
             }
         };
+
+        function initMedia() {
+            const viewer = document.getElementById('main-viewer');
+            const thumbList = document.getElementById('thumb-list');
+
+            if (mediaData.length === 0) {
+                // 비어있을 경우 민양테크 로고 표시
+                viewer.innerHTML = `<img src="${defaultLogo}" alt="Default Logo">`;
+                thumbList.style.display = 'none';
+                return;
+            }
+
+            // 미디어 렌더링
+            mediaData.forEach((item, index) => {
+                const thumb = document.createElement('div');
+                thumb.className = `thumb-item ${index === 0 ? 'active' : ''}`;
+                const thumbImg = item.type === 'video' 
+                    ? `https://img.youtube.com/vi/${item.url}/mqdefault.jpg` 
+                    : item.url;
+                
+                thumb.innerHTML = `<img src="${thumbImg}">`;
+                thumb.onclick = () => setMainMedia(index);
+                thumbList.appendChild(thumb);
+            });
+
+            setMainMedia(0);
+        }
+
+        function setMainMedia(index) {
+            const viewer = document.getElementById('main-viewer');
+            const item = mediaData[index];
+            
+            if (item.type === 'video') {
+                viewer.innerHTML = `<iframe src="https://www.youtube.com/embed/${item.url}?autoplay=1&mute=1" allowfullscreen></iframe>`;
+            } else {
+                viewer.innerHTML = `<img src="${item.url}">`;
+            }
+
+            document.querySelectorAll('.thumb-item').forEach((t, i) => {
+                t.classList.toggle('active', i === index);
+            });
+        }
 
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
@@ -186,8 +246,6 @@
             document.getElementById('th-source').textContent = t.source;
             document.getElementById('td-source').textContent = t.sourceD;
             document.getElementById('buy-text').textContent = t.buy;
-            
-            // 사양 텍스트 업데이트
             document.getElementById('specs-title').textContent = t.specs;
             document.getElementById('min-title').textContent = t.min;
             document.getElementById('rec-title').textContent = t.rec;
@@ -204,6 +262,7 @@
         }
 
         window.onload = () => {
+            initMedia();
             changeLanguage(localStorage.getItem('selectedLang') || 'ko');
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.getElementById('dark-mode-toggle').checked = true;
