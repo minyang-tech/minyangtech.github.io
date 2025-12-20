@@ -5,11 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; }
-        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; --input-bg: #f5f5f5; }
+        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --input-bg: #2a2a2a; }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
+        
+        /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
@@ -29,21 +33,37 @@
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
-        .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
-        
-        /* 목록 스타일 */
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
-        .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; }
-        .news-card:hover { transform: translateY(-5px); }
-        .news-card img { width: 100%; height: 200px; object-fit: cover; }
-        .news-card-body { padding: 20px; }
-        .news-card-body h3 { margin-bottom: 10px; color: var(--accent); }
+        /* [Filter Bar] */
+        .filter-section { max-width: 1400px; margin: 20px auto; padding: 0 5%; }
+        .filter-bar { background: var(--header-bg); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+        .filter-group { display: flex; align-items: center; gap: 10px; }
+        .filter-group label { font-size: 0.9rem; font-weight: 600; }
+        .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 12px; border-radius: 6px; outline: none; }
+        .search-wrapper { position: relative; flex-grow: 1; max-width: 400px; }
+        .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
+        .search-wrapper input { width: 100%; padding-left: 35px; }
+        .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: 600; transition: 0.3s; }
+        .sort-btn:hover { background: var(--accent); color: white; }
 
-        /* 상세페이지 스타일 */
-        .news-detail { background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .news-detail img { width: 100%; max-height: 500px; object-fit: contain; margin: 20px 0; border-radius: 10px; }
-        .btn-back { display: inline-block; margin-bottom: 20px; padding: 8px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 5px; }
+        /* [News Grid] */
+        .news-container { max-width: 1400px; margin: 0 auto; padding: 20px 5%; min-height: 400px; }
+        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .news-card img { width: 100%; height: 180px; object-fit: cover; }
+        .news-card-body { padding: 15px; flex-grow: 1; }
+        .news-card-body small { color: #888; font-weight: 500; }
+        .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent); line-height: 1.4; }
+
+        /* [Detail Page] */
+        .news-detail { max-width: 800px; margin: 0 auto; background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
+        .btn-back:hover { background: var(--accent); color: white; }
+
+        /* [Responsive] */
+        @media (max-width: 1100px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (max-width: 850px) { .news-grid { grid-template-columns: repeat(2, 1fr); } .filter-bar { flex-direction: column; align-items: stretch; } }
+        @media (max-width: 500px) { .news-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -63,54 +83,136 @@
         </div>
     </header>
 
-    <h1 id="page-title" class="page-title">뉴스</h1>
+    <h1 id="page-title" style="text-align: center; padding-top: 50px; font-size: 2.5rem;">뉴스</h1>
+
+    <section class="filter-section" id="filter-area">
+        <div class="filter-bar">
+            <div class="search-wrapper">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="news-search" class="filter-input" placeholder="검색어를 입력하세요..." oninput="applyFilters()">
+            </div>
+            <div class="filter-group">
+                <input type="date" id="date-start" class="filter-input" onchange="applyFilters()">
+                <span>~</span>
+                <input type="date" id="date-end" class="filter-input" onchange="applyFilters()">
+            </div>
+            <button class="sort-btn" id="sort-toggle" onclick="toggleSort()">
+                <i class="fa-solid fa-sort"></i> <span id="sort-text">최신순</span>
+            </button>
+        </div>
+    </section>
+
     <div id="news-content" class="news-container"></div>
 
     <script>
-        const translations = { 'ko': { 'back': '← 목록으로' }, 'en': { 'back': '← Back to List' } };
+        let allNewsData = [];
+        let isDesc = true; // 최신순 여부
+        const lang = localStorage.getItem('selectedLang') || 'ko';
 
-        async function render() {
-            const lang = localStorage.getItem('selectedLang') || 'ko';
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
-            const container = document.getElementById('news-content');
+        const translations = {
+            'ko': { 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.' },
+            'en': { 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.' }
+        };
 
+        async function init() {
             try {
                 const res = await fetch('news-data.json');
-                const data = await res.json();
-
-                if (id !== null && data[id]) {
-                    // 상세 페이지
-                    const item = data[id];
-                    container.innerHTML = `
-                        <div class="news-detail">
-                            <a href="NEWS.html" class="btn-back">${translations[lang].back}</a>
-                            <p style="color:#888">${item.date}</p>
-                            <h2>${lang === 'ko' ? item.title_ko : item.title_en}</h2>
-                            <img src="${item.image}" onerror="this.style.display='none'">
-                            <div style="line-height:1.8; white-space:pre-wrap;">${lang === 'ko' ? item.content_ko : item.content_en}</div>
-                        </div>`;
-                } else {
-                    // 목록 페이지
-                    let html = '<div class="news-grid">';
-                    data.forEach((item, index) => {
-                        html += `
-                            <div class="news-card" onclick="location.href='NEWS.html?id=${index}'">
-                                <img src="${item.image}">
-                                <div class="news-card-body">
-                                    <small>${item.date}</small>
-                                    <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
-                                </div>
-                            </div>`;
-                    });
-                    container.innerHTML = html + '</div>';
-                }
-            } catch (e) { container.innerHTML = "뉴스를 불러올 수 없습니다."; }
+                allNewsData = await res.json();
+                render();
+            } catch (e) { document.getElementById('news-content').innerHTML = "데이터를 불러올 수 없습니다."; }
         }
 
-        function changeLanguage(lang) { localStorage.setItem('selectedLang', lang); location.reload(); }
-        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); }
-        window.onload = render;
+        function render() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const detailId = urlParams.get('id');
+            const container = document.getElementById('news-content');
+            const filterArea = document.getElementById('filter-area');
+
+            if (detailId !== null) {
+                filterArea.style.display = 'none';
+                const item = allNewsData.find(n => n.id == detailId);
+                if (item) {
+                    container.innerHTML = `
+                        <div class="news-detail">
+                            <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${translations[lang].back}</a>
+                            <p style="color:#888; font-weight:600;">${item.date}</p>
+                            <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
+                            <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
+                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; opacity:0.9;">${lang === 'ko' ? item.content_ko : item.content_en}</div>
+                        </div>`;
+                }
+            } else {
+                filterArea.style.display = 'block';
+                applyFilters();
+                updateStaticUI();
+            }
+        }
+
+        function applyFilters() {
+            const searchText = document.getElementById('news-search').value.toLowerCase();
+            const startDate = document.getElementById('date-start').value;
+            const endDate = document.getElementById('date-end').value;
+
+            // 1. 검색 및 날짜 필터링
+            let filtered = allNewsData.filter(item => {
+                const title = (lang === 'ko' ? item.title_ko : item.title_en).toLowerCase();
+                const content = (lang === 'ko' ? item.content_ko : item.content_en).toLowerCase();
+                const matchesSearch = title.includes(searchText) || content.includes(searchText);
+                
+                const itemDate = item.date;
+                const matchesStart = !startDate || itemDate >= startDate;
+                const matchesEnd = !endDate || itemDate <= endDate;
+
+                return matchesSearch && matchesStart && matchesEnd;
+            });
+
+            // 2. 정렬 (최신순 vs 오래된순)
+            filtered.sort((a, b) => {
+                const dateA = new Date(a.date);
+                const dateB = new Date(b.date);
+                if (dateA - dateB !== 0) return isDesc ? dateB - dateA : dateA - dateB;
+                return isDesc ? b.id - a.id : a.id - b.id;
+            });
+
+            // 3. 렌더링
+            const container = document.getElementById('news-content');
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="text-align:center; padding: 100px 0; opacity:0.6;">${translations[lang]['no-result']}</p>`;
+                return;
+            }
+
+            let html = '<div class="news-grid">';
+            filtered.forEach(item => {
+                html += `
+                    <div class="news-card" onclick="location.href='NEWS.html?id=${item.id}'">
+                        <img src="${item.image}" alt="news">
+                        <div class="news-card-body">
+                            <small>${item.date}</small>
+                            <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
+                        </div>
+                    </div>`;
+            });
+            container.innerHTML = html + '</div>';
+        }
+
+        function toggleSort() {
+            isDesc = !isDesc;
+            document.getElementById('sort-text').textContent = isDesc ? translations[lang].newest : translations[lang].oldest;
+            applyFilters();
+        }
+
+        function updateStaticUI() {
+            document.getElementById('news-search').placeholder = translations[lang].search;
+            document.getElementById('sort-text').textContent = isDesc ? translations[lang].newest : translations[lang].oldest;
+        }
+
+        function changeLanguage(newLang) { localStorage.setItem('selectedLang', newLang); location.reload(); }
+        function toggleDarkMode() { 
+            const isDark = document.body.classList.toggle('dark-mode'); 
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled'); 
+        }
+
+        window.onload = init;
     </script>
 </body>
 </html>
