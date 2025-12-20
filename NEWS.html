@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
     <style>
-        /* index.html과 CSS를 100% 동일하게 유지 (헤더 정렬용) */
+        /* [상단바 통일용 CSS] index.html과 동일하게 유지 */
         :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
         
@@ -28,7 +29,9 @@
         .lang-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li:hover { background: var(--border-color); }
 
+        /* 다크모드 토글 스위치 (애플 스타일) */
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -38,20 +41,26 @@
         input:checked + .slider:before { transform: translateX(22px); }
         .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* 뉴스 페이지 전용 */
+        /* 뉴스 페이지 전용 스타일 */
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
         .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
+        
+        /* 뉴스 아이템: 다크모드에서도 항상 흰색 바탕 고정 */
         .news-item { 
             display: flex; gap: 30px; margin-bottom: 60px; padding: 30px; 
             background-color: #ffffff !important; color: #333333 !important; 
             border-radius: 12px; border: 1px solid #ddd; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
         }
-        .news-image { width: 350px; height: auto; border-radius: 8px; object-fit: cover; }
+        .news-image { width: 350px; max-height: 250px; border-radius: 8px; object-fit: cover; }
         .news-content { flex: 1; }
-        .news-item h2 { color: #007bff !important; margin: 10px 0; }
-        .news-full-content { white-space: pre-wrap; color: #444 !important; }
+        .news-item h2 { color: #007bff !important; margin: 10px 0; font-size: 1.8rem; }
+        .news-full-content { white-space: pre-wrap; color: #444 !important; line-height: 1.6; }
         .news-date { color: #888 !important; font-size: 0.9rem; }
-        @media (max-width: 768px) { .news-item { flex-direction: column; } .news-image { width: 100%; } }
+
+        @media (max-width: 768px) { 
+            .news-item { flex-direction: column; } 
+            .news-image { width: 100%; max-height: none; } 
+        }
     </style>
 </head>
 <body>
@@ -61,7 +70,9 @@
 
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
+            <a href="index.html" class="logo-link">
+                <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png" alt="로고">
+            </a>
             <nav>
                 <ul class="nav-links">
                     <li><a href="NEWS.html" id="nav-news" style="color:#007bff">뉴스</a></li>
@@ -92,11 +103,11 @@
     <div id="news-list" class="news-container"></div>
 
     <script>
-        /* [중요] NEWS 전용 스크립트는 기존과 동일하게 유지 (번역/다크모드/뉴스로드) */
         const translations = {
             'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환' },
             'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle' }
         };
+
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
             document.documentElement.lang = lang;
@@ -108,10 +119,12 @@
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
             loadNews();
         }
+
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
+
         async function loadNews() {
             try {
                 const lang = localStorage.getItem('selectedLang') || 'ko';
@@ -119,12 +132,17 @@
                 const newsData = await response.json();
                 const newsList = document.getElementById('news-list');
                 newsList.innerHTML = '';
+                
                 newsData.forEach(item => {
                     const title = lang === 'ko' ? item.title_ko : item.title_en;
                     const content = lang === 'ko' ? item.content_ko : item.content_en;
+                    
+                    // 이미지 주소가 비어있거나 오류일 때를 대비 (onerror 시 이미지 숨김)
+                    const imageHtml = item.image ? `<img src="${item.image}" class="news-image" onerror="this.style.display='none'">` : '';
+                    
                     newsList.innerHTML += `
                         <div class="news-item">
-                            <img src="${item.image}" class="news-image">
+                            ${imageHtml}
                             <div class="news-content">
                                 <p class="news-date">${item.date}</p>
                                 <h2>${title}</h2>
@@ -134,9 +152,13 @@
                 });
             } catch (e) { console.error("Data load failed"); }
         }
+
         window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            changeLanguage(savedLang);
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
         };
     </script>
 </body>
