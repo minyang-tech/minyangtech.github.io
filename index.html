@@ -5,18 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>민양테크 (MinYang Tech)</title>
     <style>
+        /* 기본 변수 설정 */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --header-bg: #ffffff;
+            --border-color: #eeeeee;
+        }
+
+        /* 다크 모드 변수 */
+        body.dark-mode {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --header-bg: #1e1e1e;
+            --border-color: #333333;
+        }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: var(--text-color); background-color: var(--bg-color); transition: background 0.3s; }
         
-        /* 공통 헤더 스타일 */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 5%;
-            height: 70px;
-            background: #fff;
-            border-bottom: 1px solid #eee;
+            height: 80px; /* 토글 문구 때문에 높이를 살짝 키움 */
+            background: var(--header-bg);
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -24,16 +39,35 @@
         .header-left { display: flex; align-items: center; gap: 30px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; transition: color 0.3s; }
-        .nav-links a:hover { color: #007bff; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 14px; }
 
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ddd; border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .lang-menu li { padding: 10px 15px; cursor: pointer; }
-        .lang-menu li:hover { background: #f8f9fa; }
+        /* 우측 컨트롤 영역 */
+        .controls { display: flex; align-items: center; gap: 25px; }
+        
+        /* 언어 드롭다운 */
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; }
         .lang-dropdown:hover .lang-menu { display: block; }
+        .lang-menu li { padding: 10px 15px; }
+        .lang-menu li:hover { background: var(--border-color); }
 
-        /* 메인 전용 스타일 */
+        /* 토글 스위치 스타일 */
+        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #333; transition: .4s; border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .4s; border-radius: 50%;
+        }
+        input:checked + .slider { background-color: #4cd964; } /* 켜졌을 때 초록색 */
+        input:checked + .slider:before { transform: translateX(22px); }
+        .toggle-label { font-size: 10px; font-weight: bold; color: var(--text-color); }
+
+        /* 메인 콘텐츠 */
         .hero {
             height: 60vh;
             display: flex;
@@ -45,31 +79,33 @@
                         url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2070') no-repeat center/cover;
             color: white;
         }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: -1px; }
-        .hero p { font-size: 1.5rem; font-weight: 300; opacity: 0.9; }
-        .content-placeholder { padding: 50px 5%; text-align: center; color: #999; border: 2px dashed #eee; margin: 20px 5%; }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png" alt="로고">
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                <li><a href="Product.html" id="nav-products">제품</a></li>
+            </ul></nav>
         </div>
-        <div class="lang-dropdown">
-            <span id="current-lang-label">Language ▾</span>
-            <ul class="lang-menu">
-                <li onclick="changeLanguage('en')">English</li>
-                <li onclick="changeLanguage('ko')">한국어</li>
-            </ul>
+        <div class="controls">
+            <div class="lang-dropdown">
+                <span id="current-lang-label">Language ▾</span>
+                <ul class="lang-menu">
+                    <li onclick="changeLanguage('en')">English</li>
+                    <li onclick="changeLanguage('ko')">한국어</li>
+                </ul>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
+            </div>
         </div>
     </header>
 
@@ -78,31 +114,36 @@
         <p id="hero-subtitle">민양, 함께 만드는 무한한 가능성</p>
     </section>
 
-    <div class="content-placeholder">
-        <p id="placeholder-text">내용을 준비 중입니다.</p>
-    </div>
-
     <script>
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'title': '민양테크', 'subtitle': '민양, 함께 만드는 무한한 가능성', 'placeholder': '내용을 준비 중입니다.', 'langLabel': '언어 선택 ▾' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'title': 'MinYang Tech', 'subtitle': 'MinYang, creating infinite possibilities together', 'placeholder': 'Under construction.', 'langLabel': 'Language ▾' }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'title': '민양테크', 'subtitle': '민양, 함께 만드는 무한한 가능성', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'title': 'MinYang Tech', 'subtitle': 'MinYang, creating infinite possibilities together', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle' }
         };
 
         function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.documentElement.lang = lang;
             document.getElementById('nav-news').textContent = translations[lang].news;
             document.getElementById('nav-about').textContent = translations[lang].about;
             document.getElementById('nav-products').textContent = translations[lang].products;
             document.getElementById('hero-title').textContent = translations[lang].title;
             document.getElementById('hero-subtitle').textContent = translations[lang].subtitle;
-            document.getElementById('placeholder-text').textContent = translations[lang].placeholder;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            localStorage.setItem('selectedLang', lang);
-            document.documentElement.lang = lang;
+            document.getElementById('toggle-text').textContent = translations[lang].toggle;
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
         };
     </script>
 </body>
