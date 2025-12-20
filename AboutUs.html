@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - 민양테크</title>
     <style>
-        /* index.html 및 NEWS.html과 CSS를 100% 동일하게 유지 (헤더 정렬용) */
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        /* 상단바 및 기본 테마 설정 (전 페이지 공통) */
+        :root { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --accent-color: #007bff; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -18,17 +18,25 @@
             border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
         }
         .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link { display: flex; align-items: center; }
         .logo-link img { height: 40px; width: auto; display: block; }
-        
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
 
         .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 30px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+
+        /* [가상 다리 적용] 드롭다운 마우스 끊김 방지 */
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+        .lang-menu { 
+            display: none; position: absolute; right: 0; top: 40px; 
+            background: var(--header-bg); border: 1px solid var(--border-color); 
+            border-radius: 4px; list-style: none; min-width: 100px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.5); padding: 5px 0; z-index: 1001; 
+        }
+        /* 드롭다운과 버튼 사이의 빈 공간을 메워주는 가상 다리 */
+        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 20px; }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li:hover { background: var(--border-color); }
 
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
@@ -39,26 +47,17 @@
         input:checked + .slider:before { transform: translateX(22px); }
         .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* About Us 페이지 전용 스타일 */
-        .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
-        .about-content {
-            max-width: 800px; margin: 0 auto 80px; padding: 20px 5%;
-            line-height: 1.8; font-size: 1.1rem;
-            text-align: justify; /* 양쪽 정렬 */
-        }
-        .about-content h2 { font-size: 1.8rem; margin-top: 40px; margin-bottom: 20px; text-align: center; color: #007bff; }
-        .about-content p { margin-bottom: 25px; }
-        .about-content strong { color: #007bff; font-weight: 700; }
+        /* 소개 페이지 스타일 */
+        .about-section { max-width: 900px; margin: 60px auto; padding: 0 5%; line-height: 1.8; }
+        .about-section h1 { font-size: 3rem; margin-bottom: 50px; text-align: center; font-weight: 700; }
+        .about-content { font-size: 1.15rem; color: #b0b0b0; text-align: justify; }
+        .about-content p { margin-bottom: 30px; }
         
-        /* 다크 모드일 때 텍스트 색상 조정 (선명도) */
-        body.dark-mode .about-content p { color: var(--text-color); opacity: 0.85; }
+        /* 강조 문구 파란색 (이미지에 있는 스타일 재현) */
+        .highlight { color: var(--accent-color); font-weight: 600; }
     </style>
 </head>
-<body>
-    <script>
-        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
-    </script>
-
+<body class="dark-mode">
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png"></a>
@@ -80,7 +79,7 @@
             </div>
             <div class="toggle-container">
                 <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <input type="checkbox" id="dark-mode-toggle" checked onclick="toggleDarkMode()">
                     <span class="slider"></span>
                 </label>
                 <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
@@ -88,41 +87,29 @@
         </div>
     </header>
 
-    <h1 id="page-title" class="page-title">About Us</h1>
-
-    <div class="about-content">
-        <p id="about-intro-text">
-            민양테크는 단순한 게임 개발 스튜디오를 넘어, <strong>창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</strong>입니다.
-            거대한 자본과 규모를 앞세우는 대신, 오직 <strong>이야기의 힘과 독창적인 게임 플레이 메커니즘</strong>에 집중하여 플레이어의 마음을 사로잡는 인디 게임을 제작하고 있습니다.
-        </p>
-        <p id="about-mission-text">
-            저희는 게임이 단순한 오락을 넘어, <strong>새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</strong>이라고 믿습니다.
-            민양테크의 모든 프로젝트는 이러한 신념을 바탕으로 시작됩니다. 작은 아이디어에서 시작하여 수많은 밤샘과 열정적인 논의를 거쳐 하나의 완성된 세계로 탄생합니다.
-        </p>
-        <p id="about-vision-text">
-            세상에 단 하나뿐인 독특한 경험을 추구하며, 기존의 틀에 얽매이지 않는 <strong>과감한 시도와 혁신</strong>을 두려워하지 않습니다.
-            플레이어 한 분 한 분과의 소통을 통해 끊임없이 발전하고, 더욱 완벽한 게임을 만들어 나가는 것이 민양테크의 목표이자 비전입니다.
-            우리의 게임이 여러분의 일상에 작은 즐거움과 신선한 충격으로 다가가기를 희망합니다.
-        </p>
-    </div>
+    <main class="about-section">
+        <h1 id="about-title">About Us</h1>
+        <div id="about-text" class="about-content">
+            </div>
+    </main>
 
     <script>
         const translations = {
             'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 
-                'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환', 
-                'pageTitle': 'About Us',
-                'intro': '민양테크는 단순한 게임 개발 스튜디오를 넘어, <strong>창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</strong>입니다. 거대한 자본과 규모를 앞세우는 대신, 오직 <strong>이야기의 힘과 독창적인 게임 플레이 메커니즘</strong>에 집중하여 플레이어의 마음을 사로잡는 인디 게임을 제작하고 있습니다.',
-                'mission': '저희는 게임이 단순한 오락을 넘어, <strong>새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</strong>이라고 믿습니다. 민양테크의 모든 프로젝트는 이러한 신념을 바탕으로 시작됩니다. 작은 아이디어에서 시작하여 수많은 밤샘과 열정적인 논의를 거쳐 하나의 완성된 세계로 탄생합니다.',
-                'vision': '세상에 단 하나뿐인 독특한 경험을 추구하며, 기존의 틀에 얽매이지 않는 <strong>과감한 시도와 혁신</strong>을 두려워하지 않습니다. 플레이어 한 분 한 분과의 소통을 통해 끊임없이 발전하고, 더욱 완벽한 게임을 만들어 나가는 것이 민양테크의 목표이자 비전입니다. 우리의 게임이 여러분의 일상에 작은 즐거움과 신선한 충격으로 다가가기를 희망합니다.'
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
+                'title': 'About Us',
+                'content': `
+                    <p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다. 거대한 자본과 규모를 앞세우는 대신, 오직 <span class="highlight">이야기의 힘과 독창적인 게임 플레이 메커니즘</span>에 집중하여 플레이어의 마음을 사로잡는 인디 게임을 제작하고 있습니다.</p>
+                    <p>저희는 게임이 단순한 오락을 넘어, <span class="highlight">새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</span>이라고 믿습니다. 민양테크의 모든 프로젝트는 이러한 신념을 바탕으로 시작됩니다. 작은 아이디어에서 시작하여 수많은 밤샘과 열정적인 논의를 거쳐 하나의 완성된 세계로 탄생합니다.</p>
+                    <p>세상에 단 하나뿐인 독특한 경험을 추구하며, 기존의 틀에 얽매이지 않는 <span class="highlight">과감한 시도와 혁신</span>을 두려워하지 않습니다. 플레이어 한 분 한 분과의 소통을 통해 끊임없이 발전하고, 더욱 완벽한 게임을 만들어 나가는 것이 민양테크의 목표이자 비전입니다. 우리의 게임이 여러분의 일상에 작은 즐거움과 신선한 충격으로 다가가기를 희망합니다.</p>`
             },
             'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 
-                'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 
-                'pageTitle': 'About Us',
-                'intro': 'MinYang Tech is more than just a game development studio; we are a <strong>small development team that delivers immersive interactive experiences based on creative ideas and technological expertise</strong>. Instead of leveraging vast capital and scale, we focus solely on the <strong>power of storytelling and unique gameplay mechanics</strong> to create indie games that captivate players.',
-                'mission': 'We believe that games are more than mere entertainment; they are an <strong>art form that allows us to explore new worlds, share profound emotions, and sometimes provide unexpected inspiration</strong>. Every project at MinYang Tech begins with this conviction. Starting from a small idea, it evolves into a complete world through countless late nights and passionate discussions.',
-                'vision': 'We relentlessly pursue unique experiences, unafraid of <strong>bold attempts and innovation</strong> that challenge conventional frameworks. Our goal and vision at MinYang Tech is to continuously evolve through communication with each and every player, striving to create even more perfect games. We hope our games bring a touch of joy and fresh impact to your daily lives.'
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
+                'title': 'About Us',
+                'content': `
+                    <p>MinYang Tech is more than just a game development studio; we are a <span class="highlight">small development team that delivers immersive interactive experiences based on creative ideas and technological expertise</span>. Instead of leveraging vast capital and scale, we focus solely on the <span class="highlight">power of storytelling and unique gameplay mechanics</span> to create indie games that captivate players.</p>
+                    <p>We believe that games are more than mere entertainment; they are an <span class="highlight">art form that allows us to explore new worlds, share profound emotions, and sometimes provide unexpected inspiration</span>. Every project at MinYang Tech begins with this conviction. Starting from a small idea, it evolves into a complete world through countless late nights and passionate discussions.</p>
+                    <p>We relentlessly pursue unique experiences, unafraid of <span class="highlight">bold attempts and innovation</span> that challenge conventional frameworks. Our goal and vision at MinYang Tech is to continuously evolve through communication with each and every player, striving to create even more perfect games. We hope our games bring a touch of joy and fresh impact to your daily lives.</p>`
             }
         };
 
@@ -134,11 +121,8 @@
             document.getElementById('nav-products').textContent = translations[lang].products;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
             document.getElementById('toggle-text').textContent = translations[lang].toggle;
-            
-            document.getElementById('page-title').textContent = translations[lang].pageTitle;
-            document.getElementById('about-intro-text').innerHTML = translations[lang].intro;
-            document.getElementById('about-mission-text').innerHTML = translations[lang].mission;
-            document.getElementById('about-vision-text').innerHTML = translations[lang].vision;
+            document.getElementById('about-title').textContent = translations[lang].title;
+            document.getElementById('about-text').innerHTML = translations[lang].content;
         }
 
         function toggleDarkMode() {
@@ -147,8 +131,13 @@
         }
 
         window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            changeLanguage(savedLang);
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'disabled') {
+                document.body.classList.remove('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = false;
+            }
         };
     </script>
 </body>
