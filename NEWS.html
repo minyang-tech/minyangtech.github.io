@@ -1,1 +1,106 @@
-a
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEWS - 민양테크</title>
+    <style>
+        /* 기본 스타일 (index.html과 동일) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', sans-serif; line-height: 1.6; color: #333; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 1rem 5%; background: #fff; border-bottom: 1px solid #eee; position: sticky; top: 0; z-index: 1000; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: #333; font-weight: 600; font-size: 14px; }
+        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 100%; background: white; border: 1px solid #ddd; border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .lang-menu li { padding: 10px 15px; }
+        .lang-dropdown:hover .lang-menu { display: block; }
+
+        /* 뉴스 페이지 전용 스타일 */
+        .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
+        .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
+        .news-item { display: flex; gap: 20px; margin-bottom: 40px; border-bottom: 1px solid #eee; padding-bottom: 40px; }
+        .news-image { width: 300px; height: 200px; object-fit: cover; border-radius: 8px; }
+        .news-content { flex: 1; }
+        .news-date { color: #888; font-size: 0.9rem; }
+        .news-item h2 { margin: 10px 0; font-size: 1.5rem; color: #007bff; }
+        .news-preview { color: #666; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        @media (max-width: 768px) { .news-item { flex-direction: column; } .news-image { width: 100%; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="index.html"><img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png" alt="로고" style="height: 40px;"></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news" style="color:#007bff">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="lang-dropdown">
+            <span id="current-lang-label">Language ▾</span>
+            <ul class="lang-menu">
+                <li onclick="changeLanguage('en')">English</li>
+                <li onclick="changeLanguage('ko')">한국어</li>
+            </ul>
+        </div>
+    </header>
+
+    <h1 id="page-title" class="page-title">뉴스</h1>
+
+    <div id="news-list" class="news-container">
+        </div>
+
+    <script>
+        const translations = {
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾' }
+        };
+
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            document.documentElement.lang = lang;
+            document.getElementById('nav-news').textContent = translations[lang].news;
+            document.getElementById('nav-about').textContent = translations[lang].about;
+            document.getElementById('nav-products').textContent = translations[lang].products;
+            document.getElementById('page-title').textContent = translations[lang].news;
+            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
+            loadNews(); // 언어 변경 시 뉴스 목록 다시 그리기
+        }
+
+        async function loadNews() {
+            const lang = localStorage.getItem('selectedLang') || 'ko';
+            const response = await fetch('news-data.json');
+            const newsData = await response.json();
+            
+            const newsList = document.getElementById('news-list');
+            newsList.innerHTML = '';
+
+            newsData.forEach(item => {
+                const title = lang === 'ko' ? item.title_ko : item.title_en;
+                const content = lang === 'ko' ? item.content_ko : item.content_en;
+
+                newsList.innerHTML += `
+                    <div class="news-item">
+                        <img src="${item.image}" class="news-image" alt="news">
+                        <div class="news-content">
+                            <p class="news-date">${item.date}</p>
+                            <h2>${title}</h2>
+                            <p class="news-preview">${content}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            changeLanguage(savedLang);
+        };
+    </script>
+</body>
+</html>
