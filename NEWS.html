@@ -7,6 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
     <style>
+        /* [공통 수정] 메인 배너 높이를 고정(px)에서 유동(vh)으로 변경 */
+.hero-banner { 
+    width: 100%; 
+    min-height: 40vh; /* 고정 height 대신 최소 높이 설정 */
+    display: flex; justify-content: center; align-items: center; 
+    background-size: cover;
+    background-position: center;
+    padding: 20px; /* 텍스트 여백 */
+}
+
+/* [공통 수정] 폰트 크기를 유동적으로 변경 */
+.hero-banner h1 { 
+    font-size: clamp(2rem, 8vw, 3.5rem); /* 화면 크기에 따라 폰트 자동 조절 */
+    text-align: center;
+    word-break: keep-all; /* 한글 단어 끊김 방지 */
+}
+
+/* [모바일 전용 스타일 추가] */
+@media (max-width: 768px) {
+    header {
+        padding: 0 3%; /* 간격 축소 */
+    }
+    .header-left { gap: 15px; } /* 로고와 메뉴 간격 축소 */
+    .nav-links { gap: 15px; }
+    .nav-links a { font-size: 13px; }
+    
+    /* 404 페이지 이미지 크기 조정 */
+    .img-404 { width: 200px; }
+    .img-mascot { width: 150px; }
+    
+    /* 하단 문구 크기 조정 */
+    .sub-content h2 { font-size: 1.8rem; }
+    .sub-content p { font-size: 1.1rem; }
         :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
         
