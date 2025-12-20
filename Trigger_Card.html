@@ -13,7 +13,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
 
-        /* [수정] 초기 상태가 opacity 0이라서 안 보였던 문제를 해결하기 위해 transition 설정 확인 */
+        /* 하단 섹션들에만 적용할 스크롤 애니메이션 */
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
@@ -60,9 +60,10 @@
         .info-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
         .info-table th, .info-table td { text-align: left; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
         .info-table th { width: 110px; color: var(--accent); font-size: 0.9rem; }
-        /* [수정] 라이선스 링크 스타일 */
-        .info-table td a { color: inherit; text-decoration: underline; cursor: pointer; }
-        .info-table td a:hover { color: var(--accent); }
+        
+        /* 라이선스 링크 스타일 */
+        .info-table td a { color: var(--accent); text-decoration: none; font-weight: bold; }
+        .info-table td a:hover { text-decoration: underline; }
 
         .buy-button { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: #171a21; color: #fff; text-decoration: none; padding: 18px; border-radius: 8px; font-weight: 700; transition: 0.3s; }
         .buy-button:hover { background: #2a303b; }
@@ -104,9 +105,9 @@
     </header>
 
     <div class="detail-container">
-        <h1 class="product-title reveal">Trigger Card</h1>
+        <h1 class="product-title">Trigger Card</h1>
         
-        <div class="product-main reveal">
+        <div class="product-main">
             <div class="product-media-side">
                 <div class="main-viewer" id="main-viewer"></div>
                 <div class="thumb-container">
@@ -207,8 +208,6 @@
 
         function initMedia() {
             const list = document.getElementById('thumb-list');
-            if(!list) return;
-            list.innerHTML = ''; // 중복 생성 방지
             mediaData.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = `thumb-item ${i === 0 ? 'active' : ''}`;
@@ -250,16 +249,9 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
-        /* [수정] reveal 함수 최적화 - 화면에 이미 들어와 있는 요소는 즉각 표시 */
         function reveal() {
-            const reveals = document.querySelectorAll(".reveal");
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const elementTop = el.getBoundingClientRect().top;
-                const elementVisible = 50; // 여유값
-                if (elementTop < windowHeight - elementVisible) {
-                    el.classList.add("active");
-                }
+            document.querySelectorAll(".reveal").forEach(el => {
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
             });
         }
 
@@ -271,9 +263,7 @@
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             window.addEventListener("scroll", reveal);
-            
-            // [추가] 초기 실행 시 약간의 지연을 주어 브라우저 렌더링 후 상태를 체크함
-            setTimeout(reveal, 100); 
+            reveal(); // 초기 체크
         };
     </script>
 </body>
