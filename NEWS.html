@@ -34,7 +34,21 @@
         /* 뉴스 스타일 */
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
         .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
-        .news-item { display: flex; gap: 30px; margin-bottom: 60px; border-bottom: 1px solid var(--border-color); padding-bottom: 40px; }
+        /* 뉴스 아이템 칸을 무조건 흰색으로 고정 */
+.news-item { 
+    display: flex; 
+    gap: 30px; 
+    margin-bottom: 60px; 
+    padding: 30px; /* 안쪽 여백 추가 */
+    background-color: #ffffff !important; /* 다크모드 무관하게 흰색 */
+    color: #333333 !important; /* 글자색도 검은색 계열로 고정 */
+    border-radius: 12px; /* 모서리를 둥글게 하면 더 예쁩니다 */
+    border: 1px solid var(--border-color);
+}
+
+/* 뉴스 제목과 본문 색상도 고정 */
+.news-item h2 { color: #007bff !important; }
+.news-full-content { color: #444444 !important; opacity: 1 !important; }
         .news-image { width: 350px; height: auto; border-radius: 8px; }
         .news-full-content { white-space: pre-wrap; margin-top: 15px; color: var(--text-color); opacity: 0.8; }
     </style>
