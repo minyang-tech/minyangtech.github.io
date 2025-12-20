@@ -61,7 +61,14 @@
 </head>
 <body>
 
-    <header>
+<header>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <a href="index.html" style="display: flex; align-items: center;">
+            <img src="https://raw.githubusercontent.com/minyangtech/minyangtech.github.io/main/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png" 
+                 alt="홈" 
+                 style="height: 40px; width: auto; object-fit: contain;">
+        </a>
+
         <nav>
             <ul class="nav-links">
                 <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
@@ -69,15 +76,16 @@
                 <li><a href="Product.html" id="nav-products">제품</a></li>
             </ul>
         </nav>
-        
-        <div class="lang-dropdown">
-            <span id="current-lang-label">Language ▾</span>
-            <ul class="lang-menu">
-                <li onclick="changeLanguage('en')">English</li>
-                <li onclick="changeLanguage('ko')">한국어</li>
-            </ul>
-        </div>
-    </header>
+    </div>
+    
+    <div class="lang-dropdown">
+        <span id="current-lang-label">Language ▾</span>
+        <ul class="lang-menu">
+            <li onclick="changeLanguage('en')">English</li>
+            <li onclick="changeLanguage('ko')">한국어</li>
+        </ul>
+    </div>
+</header>
 
     <section class="hero">
         <h1 id="hero-title">민양테크</h1>
