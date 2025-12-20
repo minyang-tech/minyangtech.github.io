@@ -2,35 +2,25 @@
 <html lang="ko">
 <head>
     <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
-        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; }
-        
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 80px; background: var(--header-bg);
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
-
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
         .controls { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
-        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1001; }
         .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
+        .lang-menu li { padding: 10px 15px; }
         .lang-menu li:hover { background: var(--border-color); }
-
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -38,92 +28,89 @@
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .toggle-label { font-size: 10px; font-weight: bold; }
 
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
         .news-container { max-width: 1000px; margin: 0 auto; padding: 20px 5%; }
-        .news-item { display: flex; gap: 30px; margin-bottom: 60px; padding: 30px; background-color: #ffffff !important; color: #333333 !important; border-radius: 12px; border: 1px solid #ddd; }
-        .news-image { width: 350px; max-height: 250px; border-radius: 8px; object-fit: cover; }
-        .news-content { flex: 1; }
-        .news-item h2 { color: #007bff !important; margin: 10px 0; }
-        .news-full-content { white-space: pre-wrap; color: #444 !important; line-height: 1.6; }
-        .news-date { color: #888 !important; }
+        
+        /* 목록 스타일 */
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; }
+        .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; }
+        .news-card:hover { transform: translateY(-5px); }
+        .news-card img { width: 100%; height: 200px; object-fit: cover; }
+        .news-card-body { padding: 20px; }
+        .news-card-body h3 { margin-bottom: 10px; color: var(--accent); }
 
-        @media (max-width: 768px) { .news-item { flex-direction: column; } .news-image { width: 100%; } }
+        /* 상세페이지 스타일 */
+        .news-detail { background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .news-detail img { width: 100%; max-height: 500px; object-fit: contain; margin: 20px 0; border-radius: 10px; }
+        .btn-back { display: inline-block; margin-bottom: 20px; padding: 8px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <script>
-        if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');
-    </script>
+    <script>if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');</script>
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news" style="color:#007bff">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" style="color:var(--accent)">뉴스</a></li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="Product.html">제품</a></li>
+            </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown">
-                <span id="current-lang-label">Language ▾</span>
-                <ul class="lang-menu">
-                    <li onclick="changeLanguage('en')">English</li>
-                    <li onclick="changeLanguage('ko')">한국어</li>
-                </ul>
-            </div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                    <span class="slider"></span>
-                </label>
-                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
-            </div>
+            <div class="lang-dropdown"><span id="current-lang-label">Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
+            <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
         </div>
     </header>
+
     <h1 id="page-title" class="page-title">뉴스</h1>
-    <div id="news-list" class="news-container"></div>
+    <div id="news-content" class="news-container"></div>
+
     <script>
-        const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle' }
-        };
-        function changeLanguage(lang) {
-            localStorage.setItem('selectedLang', lang);
-            document.getElementById('nav-news').textContent = translations[lang].news;
-            document.getElementById('nav-about').textContent = translations[lang].about;
-            document.getElementById('nav-products').textContent = translations[lang].products;
-            document.getElementById('page-title').textContent = translations[lang].news;
-            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('toggle-text').textContent = translations[lang].toggle;
-            loadNews();
-        }
-        function toggleDarkMode() {
-            const isDark = document.body.classList.toggle('dark-mode');
-            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
-        }
-        async function loadNews() {
+        const translations = { 'ko': { 'back': '← 목록으로' }, 'en': { 'back': '← Back to List' } };
+
+        async function render() {
+            const lang = localStorage.getItem('selectedLang') || 'ko';
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const container = document.getElementById('news-content');
+
             try {
-                const lang = localStorage.getItem('selectedLang') || 'ko';
-                const response = await fetch('news-data.json');
-                const newsData = await response.json();
-                const newsList = document.getElementById('news-list');
-                newsList.innerHTML = '';
-                newsData.forEach(item => {
-                    const title = lang === 'ko' ? item.title_ko : item.title_en;
-                    const content = lang === 'ko' ? item.content_ko : item.content_en;
-                    const imageHtml = item.image ? `<img src="${item.image}" class="news-image" onerror="this.style.display='none'">` : '';
-                    newsList.innerHTML += `<div class="news-item">${imageHtml}<div class="news-content"><p class="news-date">${item.date}</p><h2>${title}</h2><div class="news-full-content">${content}</div></div></div>`;
-                });
-            } catch (e) { console.error("Data load failed"); }
+                const res = await fetch('news-data.json');
+                const data = await res.json();
+
+                if (id !== null && data[id]) {
+                    // 상세 페이지
+                    const item = data[id];
+                    container.innerHTML = `
+                        <div class="news-detail">
+                            <a href="NEWS.html" class="btn-back">${translations[lang].back}</a>
+                            <p style="color:#888">${item.date}</p>
+                            <h2>${lang === 'ko' ? item.title_ko : item.title_en}</h2>
+                            <img src="${item.image}" onerror="this.style.display='none'">
+                            <div style="line-height:1.8; white-space:pre-wrap;">${lang === 'ko' ? item.content_ko : item.content_en}</div>
+                        </div>`;
+                } else {
+                    // 목록 페이지
+                    let html = '<div class="news-grid">';
+                    data.forEach((item, index) => {
+                        html += `
+                            <div class="news-card" onclick="location.href='NEWS.html?id=${index}'">
+                                <img src="${item.image}">
+                                <div class="news-card-body">
+                                    <small>${item.date}</small>
+                                    <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
+                                </div>
+                            </div>`;
+                    });
+                    container.innerHTML = html + '</div>';
+                }
+            } catch (e) { container.innerHTML = "뉴스를 불러올 수 없습니다."; }
         }
-        window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
-        };
+
+        function changeLanguage(lang) { localStorage.setItem('selectedLang', lang); location.reload(); }
+        function toggleDarkMode() { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); }
+        window.onload = render;
     </script>
 </body>
 </html>
