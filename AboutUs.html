@@ -26,12 +26,14 @@
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
+        
         .controls { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
         .lang-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
         .lang-menu li:hover { background: var(--border-color); }
+
         .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -46,30 +48,21 @@
 
         /* [About Section] */
         .about-section { max-width: 900px; margin: 80px auto; padding: 0 5%; line-height: 1.8; }
-        .about-section h1 { font-size: 3.5rem; margin-bottom: 50px; text-align: center; font-weight: 800; }
+        .about-section h1 { font-size: 3.5rem; margin-bottom: 50px; text-align: center; font-weight: 800; color: var(--text-color); }
         .about-content { font-size: 1.15rem; color: var(--content-text); text-align: justify; margin-bottom: 100px; }
         .about-content p { margin-bottom: 30px; }
         .highlight { color: var(--accent-color); font-weight: 600; }
 
         /* [Timeline Section] */
-        .history-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 700; }
+        .history-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 700; color: var(--text-color); }
         .timeline-container { position: relative; max-width: 1000px; margin: 100px auto 200px; padding: 0 50px; }
-        
-        /* 가로 선 */
         .timeline-line { position: absolute; top: 50%; left: 50px; right: 50px; height: 4px; background: var(--timeline-line); transform: translateY(-50%); z-index: 1; }
-        
         .timeline-points { display: flex; justify-content: space-around; position: relative; z-index: 2; }
-        
         .year-point { position: relative; cursor: pointer; padding: 20px 0; }
-        
-        /* 큰 점 */
         .dot { width: 24px; height: 24px; background: var(--bg-color); border: 4px solid var(--accent-color); border-radius: 50%; margin: 0 auto; transition: 0.3s; }
         .year-point:hover .dot { transform: scale(1.3); background: var(--accent-color); }
-        
-        /* 년도 텍스트 */
         .year-label { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-weight: 800; font-size: 1.4rem; color: var(--text-color); }
         
-        /* 마우스 호버 시 나오는 정보 창 */
         .timeline-info { 
             position: absolute; top: 60px; left: 50%; transform: translateX(-50%) translateY(10px);
             width: 280px; background: var(--header-bg); border: 1px solid var(--border-color);
@@ -92,7 +85,7 @@
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
             <nav><ul class="nav-links">
                 <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
                 <li><a href="AboutUs.html" id="nav-about" style="color:var(--accent-color)">About Us</a></li>
@@ -101,21 +94,25 @@
         </div>
         <div class="controls">
             <div class="lang-dropdown">
-                <span id="current-lang-label">Language ▾</span>
+                <span id="current-lang-label">언어 선택 ▾</span>
                 <ul class="lang-menu">
                     <li onclick="changeLanguage('en')">English</li>
                     <li onclick="changeLanguage('ko')">한국어</li>
                 </ul>
             </div>
             <div class="toggle-container">
-                <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
             </div>
         </div>
     </header>
 
     <main class="about-section">
         <h1 id="about-title" class="reveal">About Us</h1>
-        <div id="about-text" class="about-content reveal"></div>
+        <div id="about-text" class="about-content reveal">
+            </div>
 
         <h2 class="history-title reveal" id="history-title">History</h2>
         <div class="timeline-container reveal">
@@ -129,43 +126,41 @@
                         <p id="tl-25-desc">개발팀 '민양테크' 설립 및 첫 프로젝트 'Trigger Card' 개발 착수</p>
                     </div>
                 </div>
-                </div>
+            </div>
         </div>
     </main>
 
     <script>
         const translations = {
             'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환',
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
                 'title': 'About Us', 'history': '우리의 발자취',
                 'tl25T': '민양테크의 시작', 'tl25D': '개발팀 \'민양테크\' 설립 및 첫 프로젝트 \'Trigger Card\' 개발 착수',
                 'content': `
                     <p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다.</p>
                     <p>저희는 게임이 단순한 오락을 넘어, <span class="highlight">새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</span>이라고 믿습니다.</p>
-                    <p>아름답고 독특한 창의적인 경험을 추구하며, 기존의 틀에 얽매이지 않는 <span class="highlight">과감한 시도와 혁신</span>을 두려워하지 않습니다.</p>`
+                    <p>아름답고 독특한 창의적인 경험을 추구하며, 기존의 틀에 얽매이지 않는 <span class="highlight">과감한 시도와 혁신</span>을 두려워하지 않습니다.`
             },
             'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle',
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
                 'title': 'About Us', 'history': 'Our History',
                 'tl25T': 'The Beginning', 'tl25D': 'Founded MinYang Tech & Commenced development of \'Trigger Card\'',
                 'content': `
                     <p>MinYang Tech is a <span class="highlight">small development team that delivers immersive interactive experiences based on creative ideas</span>.</p>
                     <p>We believe games are an <span class="highlight">art form that allows us to explore new worlds and share profound emotions</span>.</p>
-                    <p>We relentlessly pursue unique experiences, unafraid of <span class="highlight">bold attempts and innovation</span>.</p>`
+                    <p>We relentlessly pursue unique experiences, unafraid of <span class="highlight">bold attempts and innovation</span>.`
             }
         };
 
-        // [Scroll Reveal 로직]
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
-            for (let i = 0; i < reveals.length; i++) {
+            reveals.forEach(el => {
                 const windowHeight = window.innerHeight;
-                const elementTop = reveals[i].getBoundingClientRect().top;
-                const elementVisible = 150;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveals[i].classList.add("active");
+                const elementTop = el.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    el.classList.add("active");
                 }
-            }
+            });
         }
         window.addEventListener("scroll", reveal);
 
@@ -173,11 +168,11 @@
             localStorage.setItem('selectedLang', lang);
             document.documentElement.lang = lang;
             const t = translations[lang];
+
             document.getElementById('nav-news').textContent = t.news;
             document.getElementById('nav-about').textContent = t.about;
             document.getElementById('nav-products').textContent = t.products;
             document.getElementById('current-lang-label').textContent = t.langLabel;
-            document.getElementById('toggle-text').textContent = t.toggle;
             document.getElementById('about-title').textContent = t.title;
             document.getElementById('about-text').innerHTML = t.content;
             document.getElementById('history-title').textContent = t.history;
@@ -193,11 +188,12 @@
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
+            
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('dark-mode-toggle').checked = true;
             }
-            reveal(); // 초기 실행
+            reveal();
         };
     </script>
 </body>
