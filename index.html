@@ -6,12 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>민양테크 - Home</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        (function() {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.documentElement.classList.add('dark-mode');
+            }
+        })();
+    </script>
+
     <style>
         :root { 
             --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
             --border-color: #eeeeee; --card-bg: #f9f9f9; --footer-bg: #f1f1f1; 
             --accent-color: #007bff; 
         }
+        /* body 대신 html이나 :root에 클래스가 붙어도 작동하도록 수정 */
+        .dark-mode body,
         body.dark-mode { 
             --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; 
             --border-color: #333333; --card-bg: #1e1e1e; --footer-bg: #0a0a0a; 
@@ -80,7 +91,7 @@
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
         .footer-sns a:hover .x-logo-img { opacity: 1; filter: invert(15%) sepia(95%) saturate(6932%) hue-rotate(358deg) brightness(95%) contrast(112%); transform: scale(1.1); }
         .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
         .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
@@ -91,7 +102,7 @@
         }
     </style>
 </head>
-<body>
+<body class="reveal">
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
@@ -111,6 +122,7 @@
             </div>
             <div class="toggle-container">
                 <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+                <span class="toggle-label" id="toggle-label-text">MODE</span>
             </div>
         </div>
     </header>
@@ -165,14 +177,14 @@
     <script>
         const translations = {
             'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환', 'latest': '최신 뉴스', 'more': '더 알아보기', 'contact': '저희와 연락하세요!',
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'latest': '최신 뉴스', 'more': '더 알아보기', 'contact': '저희와 연락하세요!',
                 'introT': '민양테크를 소개합니다',
                 'introH': '민양테크는 창의적인 아이디어를 기반으로 <br> 새로운 미래를 만들어가는 곳입니다.',
                 'introD': '우리는 단순한 제품을 넘어 사용자에게 새로운 경험을 선사합니다.',
                 'h1': '민양테크', 'h2': '창의적인 아이디어', 'h3': '미래를 여는 기술', 'h4': '사용자 중심의 경험', 'h5': '민양테크와 함께하세요'
             },
             'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!',
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!',
                 'introT': 'Introducing MinYang Tech',
                 'introH': 'MinYang Tech is where new futures are created <br> based on creative ideas.',
                 'introD': 'We go beyond simple products to provide new experiences to users.',
@@ -189,7 +201,6 @@
             document.getElementById('nav-about').textContent = t.about;
             document.getElementById('nav-products').textContent = t.products;
             document.getElementById('current-lang-label').textContent = t.langLabel;
-            document.getElementById('toggle-text').textContent = t.toggle;
             document.getElementById('news-title').textContent = t.latest;
             document.getElementById('more-btn').textContent = t.more;
             document.getElementById('footer-contact').textContent = t.contact;
@@ -208,6 +219,8 @@
 
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
+            // 테마 적용 일관성을 위해 html 태그에도 같이 토글
+            document.documentElement.classList.toggle('dark-mode', isDark);
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
 
@@ -217,8 +230,6 @@
                 if (entry.isIntersecting) entry.target.classList.add('active');
             });
         }, { threshold: 0.1 });
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
         // [Hero Slider]
         let currentIdx = 0;
@@ -231,24 +242,19 @@
             if (dots[idx]) dots[idx].classList.add('active');
         }
 
-        // 5초마다 자동 슬라이드
         setInterval(() => {
             currentIdx = (currentIdx + 1) % 5;
             moveSlide(currentIdx);
         }, 5000);
 
-        // [Load News with Sorting]
         async function loadNews() {
             const grid = document.getElementById('latest-news-grid');
             try {
                 const lang = localStorage.getItem('selectedLang') || 'ko';
                 const res = await fetch('news-data.json');
                 const data = await res.json();
-
-                // 1. ID가 큰 순서(최신순)로 정렬
                 data.sort((a, b) => b.id - a.id);
 
-                // 2. 상위 3개 표시 + 클릭 시 NEWS.html?id=ID 로 이동
                 grid.innerHTML = data.slice(0, 3).map(item => `
                     <div class="news-card reveal" onclick="location.href='NEWS.html?id=${item.id}'">
                         <img src="${item.image || 'https://via.placeholder.com/400x200'}" alt="news">
@@ -259,22 +265,27 @@
                     </div>
                 `).join('');
                 
-                // 새로 생성된 요소들에 observer 재연결
                 document.querySelectorAll('.news-card').forEach(el => observer.observe(el));
             } catch (e) { 
-                grid.innerHTML = "<p>뉴스 데이터를 불러오는 중 오류가 발생했습니다.</p>"; 
+                if(grid) grid.innerHTML = "<p>뉴스 데이터를 불러오는 중 오류가 발생했습니다.</p>"; 
             }
         }
 
-        window.onload = () => {
+        window.addEventListener('DOMContentLoaded', () => {
+            // 다크모드 초기화
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.documentElement.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
+
+            // 언어 설정 및 초기화
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
 
-            if (localStorage.getItem('darkMode') === 'enabled') {
-                document.body.classList.add('dark-mode');
-                document.getElementById('dark-mode-toggle').checked = true;
-            }
-        };
+            // 요소 관찰 시작
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        });
     </script>
 </body>
 </html>
