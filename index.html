@@ -5,6 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>민양테크 - Home</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://minyangtech.github.io/">
+    <meta property="og:title" content="민양테크">
+    <meta property="og:description" content="민양, 함께 만드는 무한한 가능성">
+    <meta property="og:image" content="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true">
+    <meta property="og:site_name" content="민양테크">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="민양테크">
+    <meta name="twitter:description" content="민양, 함께 만드는 무한한 가능성">
+    <meta name="twitter:image" content="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <script>
@@ -45,7 +58,6 @@
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
         .lang-menu li:hover { background: var(--border-color); }
 
-        /* Mode 글자 제거를 위해 컨테이너 여백 조정 */
         .toggle-container { display: flex; align-items: center; }
         .switch { position: relative; width: 46px; height: 24px; display: inline-block; }
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -198,22 +210,22 @@
             document.documentElement.lang = lang;
             const t = translations[lang];
 
-            document.getElementById('nav-news').textContent = t.news;
-            document.getElementById('nav-about').textContent = t.about;
-            document.getElementById('nav-products').textContent = t.products;
-            document.getElementById('current-lang-label').textContent = t.langLabel;
-            document.getElementById('news-title').textContent = t.latest;
-            document.getElementById('more-btn').textContent = t.more;
-            document.getElementById('footer-contact').textContent = t.contact;
-            document.getElementById('intro-title').textContent = t.introT;
-            document.getElementById('intro-highlight').innerHTML = t.introH;
-            document.getElementById('intro-desc').textContent = t.introD;
+            if(document.getElementById('nav-news')) document.getElementById('nav-news').textContent = t.news;
+            if(document.getElementById('nav-about')) document.getElementById('nav-about').textContent = t.about;
+            if(document.getElementById('nav-products')) document.getElementById('nav-products').textContent = t.products;
+            if(document.getElementById('current-lang-label')) document.getElementById('current-lang-label').textContent = t.langLabel;
+            if(document.getElementById('news-title')) document.getElementById('news-title').textContent = t.latest;
+            if(document.getElementById('more-btn')) document.getElementById('more-btn').textContent = t.more;
+            if(document.getElementById('footer-contact')) document.getElementById('footer-contact').textContent = t.contact;
+            if(document.getElementById('intro-title')) document.getElementById('intro-title').textContent = t.introT;
+            if(document.getElementById('intro-highlight')) document.getElementById('intro-highlight').innerHTML = t.introH;
+            if(document.getElementById('intro-desc')) document.getElementById('intro-desc').textContent = t.introD;
 
-            document.getElementById('hero-1').textContent = t.h1;
-            document.getElementById('hero-2').textContent = t.h2;
-            document.getElementById('hero-3').textContent = t.h3;
-            document.getElementById('hero-4').textContent = t.h4;
-            document.getElementById('hero-5').textContent = t.h5;
+            if(document.getElementById('hero-1')) document.getElementById('hero-1').textContent = t.h1;
+            if(document.getElementById('hero-2')) document.getElementById('hero-2').textContent = t.h2;
+            if(document.getElementById('hero-3')) document.getElementById('hero-3').textContent = t.h3;
+            if(document.getElementById('hero-4')) document.getElementById('hero-4').textContent = t.h4;
+            if(document.getElementById('hero-5')) document.getElementById('hero-5').textContent = t.h5;
 
             loadNews();
         }
@@ -247,6 +259,7 @@
 
         async function loadNews() {
             const grid = document.getElementById('latest-news-grid');
+            if(!grid) return;
             try {
                 const lang = localStorage.getItem('selectedLang') || 'ko';
                 const res = await fetch('news-data.json');
@@ -265,7 +278,7 @@
                 
                 document.querySelectorAll('.news-card').forEach(el => observer.observe(el));
             } catch (e) { 
-                if(grid) grid.innerHTML = "<p>뉴스 데이터를 불러오는 중 오류가 발생했습니다.</p>"; 
+                grid.innerHTML = "<p>뉴스 데이터를 불러오는 중 오류가 발생했습니다.</p>"; 
             }
         }
 
@@ -273,7 +286,8 @@
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
                 document.documentElement.classList.add('dark-mode');
-                document.getElementById('dark-mode-toggle').checked = true;
+                const toggle = document.getElementById('dark-mode-toggle');
+                if(toggle) toggle.checked = true;
             }
 
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
