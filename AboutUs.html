@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - 민양테크</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root { 
             --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
@@ -18,7 +19,7 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s, color 0.2s; overflow-x: hidden; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s, color 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
         
         /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
@@ -34,7 +35,7 @@
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
         .lang-menu li:hover { background: var(--border-color); }
 
-        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .toggle-container { display: flex; align-items: center; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
@@ -42,18 +43,17 @@
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* [Scroll Animation] */
+        /* [Main Content] */
+        main { flex: 1; }
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* [About Section] */
         .about-section { max-width: 900px; margin: 80px auto; padding: 0 5%; line-height: 1.8; }
         .about-section h1 { font-size: 3.5rem; margin-bottom: 50px; text-align: center; font-weight: 800; color: var(--text-color); }
         .about-content { font-size: 1.15rem; color: var(--content-text); text-align: justify; margin-bottom: 100px; }
         .about-content p { margin-bottom: 30px; }
         .highlight { color: var(--accent-color); font-weight: 600; }
 
-        /* [Timeline Section] */
         .history-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 700; color: var(--text-color); }
         .timeline-container { position: relative; max-width: 1000px; margin: 100px auto 200px; padding: 0 50px; }
         .timeline-line { position: absolute; top: 50%; left: 50px; right: 50px; height: 4px; background: var(--timeline-line); transform: translateY(-50%); z-index: 1; }
@@ -72,6 +72,18 @@
         .year-point:hover .timeline-info { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
         .timeline-info h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.1rem; }
         .timeline-info p { font-size: 0.95rem; line-height: 1.5; color: var(--content-text); }
+
+        /* [Footer] */
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
+        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .footer-email a:hover { opacity: 1; color: var(--accent-color); }
 
         @media (max-width: 768px) {
             .about-section h1 { font-size: 2.5rem; }
@@ -111,8 +123,7 @@
 
     <main class="about-section">
         <h1 id="about-title" class="reveal">About Us</h1>
-        <div id="about-text" class="about-content reveal">
-            </div>
+        <div id="about-text" class="about-content reveal"></div>
 
         <h2 class="history-title reveal" id="history-title">History</h2>
         <div class="timeline-container reveal">
@@ -130,11 +141,26 @@
         </div>
     </main>
 
+    <footer>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+    </footer>
+
     <script>
         const translations = {
             'ko': { 
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
-                'title': 'About Us', 'history': '우리의 발자취',
+                'title': 'About Us', 'history': '우리의 발자취', 'contact': '저희와 연락하세요!',
                 'tl25T': '민양테크의 시작', 'tl25D': '개발팀 \'민양테크\' 설립 및 첫 프로젝트 \'Trigger Card\' 개발 착수',
                 'content': `
                     <p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다.</p>
@@ -143,7 +169,7 @@
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
-                'title': 'About Us', 'history': 'Our History',
+                'title': 'About Us', 'history': 'Our History', 'contact': 'Contact Us!',
                 'tl25T': 'The Beginning', 'tl25D': 'Founded MinYang Tech & Commenced development of \'Trigger Card\'',
                 'content': `
                     <p>MinYang Tech is a <span class="highlight">small development team that delivers immersive interactive experiences based on creative ideas</span>.</p>
@@ -157,9 +183,7 @@
             reveals.forEach(el => {
                 const windowHeight = window.innerHeight;
                 const elementTop = el.getBoundingClientRect().top;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
+                if (elementTop < windowHeight - 100) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
@@ -178,6 +202,7 @@
             document.getElementById('history-title').textContent = t.history;
             document.getElementById('tl-25-title').textContent = t.tl25T;
             document.getElementById('tl-25-desc').textContent = t.tl25D;
+            document.getElementById('footer-contact').textContent = t.contact;
         }
 
         function toggleDarkMode() {
@@ -188,7 +213,6 @@
         window.onload = () => {
             const savedLang = localStorage.getItem('selectedLang') || 'ko';
             changeLanguage(savedLang);
-            
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
                 document.getElementById('dark-mode-toggle').checked = true;
