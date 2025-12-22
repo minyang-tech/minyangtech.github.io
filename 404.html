@@ -57,6 +57,14 @@
         .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent-color); }
+
+        /* 추가된 스타일 */
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
+        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
+
     </style>
 </head>
 <body>
@@ -106,6 +114,20 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Policy.html">개인정보 처리방침</a>
+        </div>
+
+        <div class="footer-copyright">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
     </footer>
 
     <script>
@@ -126,7 +148,9 @@
         }
         window.onload = () => {
             changeLanguage(localStorage.getItem('selectedLang') || 'ko');
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
         };
     </script>
 </body>
