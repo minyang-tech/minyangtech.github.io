@@ -112,13 +112,18 @@
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent); }
 
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
+
         @media (max-width: 850px) { .product-main, .specs-grid { flex-direction: column; } }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
             <nav><ul class="nav-links">
                 <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
                 <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
@@ -148,7 +153,6 @@
                     <tr><th>플랫폼</th><td>Steam (Windows)</td></tr>
                     <tr><th>엔진</th><td>Unity3D</td></tr>
                     <tr><th>지원 언어</th><td>한국어, 영어</td></tr>
-                    <tr><th>라이선스</th><td><a href="https://github.com/minyangtech/Trigger-Card/blob/main/LICENSE" target="_blank" style="color:var(--accent); text-decoration:none;">MIT License</a></td></tr>
                     <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" class="email-link">minyangtech.info@gmail.com</a></td></tr>
                 </table>
                 <a href="https://store.steampowered.com/" target="_blank" class="buy-button"><i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기</a>
@@ -192,6 +196,17 @@
         </div>
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Terms-of-Use.html">이용약관</a>
+            <a href="Policy.html">개인정보 처리방침</a>
         </div>
     </footer>
 
