@@ -9,23 +9,27 @@
     <style>
         :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
 
         .reveal { opacity: 0; transform: translateY(40px); transition: all 0.7s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
+        /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
         .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
+        
         .controls { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1001; }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; }
         .lang-menu li:hover { background: var(--border-color); }
+
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -33,6 +37,7 @@
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
 
+        /* [Main Content] */
         main { flex: 1; }
         .page-title { padding: 50px 5% 20px; font-size: 2.5rem; text-align: center; }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 40px; max-width: 1200px; margin: 40px auto; padding: 0 5%; }
@@ -43,7 +48,8 @@
         .product-info h3 { color: var(--accent); margin-bottom: 10px; }
         .status-tag { display: inline-block; padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: bold; background: #ffc107; color: #000; margin-top: 10px; }
 
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--header-bg); }
+        /* [Footer] Trigger_Card.html와 동일하게 적용 */
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
         .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
@@ -53,6 +59,12 @@
         .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent); }
+
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
+        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -67,19 +79,19 @@
             </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown"><span>Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
+            <div class="lang-dropdown"><span id="lang-label">Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
             <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
         </div>
     </header>
 
     <main>
-        <h1 class="page-title reveal">제품</h1>
+        <h1 class="page-title reveal" id="page-title">제품</h1>
         <div class="product-grid">
             <a href="Trigger_Card.html" class="product-card reveal">
                 <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true" class="product-img">
                 <div class="product-info">
                     <h3>Trigger Card</h3>
-                    <p>혁신적인 카드 시스템</p>
+                    <p id="product-desc">혁신적인 카드 시스템</p>
                     <span class="status-tag">Coming Soon</span>
                 </div>
             </a>
@@ -99,9 +111,36 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+        </div>
+        
+        <div class="footer-copyright" id="copyright-text">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
     </footer>
 
     <script>
+        const translations = {
+            'ko': {
+                'title': '제품', 'desc': '혁신적인 카드 시스템', 'lang': '언어 선택 ▾',
+                'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침',
+                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.'
+            },
+            'en': {
+                'title': 'Products', 'desc': 'Innovative card system', 'lang': 'Language ▾',
+                'contact': 'Contact Us!', 'privacy': 'Privacy Policy',
+                'copyright': 'Copyright © Minyang Tech. All rights reserved.'
+            }
+        };
+
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
@@ -111,15 +150,31 @@
             });
         }
         window.addEventListener("scroll", reveal);
-        window.onload = () => {
-            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
-            setTimeout(reveal, 100);
-        };
-        function changeLanguage(lang) { localStorage.setItem('selectedLang', lang); location.reload(); }
+
+        function changeLanguage(lang) {
+            localStorage.setItem('selectedLang', lang);
+            const t = translations[lang];
+            document.getElementById('page-title').textContent = t.title;
+            document.getElementById('product-desc').textContent = t.desc;
+            document.getElementById('lang-label').textContent = t.lang;
+            document.getElementById('footer-contact').textContent = t.contact;
+            document.getElementById('privacy-link').textContent = t.privacy;
+            document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
+        }
+
         function toggleDarkMode() { 
             document.body.classList.toggle('dark-mode'); 
             localStorage.setItem('darkMode', document.body.classList.contains('dark-mode') ? 'enabled' : 'disabled'); 
         }
+
+        window.onload = () => {
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            changeLanguage(savedLang);
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
+            setTimeout(reveal, 100);
+        };
     </script>
 </body>
 </html>
