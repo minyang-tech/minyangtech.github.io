@@ -99,13 +99,18 @@
         .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
         /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); }
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
         .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; filter: invert(15%) sepia(95%) saturate(6932%) hue-rotate(358deg) brightness(95%) contrast(112%); transform: scale(1.1); }
+        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+        
         .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
         .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+        
+        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .footer-email a:hover { opacity: 1; color: var(--accent-color); }
 
         @media (max-width: 900px) {
             .about-intro-section { flex-direction: column; text-align: center; }
@@ -184,6 +189,9 @@
             <a href="https://www.youtube.com/@minyangtech" target="_blank">
                 <i class="fa-brands fa-youtube"></i>
             </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
     </footer>
 
