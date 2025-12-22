@@ -10,12 +10,12 @@
         :root { 
             --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
             --border-color: #eeeeee; --accent-color: #007bff; --content-text: #555555;
-            --timeline-line: #e0e0e0;
+            --timeline-line: #e0e0e0; --card-bg: #fdfdfd;
         }
         body.dark-mode { 
             --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; 
             --border-color: #333333; --content-text: #b0b0b0;
-            --timeline-line: #444444;
+            --timeline-line: #444444; --card-bg: #1e1e1e;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -54,6 +54,17 @@
         .about-content p { margin-bottom: 30px; }
         .highlight { color: var(--accent-color); font-weight: 600; }
 
+        /* [Team Section] */
+        .team-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; font-weight: 700; color: var(--text-color); }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 120px; }
+        .team-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 20px; text-align: center; transition: 0.3s; }
+        .team-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
+        .team-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 20px; }
+        .team-card h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-color); }
+        .team-card .role { display: inline-block; padding: 4px 12px; background: var(--accent-color); color: white; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; }
+        .team-card p { color: var(--content-text); font-size: 1rem; }
+
+        /* [History] */
         .history-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 700; color: var(--text-color); }
         .timeline-container { position: relative; max-width: 1000px; margin: 100px auto 200px; padding: 0 50px; }
         .timeline-line { position: absolute; top: 50%; left: 50px; right: 50px; height: 4px; background: var(--timeline-line); transform: translateY(-50%); z-index: 1; }
@@ -73,7 +84,7 @@
         .timeline-info h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.1rem; }
         .timeline-info p { font-size: 0.95rem; line-height: 1.5; color: var(--content-text); }
 
-        /* [Footer] Trigger_Card.html와 동일하게 적용 */
+        /* [Footer] */
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
@@ -97,6 +108,7 @@
             .timeline-points { flex-direction: column; gap: 50px; align-items: center; }
             .timeline-info { position: relative; top: 20px; opacity: 1; visibility: visible; transform: none; width: 100%; }
             .year-label { position: static; transform: none; margin-bottom: 10px; text-align: center; }
+            .team-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -130,6 +142,22 @@
     <main class="about-section">
         <h1 id="about-title" class="reveal">About Us</h1>
         <div id="about-text" class="about-content reveal"></div>
+
+        <h2 class="team-title reveal" id="team-intro-title">팀원 소개</h2>
+        <div class="team-grid reveal">
+            <div class="team-card">
+                <i class="fa-solid fa-code"></i>
+                <h3 id="team-member1-name">임정빈</h3>
+                <span class="role" id="team-member1-role">메인 프로그래머</span>
+                <p id="team-member1-desc">전태산이라 불러주세요</p>
+            </div>
+            <div class="team-card">
+                <i class="fa-solid fa-pen-nib"></i>
+                <h3 id="team-member2-name">WhoAsked</h3>
+                <span class="role" id="team-member2-role">메인 디자이너</span>
+                <p id="team-member2-desc">만나서 반갑습니다.</p>
+            </div>
+        </div>
 
         <h2 class="history-title reveal" id="history-title">History</h2>
         <div class="timeline-container reveal">
@@ -181,6 +209,9 @@
             'ko': { 
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
                 'title': 'About Us', 'history': '우리의 발자취', 'contact': '저희와 연락하세요!',
+                'teamTitle': '팀원 소개',
+                'm1Name': '임정빈', 'm1Role': '메인 프로그래머', 'm1Desc': '전태산이라 불러주세요',
+                'm2Name': 'WhoAsked', 'm2Role': '메인 디자이너', 'm2Desc': '만나서 반갑습니다.',
                 'tl25T': '민양테크의 시작', 'tl25D': '개발팀 \'민양테크\' 설립 및 첫 프로젝트 \'Trigger Card\' 개발 착수',
                 'privacy': '개인정보 처리방침',
                 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.',
@@ -192,6 +223,9 @@
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
                 'title': 'About Us', 'history': 'Our History', 'contact': 'Contact Us!',
+                'teamTitle': 'Meet Our Team',
+                'm1Name': 'Lim Jeong-bin', 'm1Role': 'Main Programmer', 'm1Desc': 'Please call me Jeon Tae-san',
+                'm2Name': 'WhoAsked', 'm2Role': 'Main Designer', 'm2Desc': 'Nice to meet you.',
                 'tl25T': 'The Beginning', 'tl25D': 'Founded MinYang Tech & Commenced development of \'Trigger Card\'',
                 'privacy': 'Privacy Policy',
                 'copyright': 'Copyright © Minyang Tech. All rights reserved.',
@@ -229,6 +263,15 @@
             document.getElementById('footer-contact').textContent = t.contact;
             document.getElementById('privacy-link').textContent = t.privacy;
             document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
+            
+            // Team translations
+            document.getElementById('team-intro-title').textContent = t.teamTitle;
+            document.getElementById('team-member1-name').textContent = t.m1Name;
+            document.getElementById('team-member1-role').textContent = t.m1Role;
+            document.getElementById('team-member1-desc').textContent = t.m1Desc;
+            document.getElementById('team-member2-name').textContent = t.m2Name;
+            document.getElementById('team-member2-role').textContent = t.m2Role;
+            document.getElementById('team-member2-desc').textContent = t.m2Desc;
         }
 
         function toggleDarkMode() {
