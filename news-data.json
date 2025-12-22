@@ -26,13 +26,13 @@
     "content_en": "Minyang Tech website has been completely renewed! \n I will keep increasing the character count just to test the text limit. \n I honestly don't know what to write here.. \n What should I even say? \n Thank you for using Minyang Tech's games. \n But really, to be honest, I have nothing to write about. \n I would like to express my gratitude to all the customers who use Minyang Tech. \n Thank you. \n -Minyang Tech",
     "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
   },
-    {
-    "id": 4,
-    "date": "2025-12-22",
-    "title_ko": "Trigger_Card의 EULA를 확인해주세요.",
-    "title_en": "Please check the EULA for Trigger_Card.",
-    "content_ko": "민양테크는 법적 문젤를 우려해 당사의 제품인 Trigger_Card에 EULA를 걸었습니다. \n 자세한 내용은 아래를 참고해주세요 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n 민양테크를 이용해주시는 고객여러분께 감사의 말씀 드립니다. \n 감사합니다. \n -민양테크",
-    "content_en": "Minyang Tech has implemented an EULA for our product, Trigger_Card, due to potential legal considerations. \n Please refer to the link below for more details 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n We would like to express our sincere gratitude to all our customers for choosing Minyang Tech. \n Thank you. \n - Minyang Tech",
-    "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
-  }
+   {
+  "id": 4,
+  "date": "2025-12-22",
+  "title_ko": "Trigger_Card의 EULA를 확인해주세요.",
+  "title_en": "Please check the EULA for Trigger_Card.",
+  "content_ko": "민양테크는 법적 문제를 우려해 당사의 제품인 Trigger_Card에 EULA를 걸었습니다. \n 자세한 내용은 아래를 참고해주세요 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n 민양테크를 이용해주시는 고객여러분께 감사의 말씀 드립니다. \n 감사합니다. \n -민양테크",
+  "content_en": "Minyang Tech has implemented an EULA for our product, Trigger_Card, due to potential legal considerations. \n Please refer to the link below for more details 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n We would like to express our sincere gratitude to all our customers for choosing Minyang Tech. \n Thank you. \n - Minyang Tech",
+  "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
+}
 ]
