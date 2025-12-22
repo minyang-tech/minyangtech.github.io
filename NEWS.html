@@ -57,8 +57,7 @@
         .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
         .btn-back:hover { background: var(--accent); color: white; }
 
-        /* [Footer] Trigger_Card.html 스타일 적용 */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); margin-top: 50px;}
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
         .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
@@ -68,7 +67,6 @@
         .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent); }
-
         .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
         .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
         .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
@@ -131,17 +129,14 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
         <div class="footer-biz-info">
             <p>상호명: 작성예정 | 대표자: 작성예정</p>
             <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
             <p>주소: 작성예정</p>
         </div>
-
         <div class="footer-legal">
             <a href="Policy.html">개인정보 처리방침</a>
         </div>
-        
         <div class="footer-copyright">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
@@ -185,13 +180,21 @@
                 filterArea.style.display = 'none';
                 const item = allNewsData.find(n => n.id == detailId);
                 if (item) {
+                    let content = lang === 'ko' ? item.content_ko : item.content_en;
+                    
+                    // URL을 찾아 클릭 가능한 링크로 변환 (정규식 사용)
+                    const urlRegex = /(https?:\/\/[^\s]+)/g;
+                    const linkedContent = content.replace(urlRegex, (url) => {
+                        return `<a href="${url}" target="_blank" style="color:var(--accent); text-decoration:underline; font-weight:bold;">${url}</a>`;
+                    });
+
                     container.innerHTML = `
                         <div class="news-detail reveal">
                             <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${translations[lang].back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
                             <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
                             <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
-                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; opacity:0.9;">${lang === 'ko' ? item.content_ko : item.content_en}</div>
+                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; opacity:0.9;">${linkedContent}</div>
                         </div>`;
                 }
             } else {
@@ -255,6 +258,7 @@
             document.getElementById('news-search').placeholder = translations[lang].search;
             document.getElementById('sort-text').textContent = isDesc ? translations[lang].newest : translations[lang].oldest;
             document.getElementById('footer-contact').textContent = translations[lang].contact;
+            document.getElementById('current-lang-label').textContent = lang === 'ko' ? '한국어 ▾' : 'English ▾';
         }
 
         function changeLanguage(newLang) { localStorage.setItem('selectedLang', newLang); location.reload(); }
