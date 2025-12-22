@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>개인정보 처리방침 - 민양테크</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { 
+            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
+            --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; 
+        }
+        body.dark-mode { 
+            --bg-color: #121212; --text-color: #f0f0f0; --header-bg: #1e1e1e; 
+            --border-color: #333333; --card-bg: #1e1e1e;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: 0.2s; line-height: 1.6; }
+
+        header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 0 5%; height: 80px; background: var(--header-bg); 
+            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; 
+        }
+        .header-left { display: flex; align-items: center; gap: 40px; }
+        .logo-link img { height: 35px; width: auto; }
+        .nav-links { display: flex; list-style: none; gap: 30px; }
+        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; }
+        
+        .controls { display: flex; align-items: center; gap: 20px; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+        input:checked + .slider { background-color: var(--accent); }
+        input:checked + .slider:before { transform: translateX(22px); }
+
+        /* 본문 스타일 */
+        .content-container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+        .page-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; text-align: center; color: var(--accent); }
+        .last-updated { text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 50px; }
+
+        .policy-section { background: var(--card-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); margin-bottom: 30px; }
+        .section-header { font-size: 1.3rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 12px; color: var(--text-color); }
+        .policy-text { font-size: 1rem; color: var(--text-color); opacity: 0.9; margin-bottom: 15px; }
+        .policy-list { list-style: none; padding-left: 5px; }
+        .policy-list li { margin-bottom: 10px; position: relative; padding-left: 20px; }
+        .policy-list li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        
+        .contact-box { background: rgba(0, 123, 255, 0.05); border: 1px dashed var(--accent); padding: 20px; border-radius: 10px; margin-top: 10px; }
+
+        /* [Footer] */
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); margin-top: 80px;}
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
+        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .footer-email a:hover { opacity: 1; color: var(--accent); }
+
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
+
+        @media (max-width: 600px) { .page-title { font-size: 1.8rem; } .policy-section { padding: 25px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html">뉴스</a></li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="Product.html">제품</a></li>
+            </ul></nav>
+        </div>
+        <div class="controls">
+            <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+        </div>
+    </header>
+
+    <div class="content-container">
+        <h1 class="page-title">개인정보 처리방침</h1>
+        <p class="last-updated">시행일: 2025년 12월 22일</p>
+
+        <div class="policy-section">
+            <p class="policy-text">민양테크(이하 "회사")는 이용자의 개인정보를 소중하게 생각하며, 관련 법령을 준수하여 이용자의 권익을 보호하기 위해 다음과 같은 개인정보 처리방침을 수립·공개합니다.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">1. 개인정보의 처리 목적</h2>
+            <p class="policy-text">회사는 이용자의 문의 및 불만 처리(이하 "고객 응대")를 위한 목적으로만 개인정보를 처리합니다. 수집된 정보는 문의 내용 확인 및 답변을 위한 연락 이외의 용도로는 사용되지 않습니다.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">2. 처리하는 개인정보의 항목</h2>
+            <p class="policy-text">회사는 서비스 이용 과정에서 다음과 같은 최소한의 개인정보를 수집합니다.</p>
+            <ul class="policy-list">
+                <li><strong>필수 항목:</strong> 이메일 주소</li>
+                <li><strong>선택 항목:</strong> 문의 내용 내에 이용자가 직접 기입한 정보</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">3. 개인정보의 처리 및 보유기간</h2>
+            <p class="policy-text">이용자의 개인정보는 문의 사항에 대한 처리가 완료될 때까지만 보유하며, 목적 달성 시 지체 없이 파기합니다. 단, 관계 법령에 의해 보존할 필요가 있는 경우 해당 법령에서 정한 기간 동안 보관합니다.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">4. 개인정보의 파기 절차 및 방법</h2>
+            <p class="policy-text">회사는 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체 없이 해당 개인정보를 파기합니다.</p>
+            <ul class="policy-list">
+                <li><strong>전자적 파일 형태:</strong> 복구 및 재생할 수 없는 기술적 방법을 사용하여 영구 삭제</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">5. 개인정보의 안전성 확보조치</h2>
+            <p class="policy-text">회사는 이용자의 개인정보가 분실, 도난, 유출되지 않도록 다음과 같은 안전성 확보 조치를 취하고 있습니다.</p>
+            <ul class="policy-list">
+                <li><strong>관리적 조치:</strong> 내부 관리 계획 수립 및 시행, 개인정보 취급자 최소화</li>
+                <li><strong>기술적 조치:</strong> 메일 보안 설정 및 비밀번호 관리, 침입차단시스템 운영</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">6. 정보주체와 법정대리인의 권리·의무 및 행사방법</h2>
+            <p class="policy-text">이용자는 언제든지 회사에 개인정보 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
+            <p class="policy-text">권리 행사는 이메일(<a href="mailto:minyangtech.info@gmail.com" style="color:var(--accent)">minyangtech.info@gmail.com</a>)을 통해 서면으로 접수하실 수 있으며, 회사는 이에 대해 지체 없이 조치하겠습니다.</p>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">7. 개인정보 보호책임자 및 고충처리 부서</h2>
+            <p class="policy-text">개인정보 처리에 관한 업무를 총괄해서 책임지고, 관련 불만 처리 및 피해 구제를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
+            <div class="contact-box">
+                <p><strong>성명:</strong> [내일기입할게요ㅠㅠ]</p>
+                <p><strong>연락처:</strong> <a href="mailto:minyangtech.info@gmail.com" style="color:var(--accent)">minyangtech.info@gmail.com</a></p>
+            </div>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">8. 정보주체의 권익침해에 대한 구제방법</h2>
+            <p class="policy-text">이용자는 개인정보 침해로 인한 구제를 받기 위해 아래의 기관에 분쟁 해결이나 상담을 신청할 수 있습니다.</p>
+            <ul class="policy-list">
+                <li>개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopis.go.kr)</li>
+                <li>개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)</li>
+                <li>대검찰청 사이버수사과 : (국번없이) 1301 (www.spo.go.kr)</li>
+                <li>경찰청 사이버수사국 : (국번없이) 182 (ecrm.cyber.go.kr)</li>
+            </ul>
+        </div>
+
+        <div class="policy-section">
+            <h2 class="section-header">9. 개인정보 처리방침의 변경</h2>
+            <p class="policy-text">본 방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경 내용이 있을 경우 아래의 경로를 통해 공지합니다.</p>
+            <p class="policy-text">민양테크 웹사이트 및 서비스 중인 게임 내 공지사항</p>
+        </div>
+    </div>
+
+    <footer>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Terms-of-Use.html">이용약관</a>
+            <a href="Policy.html" style="color:var(--accent); opacity:1;">개인정보 처리방침</a>
+        </div>
+    </footer>
+
+    <script>
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                document.getElementById('dark-mode-toggle').checked = true;
+            }
+        };
+    </script>
+</body>
+</html>
