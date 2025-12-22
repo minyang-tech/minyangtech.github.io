@@ -1,23 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-     <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
-    
+    <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Not Found - 민양테크</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; }
+        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent-color: #007bff; }
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
         
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 0 5%; height: 80px; background: var(--header-bg);
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000;
-        }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
         .nav-links { display: flex; list-style: none; gap: 30px; }
@@ -25,54 +21,42 @@
 
         .controls { display: flex; align-items: center; gap: 25px; }
         .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { 
-            display: none; position: absolute; right: 0; top: 35px; 
-            background: var(--header-bg); border: 1px solid var(--border-color); 
-            border-radius: 4px; list-style: none; min-width: 100px; 
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; 
-        }
-        .lang-dropdown::after { content: ""; position: absolute; top: 100%; left: 0; width: 100%; height: 15px; }
+        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; color: var(--text-color); }
 
-        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .toggle-container { display: flex; align-items: center; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
         .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
-        .toggle-label { font-size: 10px; font-weight: bold; }
 
-        /* [핵심 수정 부분] */
+        /* [Main 404 Content] */
         .error-container {
-            min-height: calc(100vh - 80px);
+            flex: 1;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 40px 5%;
+            text-align: center; padding: 80px 5%;
         }
-
         .error-images { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 20px; }
-        
-        /* 404 이미지를 왼쪽으로 살짝 땡김 (-20px) */
-        .img-404 { 
-            width: 300px; max-width: 80%; height: auto; 
-            transform: translateX(-20px); 
-        }
-        
-        /* 마스코트 캐릭터는 그대로 중앙 혹은 약간 오른쪽으로 배치해서 밸런스 조절 */
-        .img-mascot { 
-            width: 200px; max-width: 60%; height: auto; 
-            margin-top: -30px; /* 로고와 더 겹치게 수정 */
-            z-index: 2;
-        }
-
+        .img-404 { width: 300px; max-width: 80%; height: auto; transform: translateX(-20px); }
+        .img-mascot { width: 200px; max-width: 60%; height: auto; margin-top: -30px; z-index: 2; }
         .error-msg { font-size: 1.5rem; margin: 10px 0 40px; opacity: 0.8; font-weight: 500; }
-        .home-btn {
-            padding: 15px 40px; background: #007bff; color: white;
-            text-decoration: none; border-radius: 50px; font-weight: bold;
-            transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
-        }
+        .home-btn { padding: 15px 40px; background: #007bff; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); }
         .home-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4); }
+
+        /* [Footer] */
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
+        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .footer-email a:hover { opacity: 1; color: var(--accent-color); }
     </style>
 </head>
 <body>
@@ -80,13 +64,11 @@
     <header>
         <div class="header-left">
             <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html">뉴스</a></li>
+                <li><a href="AboutUs.html">About Us</a></li>
+                <li><a href="Product.html">제품</a></li>
+            </ul></nav>
         </div>
         <div class="controls">
             <div class="lang-dropdown">
@@ -98,7 +80,6 @@
             </div>
             <div class="toggle-container">
                 <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
-                <span class="toggle-label" id="toggle-text">다크 모드 전환</span>
             </div>
         </div>
     </header>
@@ -112,20 +93,32 @@
         <a href="index.html" class="home-btn" id="home-btn-text">홈으로 돌아가기</a>
     </main>
 
+    <footer>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+    </footer>
+
     <script>
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'toggle': '다크 모드 전환', 'error': '요청하신 페이지를 찾을 수 없습니다.', 'home': '홈으로 돌아가기' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'toggle': 'Dark Mode Toggle', 'error': "The page you requested could not be found.", 'home': 'Back to Home' }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'error': '요청하신 페이지를 찾을 수 없습니다.', 'home': '홈으로 돌아가기', 'contact': '저희와 연락하세요!' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'error': "The page you requested could not be found.", 'home': 'Back to Home', 'contact': 'Contact Us!' }
         };
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
-            document.getElementById('nav-news').textContent = translations[lang].news;
-            document.getElementById('nav-about').textContent = translations[lang].about;
-            document.getElementById('nav-products').textContent = translations[lang].products;
             document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('toggle-text').textContent = translations[lang].toggle;
             document.getElementById('error-text').textContent = translations[lang].error;
             document.getElementById('home-btn-text').textContent = translations[lang].home;
+            document.getElementById('footer-contact').textContent = translations[lang].contact;
         }
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
