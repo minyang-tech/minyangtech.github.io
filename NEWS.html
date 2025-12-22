@@ -11,9 +11,8 @@
         body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --input-bg: #2a2a2a; }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
         
-        /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
@@ -25,7 +24,6 @@
         .lang-dropdown:hover .lang-menu { display: block; }
         .lang-menu li { padding: 10px 15px; }
         .lang-menu li:hover { background: var(--border-color); }
-        .toggle-container { display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
         .switch input { opacity: 0; width: 0; height: 0; }
         .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
@@ -33,15 +31,12 @@
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* [Scroll Reveal 애니메이션] */
+        main { flex: 1; }
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* [Filter Bar] */
         .filter-section { max-width: 1400px; margin: 20px auto; padding: 0 5%; }
         .filter-bar { background: var(--header-bg); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
-        .filter-group { display: flex; align-items: center; gap: 10px; }
-        .filter-group label { font-size: 0.9rem; font-weight: 600; }
         .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 12px; border-radius: 6px; outline: none; }
         .search-wrapper { position: relative; flex-grow: 1; max-width: 400px; }
         .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
@@ -49,7 +44,6 @@
         .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: 600; transition: 0.3s; }
         .sort-btn:hover { background: var(--accent); color: white; }
 
-        /* [News Grid] */
         .news-container { max-width: 1400px; margin: 0 auto; padding: 20px 5%; min-height: 400px; }
         .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
         .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
@@ -59,12 +53,21 @@
         .news-card-body small { color: #888; font-weight: 500; }
         .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent); line-height: 1.4; }
 
-        /* [Detail Page] */
         .news-detail { max-width: 800px; margin: 0 auto; background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
         .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
         .btn-back:hover { background: var(--accent); color: white; }
 
-        /* [Responsive] */
+        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--header-bg); }
+        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
+        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
+        .footer-email a:hover { opacity: 1; color: var(--accent); }
+
         @media (max-width: 1100px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (max-width: 850px) { .news-grid { grid-template-columns: repeat(2, 1fr); } .filter-bar { flex-direction: column; align-items: stretch; } }
         @media (max-width: 500px) { .news-grid { grid-template-columns: 1fr; } }
@@ -87,38 +90,49 @@
         </div>
     </header>
 
-    <h1 id="page-title" class="reveal" style="text-align: center; padding-top: 50px; font-size: 2.5rem;">뉴스</h1>
+    <main>
+        <h1 id="page-title" class="reveal" style="text-align: center; padding: 50px 0 20px; font-size: 2.5rem;">뉴스</h1>
+        <section class="filter-section reveal" id="filter-area">
+            <div class="filter-bar">
+                <div class="search-wrapper">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="news-search" class="filter-input" placeholder="검색어를 입력하세요..." oninput="applyFilters()">
+                </div>
+                <div class="filter-group">
+                    <input type="date" id="date-start" class="filter-input" onchange="applyFilters()">
+                    <span>~</span>
+                    <input type="date" id="date-end" class="filter-input" onchange="applyFilters()">
+                </div>
+                <button class="sort-btn" id="sort-toggle" onclick="toggleSort()">
+                    <i class="fa-solid fa-sort"></i> <span id="sort-text">최신순</span>
+                </button>
+            </div>
+        </section>
+        <div id="news-content" class="news-container"></div>
+    </main>
 
-    <section class="filter-section reveal" id="filter-area">
-        <div class="filter-bar">
-            <div class="search-wrapper">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="news-search" class="filter-input" placeholder="검색어를 입력하세요..." oninput="applyFilters()">
-            </div>
-            <div class="filter-group">
-                <input type="date" id="date-start" class="filter-input" onchange="applyFilters()">
-                <span>~</span>
-                <input type="date" id="date-end" class="filter-input" onchange="applyFilters()">
-            </div>
-            <button class="sort-btn" id="sort-toggle" onclick="toggleSort()">
-                <i class="fa-solid fa-sort"></i> <span id="sort-text">최신순</span>
-            </button>
+    <footer>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
         </div>
-    </section>
-
-    <div id="news-content" class="news-container"></div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+    </footer>
 
     <script>
-        // [Scroll Reveal 로직]
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
                 const windowHeight = window.innerHeight;
                 const elementTop = el.getBoundingClientRect().top;
-                const elementVisible = 100;
-                if (elementTop < windowHeight - elementVisible) {
-                    el.classList.add("active");
-                }
+                if (elementTop < windowHeight - 100) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
@@ -128,8 +142,8 @@
         const lang = localStorage.getItem('selectedLang') || 'ko';
 
         const translations = {
-            'ko': { 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.' },
-            'en': { 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.' }
+            'ko': { 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.', 'contact': '저희와 연락하세요!' },
+            'en': { 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.', 'contact': 'Contact Us!' }
         };
 
         async function init() {
@@ -219,6 +233,7 @@
         function updateStaticUI() {
             document.getElementById('news-search').placeholder = translations[lang].search;
             document.getElementById('sort-text').textContent = isDesc ? translations[lang].newest : translations[lang].oldest;
+            document.getElementById('footer-contact').textContent = translations[lang].contact;
         }
 
         function changeLanguage(newLang) { localStorage.setItem('selectedLang', newLang); location.reload(); }
@@ -227,7 +242,10 @@
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled'); 
         }
 
-        window.onload = init;
+        window.onload = () => {
+            if (localStorage.getItem('darkMode') === 'enabled') document.getElementById('dark-mode-toggle').checked = true;
+            init();
+        };
     </script>
 </body>
 </html>
