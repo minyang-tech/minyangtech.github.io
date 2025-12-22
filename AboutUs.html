@@ -73,7 +73,7 @@
         .timeline-info h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.1rem; }
         .timeline-info p { font-size: 0.95rem; line-height: 1.5; color: var(--content-text); }
 
-        /* [Footer] */
+        /* [Footer] Trigger_Card.html와 동일하게 적용 */
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
@@ -84,6 +84,12 @@
         .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent-color); }
+
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
+        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
 
         @media (max-width: 768px) {
             .about-section h1 { font-size: 2.5rem; }
@@ -154,6 +160,20 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+        </div>
+        
+        <div class="footer-copyright" id="copyright-text">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
     </footer>
 
     <script>
@@ -162,6 +182,8 @@
                 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾',
                 'title': 'About Us', 'history': '우리의 발자취', 'contact': '저희와 연락하세요!',
                 'tl25T': '민양테크의 시작', 'tl25D': '개발팀 \'민양테크\' 설립 및 첫 프로젝트 \'Trigger Card\' 개발 착수',
+                'privacy': '개인정보 처리방침',
+                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.',
                 'content': `
                     <p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다.</p>
                     <p>저희는 게임이 단순한 오락을 넘어, <span class="highlight">새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</span>이라고 믿습니다.</p>
@@ -171,6 +193,8 @@
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
                 'title': 'About Us', 'history': 'Our History', 'contact': 'Contact Us!',
                 'tl25T': 'The Beginning', 'tl25D': 'Founded MinYang Tech & Commenced development of \'Trigger Card\'',
+                'privacy': 'Privacy Policy',
+                'copyright': 'Copyright © Minyang Tech. All rights reserved.',
                 'content': `
                     <p>MinYang Tech is a <span class="highlight">small development team that delivers immersive interactive experiences based on creative ideas</span>.</p>
                     <p>We believe games are an <span class="highlight">art form that allows us to explore new worlds and share profound emotions</span>.</p>
@@ -203,6 +227,8 @@
             document.getElementById('tl-25-title').textContent = t.tl25T;
             document.getElementById('tl-25-desc').textContent = t.tl25D;
             document.getElementById('footer-contact').textContent = t.contact;
+            document.getElementById('privacy-link').textContent = t.privacy;
+            document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
         }
 
         function toggleDarkMode() {
