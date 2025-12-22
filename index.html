@@ -98,19 +98,23 @@
         .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; transition: 0.3s; }
         .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
-        /* [Footer] */
+        /* [Footer] 다른 페이지들과 동일하게 적용 */
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
         .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
         .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        
         .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
         .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        
         .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
         .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
         .footer-email a:hover { opacity: 1; color: var(--accent-color); }
+
+        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
+        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
+        .footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
+        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
 
         @media (max-width: 900px) {
             .about-intro-section { flex-direction: column; text-align: center; }
@@ -193,6 +197,20 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
+
+        <div class="footer-biz-info">
+            <p>상호명: 작성예정 | 대표자: 작성예정</p>
+            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
+            <p>주소: 작성예정</p>
+        </div>
+
+        <div class="footer-legal">
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+        </div>
+        
+        <div class="footer-copyright" id="copyright-text">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
     </footer>
 
     <script>
@@ -202,14 +220,18 @@
                 'introT': '민양테크를 소개합니다',
                 'introH': '민양테크는 창의적인 아이디어를 기반으로 <br> 새로운 미래를 만들어가는 곳입니다.',
                 'introD': '우리는 단순한 제품을 넘어 사용자에게 새로운 경험을 선사합니다.',
-                'h1': '민양테크', 'h2': '창의적인 아이디어', 'h3': '미래를 여는 기술', 'h4': '사용자 중심의 경험', 'h5': '민양테크와 함께하세요'
+                'h1': '민양테크', 'h2': '창의적인 아이디어', 'h3': '미래를 여는 기술', 'h4': '사용자 중심의 경험', 'h5': '민양테크와 함께하세요',
+                'privacy': '개인정보 처리방침',
+                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.'
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'latest': 'Latest News', 'more': 'Read More', 'contact': 'Contact Us!',
                 'introT': 'Introducing MinYang Tech',
                 'introH': 'MinYang Tech is where new futures are created <br> based on creative ideas.',
                 'introD': 'We go beyond simple products to provide new experiences to users.',
-                'h1': 'MinYang Tech', 'h2': 'Creative Ideas', 'h3': 'Future-Leading Tech', 'h4': 'User-Centric Experience', 'h5': 'Join MinYang Tech'
+                'h1': 'MinYang Tech', 'h2': 'Creative Ideas', 'h3': 'Future-Leading Tech', 'h4': 'User-Centric Experience', 'h5': 'Join MinYang Tech',
+                'privacy': 'Privacy Policy',
+                'copyright': 'Copyright © Minyang Tech. All rights reserved.'
             }
         };
 
@@ -228,6 +250,8 @@
             if(document.getElementById('intro-title')) document.getElementById('intro-title').textContent = t.introT;
             if(document.getElementById('intro-highlight')) document.getElementById('intro-highlight').innerHTML = t.introH;
             if(document.getElementById('intro-desc')) document.getElementById('intro-desc').textContent = t.introD;
+            if(document.getElementById('privacy-link')) document.getElementById('privacy-link').textContent = t.privacy;
+            if(document.getElementById('copyright-text')) document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
 
             if(document.getElementById('hero-1')) document.getElementById('hero-1').textContent = t.h1;
             if(document.getElementById('hero-2')) document.getElementById('hero-2').textContent = t.h2;
