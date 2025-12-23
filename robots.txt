@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://minyangtech.n-e.kr/sitemap.xml
