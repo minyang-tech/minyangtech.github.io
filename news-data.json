@@ -29,17 +29,17 @@
    {
   "id": 4,
   "date": "2025-12-22",
-  "title_ko": "Trigger_Card의 EULA를 확인해주세요.",
-  "title_en": "Please check the EULA for Trigger_Card.",
-  "content_ko": "민양테크는 법적 문제를 우려해 당사의 제품인 Trigger_Card에 EULA를 걸었습니다. \n 자세한 내용은 아래를 참고해주세요 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n 민양테크를 이용해주시는 고객여러분께 감사의 말씀 드립니다. \n 감사합니다. \n -민양테크",
-  "content_en": "Minyang Tech has implemented an EULA for our product, Trigger_Card, due to potential legal considerations. \n Please refer to the link below for more details 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n We would like to express our sincere gratitude to all our customers for choosing Minyang Tech. \n Thank you. \n - Minyang Tech",
+  "title_ko": "Trigger Card의 EULA를 확인해주세요.",
+  "title_en": "Please check the EULA for Trigger Card.",
+  "content_ko": "민양테크는 법적 문제를 우려해 당사의 제품인 Trigger Card에 EULA를 걸었습니다. \n 자세한 내용은 아래를 참고해주세요 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n 민양테크를 이용해주시는 고객여러분께 감사의 말씀 드립니다. \n 감사합니다. \n -민양테크",
+  "content_en": "Minyang Tech has implemented an EULA for our product, Trigger Card, due to potential legal considerations. \n Please refer to the link below for more details 👇 \n https://minyangtech.n-e.kr/EULA/Trigger_Card.html \n We would like to express our sincere gratitude to all our customers for choosing Minyang Tech. \n Thank you. \n - Minyang Tech",
   "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
 },
 {
   "id": 5,
   "date": "2025-12-23",
-  "title_ko": "Trigger_Card의 EULA가 업데이트 되었습니다..",
-  "title_en": "Please check the Updata For EULA for Trigger_Card.",
+  "title_ko": "Trigger Card의 EULA가 업데이트 되었습니다..",
+  "title_en": "Please check the Updata For EULA for Trigger Card.",
   "content_ko": "민양테크는 법적문제를 우려하여, 기존 EULA 4번의 \n [회사는 유저가 회사가 만든 게임을 플레이하다가 발생한 PC 문제, 2차 개조로 인한 문제 등 어떠한 문제도 회사는 책임을 지지 아니합니다.] 항목을 \n [회사는 유저가 회사가 만든 게임을 플레이하다가 발생한 PC 문제, 2차 개조로 인한 문제 또는 사용자의 부주의로 인한 계정 정보 유출이나, 공식적으로 제공되지 않는 외부 모드(Mod) 사용으로 인한 데이터 손실 등 어떠한 문제도 회사는 책임을 지지 아니합니다.] \n 와 같이 업데이트 하였습니다. \n 감사합니다. \n -민양테크",
   "content_en": "Minyang Tech has updated Section 4 of our existing EULA to address potential legal considerations. \n\n [Original]: The Company shall not be held liable for any issues, including PC malfunctions or problems arising from secondary modifications, occurring while the user is playing games developed by the Company. \n\n [Updated]: The Company shall not be held liable for any issues, including PC malfunctions, problems arising from secondary modifications, leakage of account information due to user negligence, or data loss caused by the use of unofficial third-party mods, occurring while the user is playing games developed by the Company. \n\n Thank you for your continued support. \n - Minyang Tech",
   "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
