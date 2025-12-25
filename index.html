@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>민양테크 | 게임·소프트웨어 개발</title>
+    
+    <title>민양테크 | 공식 홈페이지</title>
+    <meta name="description" content="창의적인 아이디어를 기반으로 새로운 미래를 만드는 게임 및 소프트웨어 개발사 민양테크입니다.">
+    <meta name="keywords" content="민양테크, Trigger Card, 게임 개발, 소프트웨어 개발">
+    <meta name="author" content="민양테크">
 
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://minyangtech.github.io/">
+    <meta property="og:url" content="https://minyangtech.n-e.kr/">
     <meta property="og:title" content="민양테크">
     <meta property="og:description" content="민양, 함께 만드는 무한한 가능성">
     <meta property="og:image" content="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true">
@@ -29,6 +35,7 @@
     </script>
 
     <style>
+        /* 기존 스타일 동일 (생략 없음) */
         :root { 
             --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
             --border-color: #eeeeee; --card-bg: #f9f9f9; --footer-bg: #f1f1f1; 
@@ -44,7 +51,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s, color 0.2s; overflow-x: hidden; }
 
-        /* [Header] */
         header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
         .header-left { display: flex; align-items: center; gap: 40px; }
         .logo-link img { height: 40px; width: auto; display: block; }
@@ -66,7 +72,6 @@
         input:checked + .slider { background-color: #4cd964; }
         input:checked + .slider:before { transform: translateX(22px); }
 
-        /* [Hero Slider] */
         .hero-container { position: relative; width: 100%; height: 500px; overflow: hidden; }
         .hero-wrapper { display: flex; width: 500%; height: 100%; transition: transform 0.6s ease-in-out; }
         .hero-slide { width: 20%; display: flex; justify-content: center; align-items: center; background-size: cover; background-repeat: no-repeat; background-position: center; background-color: #1a1a1a; color: white; }
@@ -75,7 +80,6 @@
         .dot { width: 12px; height: 12px; background: rgba(255,255,255,0.4); border-radius: 50%; cursor: pointer; transition: 0.3s; }
         .dot.active { background: #fff; width: 35px; border-radius: 10px; }
 
-        /* [About Intro Section] */
         .about-intro-section { padding: 100px 10%; display: flex; align-items: center; gap: 50px; background-color: var(--bg-color); }
         .about-image { flex: 1; max-width: 500px; border-radius: 20px; overflow: hidden; opacity: 0; transform: translateX(-50px); transition: 1s; }
         .about-image img { width: 100%; display: block; }
@@ -86,7 +90,6 @@
 
         .reveal.active { opacity: 1; transform: translate(0); }
 
-        /* [News Section] */
         .news-section { padding: 80px 5%; text-align: center; background: var(--card-bg); }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: 40px; }
         .news-card { background: var(--bg-color); border-radius: 15px; overflow: hidden; border: 1px solid var(--border-color); text-align: left; transition: 0.3s; cursor: pointer; }
@@ -98,7 +101,6 @@
         .more-btn { display: inline-block; margin-top: 30px; padding: 12px 30px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 25px; font-weight: bold; transition: 0.3s; }
         .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
-        /* [Footer] 다른 페이지들과 동일하게 적용 */
         footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
         .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
         .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
@@ -125,7 +127,7 @@
 <body class="reveal">
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="민양테크 로고"></a>
             <nav><ul class="nav-links">
                 <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
                 <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
