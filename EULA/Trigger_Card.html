@@ -6,159 +6,147 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EULA - Trigger Card - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../common.css">
+
     <style>
-        :root { 
-            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
-            --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; 
-        }
-        body.dark-mode { 
-            --bg-color: #121212; --text-color: #f0f0f0; --header-bg: #1e1e1e; 
-            --border-color: #333333; --card-bg: #1e1e1e;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: 0.2s; line-height: 1.6; }
+        /* EULA 전용 스타일 */
+        :root { --card-bg: #f9f9f9; }
+        body.dark-mode { --card-bg: #1e1e1e; }
 
-        /* [Header] */
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 5%; height: 80px; background: var(--header-bg); 
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; 
-        }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 35px; width: auto; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; }
-        
-        .controls { display: flex; align-items: center; gap: 20px; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* [EULA Content] */
-        .eula-container { max-width: 800px; margin: 60px auto; padding: 0 20px; }
+        .eula-container { max-width: 850px; margin: 40px auto; padding: 0 20px; }
         .eula-header { margin-bottom: 40px; text-align: center; }
-        .eula-header h1 { font-size: 2.5rem; color: var(--accent); margin-bottom: 10px; }
-        .eula-header p { opacity: 0.7; font-size: 0.9rem; }
+        .eula-header h1 { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 12px; font-weight: 800; }
+        .eula-header p { opacity: 0.6; font-size: 0.95rem; }
 
-        .eula-content { background: var(--card-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .eula-section { margin-bottom: 30px; }
-        .eula-section h2 { font-size: 1.25rem; margin-bottom: 15px; color: var(--accent); border-bottom: 2px solid var(--border-color); padding-bottom: 5px; display: inline-block; }
-        .eula-section p, .eula-section li { font-size: 1rem; margin-bottom: 10px; color: var(--text-color); opacity: 0.9; }
-        .eula-section ul { list-style: none; padding-left: 0; }
-        .eula-section ul li::before { content: "•"; color: var(--accent); font-weight: bold; display: inline-block; width: 1em; margin-left: 0; }
+        .eula-content { 
+            background: var(--card-bg); 
+            padding: 50px; 
+            border-radius: 20px; 
+            border: 1px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .eula-section { margin-bottom: 40px; }
+        .eula-section:last-child { margin-bottom: 0; }
+        
+        .eula-section h2 { 
+            font-size: 1.4rem; 
+            margin-bottom: 18px; 
+            color: var(--text-color); 
+            border-left: 5px solid var(--accent-color); 
+            padding-left: 15px; 
+            font-weight: 700;
+        }
+        
+        .eula-section p, .eula-section li { 
+            font-size: 1.05rem; 
+            line-height: 1.8; 
+            color: var(--text-color); 
+            opacity: 0.85;
+            word-break: keep-all;
+        }
+        
+        .eula-section ul { list-style: none; padding-left: 5px; }
+        .eula-section ul li { margin-bottom: 12px; position: relative; padding-left: 25px; }
+        .eula-section ul li::before { 
+            content: "✓"; 
+            position: absolute;
+            left: 0;
+            color: var(--accent-color); 
+            font-weight: bold; 
+        }
 
-        /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); margin-top: 100px; }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent); }
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
-
-        @media (max-width: 600px) {
-            .eula-content { padding: 20px; }
+        @media (max-width: 768px) {
+            .eula-content { padding: 30px 20px; }
             .eula-header h1 { font-size: 1.8rem; }
+            .eula-section h2 { font-size: 1.2rem; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="../index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
-            <nav><ul class="nav-links">
-                <li><a href="../NEWS.html">뉴스</a></li>
-                <li><a href="../AboutUs.html">About Us</a></li>
-                <li><a href="../Product.html">제품</a></li>
-            </ul></nav>
+            <a href="../index.html" class="logo-link">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../NEWS.html">뉴스</a></li>
+                    <li><a href="../AboutUs.html">About Us</a></li>
+                    <li><a href="../Product.html">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
-            <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
     </header>
 
-    <div class="eula-container">
+    <main class="eula-container">
         <div class="eula-header">
-            <h1>최종 사용자 라이선스 계약 (EULA)</h1>
-            <p>제품명: Trigger Card | 최종 수정일: 2025년 12월 23일</p>
+            <h1>최종 사용자 라이선스 계약</h1>
+            <p>제품명: <strong>Trigger Card</strong> | 최종 수정일: 2025년 12월 23일</p>
         </div>
 
         <div class="eula-content">
-            <div class="eula-section">
+            <section class="eula-section">
                 <h2>1. 사용권한</h2>
-                <p>민양테크 (이하 "회사")는 플레이어 (이하 "유저") 에게 게임을 "대여"한것으로, "유저"는 본 게임에 대한 소유권을 주장할 수 없습니다.</p>
-            </div>
+                <p>민양테크 (이하 "회사")는 플레이어 (이하 "유저") 에게 게임을 "대여"한 것으로, "유저"는 본 게임에 대한 소유권을 주장할 수 없습니다.</p>
+            </section>
 
-            <div class="eula-section">
+            <section class="eula-section">
                 <h2>2. 금지 사항</h2>
                 <ul>
-                    <li>"회사"는 "회사"가 만든 창작물인 게임의 복제 및 재배포를 금지합니다.</li>
-                    <li>"회사"는 "회사"가 만든 창작물인 게임의 개조를 금지합니다.</li>
-                    <li>"회사"는 "회사"가 만든 창작물인 게임의 상업적 이용을 금지합니다.</li>
-                    <li>"회사"는 "유저"가 "회사"의 창작물로 치트 및 해킹(데이터 조작, 핵, 치트 프로그램 등을 사용하여 게임의 정상적인 운영을 방해하는 행위)을 금지합니다.</li>
-                    <li>"회사"는 "유저"가 "회사"의 창작물인 에셋을 본 게임에서 추출하는 것을 금합니다.</li>
-                    <li>"회사"는 "유저"가 타인에게 계정을 공유하는 것을 금합니다. (이는 스팀 계정 공유를 통해 타인에게 게임 이용 권한을 넘기는 행위에 대해 개발자는 책임을 지지 않는다는 것을 의미합니다.)</li>
+                    <li>창작물인 게임의 무단 복제 및 재배포 행위</li>
+                    <li>게임 파일의 임의 개조 및 리버스 엔지니어링</li>
+                    <li>게임 및 관련 리소스를 활용한 모든 상업적 이용</li>
+                    <li>데이터 조작, 핵, 치트 프로그램 등을 사용한 비정상적 운영 방해</li>
+                    <li>게임 내 에셋(이미지, 사운드 등)을 무단으로 추출하는 행위</li>
+                    <li>타인에게 계정을 공유하여 게임 이용 권한을 넘기는 행위</li>
                 </ul>
-            </div>
+            </section>
 
-            <div class="eula-section">
+            <section class="eula-section">
                 <h2>3. 저작권</h2>
-                <p>이 게임 안에 들어간 에셋, 코드는 모두 "회사"의 소유입니다.</p>
-            </div>
+                <p>본 게임에 포함된 모든 에셋, 코드, 디자인 및 지식재산권은 "회사"의 독점 소유입니다.</p>
+            </section>
 
-            <div class="eula-section">
+            <section class="eula-section">
                 <h2>4. 면책 조항</h2>
-                <p>"회사"는 "유저"가 "회사"가 만든 게임을 플레이하다가 발생한 PC 문제, 2차 개조로 인한 문제 또는 사용자의 부주의로 인한 계정 정보 유출이나, 공식적으로 제공되지 않는 외부 모드(Mod) 사용으로 인한 데이터 손실 등 어떠한 문제도 "회사"는 책임을 지지 아니합니다.</p>
-            </div>
+                <p>"회사"는 "유저"가 게임 플레이 중 발생한 하드웨어 문제, 2차 개조로 인한 오류, 사용자 부주의로 인한 계정 유출 및 비공식 모드(Mod) 사용으로 인한 데이터 손실에 대해 책임을 지지 않습니다.</p>
+            </section>
 
-            <div class="eula-section">
-                <h2>5. 컨텐츠 제작</h2>
+            <section class="eula-section">
+                <h2>5. 컨텐츠 제작 가이드라인</h2>
                 <ul>
-                    <li>"회사"는 유튜브/치지직/트위치 등에서 방송(이하 "방송") 또는 리뷰 영상 제작을 허용합니다.</li>
-                    <li>"회사"는 플랫폼을 제공하는 광고 수익 창출은 허용하나, 게임 리소스 자체를 유료로 판매하는 행위를 금합니다.</li>
-                    <li>"회사"는 "방송"을 통해 "유저"가 "회사"의 제품에 대한 가치 훼손식 방식, 허위 사실 유포를 금합니다.</li>
+                    <li>유튜브, 치지직, 트위치 등에서의 방송 및 리뷰 영상 제작을 허용합니다.</li>
+                    <li>플랫폼 제공 광고 수익 창출은 가능하나, 리소스를 직접 유료 판매할 수 없습니다.</li>
+                    <li>제품의 가치를 훼손하거나 허위 사실을 유포하는 방식의 컨텐츠 제작은 금지됩니다.</li>
                 </ul>
-            </div>
+            </section>
 
-            <div class="eula-section">
-                <h2>6. 서비스 이용의 조건</h2>
-                <ul>
-                    <li>"유저"는 "유저"가 거주중인 국가 법령에 따라 이 제품을 이용할 수 있는 적정 연령이거나, 부모님의 동의를 얻었음을 보증합니다.</li>
-                    <li>게임의 밸런스 패치, 버그 수정 등을 위해 사전 고지 없이 게임 내용이 변경되거나 업데이트될 수 있습니다.</li>
-                </ul>
-            </div>
+            <section class="eula-section">
+                <h2>6. 서비스 이용 조건</h2>
+                <p>"유저"는 거주 국가 법령에 따른 적정 연령이거나 보호자의 동의를 얻었음을 보증합니다. 게임의 밸런스 및 버그 수정을 위해 사전 고지 없이 업데이트가 진행될 수 있습니다.</p>
+            </section>
 
-            <div class="eula-section">
-                <h2>7. 기술적 한계 및 보증 부인</h2>
-                <ul>
-                    <li>"회사"에서 만든 게임에 대한 버그는 최대한으로 수정하려 노력하나, 모든 오류의 "즉각적"인 수정을 보장하지는 못합니다.</li>
-                    <li>"회사"는 온라인 기능이 포함된 경우, 사용자의 인터넷 환경에 따른 접속 불량은 개발자가 책임지지 아니합니다.</li>
-                </ul>
-            </div>
+            <section class="eula-section">
+                <h2>7. 유료 컨텐츠 및 환불</h2>
+                <p>본 게임의 구매 취소 및 환불은 스팀(Steam)의 환불 정책을 최우선으로 따릅니다.</p>
+            </section>
 
-            <div class="eula-section">
-                <h2>8. 유료 컨텐츠 및 환불</h2>
-                <p>"회사"는 본 게임의 구매 취소 및 환불은 스팀의 환불 정책을 최우선으로 따릅니다.</p>
-            </div>
-
-            <div class="eula-section">
-                <h2>9. 관할 법원</h2>
-                <p>"회사"는 본 약관과 관련하여 분쟁이 발생할 경우, "회사"의 소재지를 관할하는 법원을 합의 관할 법원으로 합니다.</p>
-            </div>
+            <section class="eula-section">
+                <h2>8. 관할 법원</h2>
+                <p>본 약관과 관련하여 분쟁이 발생할 경우, "회사"의 소재지를 관할하는 법원을 합의 관할 법원으로 합니다.</p>
+            </section>
         </div>
-    </div>
+    </main>
 
     <footer>
         <h3>저희와 연락하세요!</h3>
@@ -173,17 +161,9 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
-
         <div class="footer-legal">
             <a href="../Policy.html">개인정보 처리방침</a>
         </div>
-        
         <div class="footer-copyright">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
@@ -194,7 +174,6 @@
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
-
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
