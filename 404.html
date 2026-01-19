@@ -6,77 +6,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 Not Found - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent-color: #007bff; }
-        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 40px; width: auto; display: block; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
-
-        .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
-        .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
-
-        .toggle-container { display: flex; align-items: center; }
-        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #4cd964; }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* [Main 404 Content] */
+        /* 404 전용 스타일 */
         .error-container {
             flex: 1;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 80px 5%;
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center;
+            text-align: center; 
+            padding: 100px 5%;
         }
-        .error-images { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 20px; }
-        .img-404 { width: 300px; max-width: 80%; height: auto; transform: translateX(-20px); }
-        .img-mascot { width: 200px; max-width: 60%; height: auto; margin-top: -30px; z-index: 2; }
-        .error-msg { font-size: 1.5rem; margin: 10px 0 40px; opacity: 0.8; font-weight: 500; }
-        .home-btn { padding: 15px 40px; background: #007bff; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: all 0.2s ease; box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); }
-        .home-btn:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4); }
 
-        /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent-color); }
+        .error-images { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            margin-bottom: 30px;
+            position: relative;
+        }
 
-        /* 추가된 스타일 */
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
+        .img-404 { 
+            width: 320px; 
+            max-width: 80%; 
+            height: auto; 
+            opacity: 0.9;
+        }
 
+        .img-mascot { 
+            width: 180px; 
+            max-width: 50%; 
+            height: auto; 
+            margin-top: -40px; 
+            z-index: 2;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+        }
+
+        .error-msg { 
+            font-size: 1.5rem; 
+            margin-bottom: 40px; 
+            opacity: 0.8; 
+            font-weight: 600;
+            word-break: keep-all;
+        }
+
+        .home-btn { 
+            padding: 16px 45px; 
+            background: var(--accent-color); 
+            color: white; 
+            text-decoration: none; 
+            border-radius: 50px; 
+            font-weight: 700; 
+            transition: all 0.3s ease; 
+            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3); 
+        }
+
+        .home-btn:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 8px 25px rgba(0, 123, 255, 0.4); 
+            filter: brightness(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .error-container { padding: 60px 5% 100px; }
+            .img-404 { width: 250px; }
+            .img-mascot { width: 140px; margin-top: -30px; }
+            .error-msg { font-size: 1.2rem; }
+        }
     </style>
 </head>
 <body>
-    <script>if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');</script>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav><ul class="nav-links">
-                <li><a href="NEWS.html">뉴스</a></li>
-                <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="Product.html">제품</a></li>
-            </ul></nav>
+            <a href="index.html" class="logo-link">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
             <div class="lang-dropdown">
@@ -87,7 +101,10 @@
                 </ul>
             </div>
             <div class="toggle-container">
-                <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
             </div>
         </div>
     </header>
@@ -114,41 +131,53 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
-
         <div class="footer-legal">
             <a href="Policy.html">개인정보 처리방침</a>
         </div>
-
-        <div class="footer-copyright">
+        <div class="footer-copyright" id="copyright-text">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
     </footer>
 
     <script>
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'langLabel': '언어 선택 ▾', 'error': '요청하신 페이지를 찾을 수 없습니다.', 'home': '홈으로 돌아가기', 'contact': '저희와 연락하세요!' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾', 'error': "The page you requested could not be found.", 'home': 'Back to Home', 'contact': 'Contact Us!' }
+            'ko': { 
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 
+                'langLabel': '언어 선택 ▾', 'error': '요청하신 페이지를 찾을 수 없습니다.', 
+                'home': '홈으로 돌아가기', 'contact': '저희와 연락하세요!',
+                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.'
+            },
+            'en': { 
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 
+                'langLabel': 'Language ▾', 'error': "The page you requested could not be found.", 
+                'home': 'Back to Home', 'contact': 'Contact Us!',
+                'copyright': 'Copyright © Minyang Tech. All rights reserved.'
+            }
         };
+
         function changeLanguage(lang) {
             localStorage.setItem('selectedLang', lang);
-            document.getElementById('current-lang-label').textContent = translations[lang].langLabel;
-            document.getElementById('error-text').textContent = translations[lang].error;
-            document.getElementById('home-btn-text').textContent = translations[lang].home;
-            document.getElementById('footer-contact').textContent = translations[lang].contact;
+            const t = translations[lang];
+            document.getElementById('nav-news').textContent = t.news;
+            document.getElementById('nav-about').textContent = t.about;
+            document.getElementById('nav-products').textContent = t.products;
+            document.getElementById('current-lang-label').textContent = t.langLabel;
+            document.getElementById('error-text').textContent = t.error;
+            document.getElementById('home-btn-text').textContent = t.home;
+            document.getElementById('footer-contact').textContent = t.contact;
+            document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
         }
+
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
         }
+
         window.onload = () => {
-            changeLanguage(localStorage.getItem('selectedLang') || 'ko');
+            const savedLang = localStorage.getItem('selectedLang') || 'ko';
+            changeLanguage(savedLang);
             if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
                 document.getElementById('dark-mode-toggle').checked = true;
             }
         };
