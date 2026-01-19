@@ -6,49 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trigger Card - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
     <style>
-        :root { 
-            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
-            --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; 
-        }
-        body.dark-mode { 
-            --bg-color: #121212; --text-color: #f0f0f0; --header-bg: #1e1e1e; 
-            --border-color: #333333; --card-bg: #1e1e1e;
-        }
+        /* 제품 상세 페이지 전용 스타일 */
+        :root { --card-bg: #f9f9f9; }
+        body.dark-mode { --card-bg: #1e1e1e; }
         
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: 0.2s; overflow-x: hidden; }
-
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 5%; height: 80px; background: var(--header-bg); 
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; 
-        }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 35px; width: auto; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; }
-        
-        .controls { display: flex; align-items: center; gap: 20px; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
         .detail-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-        .product-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 30px; text-align: center; color: var(--accent); }
+        .product-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 30px; text-align: center; color: var(--accent-color); }
         
         .product-main { 
             display: flex; gap: 30px; background: var(--card-bg); 
             padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); 
-            margin-bottom: 40px; 
+            margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
         }
+        
         .product-media-side { flex: 1.4; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
         .main-viewer { 
             width: 100%; aspect-ratio: 16 / 9; background: #000; 
-            border-radius: 10px; overflow: hidden; position: relative;
+            border-radius: 12px; overflow: hidden; position: relative;
         }
         .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
         
@@ -61,74 +39,55 @@
         .thumb-list::-webkit-scrollbar { display: none; }
 
         .thumb-item { 
-            width: 120px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 6px; 
-            cursor: pointer; opacity: 0.4; transition: 0.3s; border: 2px solid transparent; overflow: hidden;
+            width: 120px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 8px; 
+            cursor: pointer; opacity: 0.5; transition: 0.3s; border: 2px solid transparent; overflow: hidden;
         }
-        .thumb-item.active { opacity: 1; border-color: var(--accent); transform: scale(1.05); }
+        .thumb-item.active { opacity: 1; border-color: var(--accent-color); transform: scale(1.05); }
         .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
 
         .slide-btn { 
             position: absolute; top: 50%; transform: translateY(-50%);
             background: rgba(0,0,0,0.5); color: white; border: none;
             width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; z-index: 10;
+            display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.2s;
         }
-        .slide-btn:hover { background: var(--accent); }
+        .slide-btn:hover { background: var(--accent-color); }
         .prev-btn { left: 5px; } .next-btn { right: 5px; }
 
         .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .info-table { width: 100%; border-collapse: collapse; }
-        .info-table th { text-align: left; padding: 12px 0; color: var(--accent); border-bottom: 1px solid var(--border-color); white-space: nowrap; }
-        .info-table td { padding: 12px 10px; border-bottom: 1px solid var(--border-color); font-weight: 500; font-size: 0.95rem; }
+        .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
+        .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
         
-        .email-link { color: var(--text-color); text-decoration: none; transition: 0.3s; }
-        .email-link:hover { color: var(--accent); }
-
+        /* itch.io 버튼 스타일 */
         .buy-button { 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
-            background: #222; color: #fff; text-decoration: none; padding: 15px; 
-            border-radius: 8px; font-weight: 700; transition: 0.3s; margin-top: 20px;
+            background: #fa5c5c; color: #fff; text-decoration: none; padding: 16px; 
+            border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(250, 92, 92, 0.3);
         }
-        .buy-button:hover { background: var(--accent); }
+        .buy-button:hover { background: #ff4444; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(250, 92, 92, 0.4); }
 
-        /* EULA 버튼 스타일 추가 */
         .eula-button {
             display: flex; align-items: center; justify-content: center; gap: 8px;
             background: transparent; color: var(--text-color); text-decoration: none; padding: 12px;
-            border-radius: 8px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; margin-top: 10px;
+            border-radius: 10px; font-weight: 600; font-size: 0.9rem; transition: 0.3s; margin-top: 12px;
             border: 1px solid var(--border-color); opacity: 0.8;
         }
         .eula-button:hover { background: var(--border-color); opacity: 1; }
 
-        .specs-section { background: var(--card-bg); padding: 30px; border-radius: 15px; border: 1px solid var(--border-color); margin-bottom: 40px; }
-        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-        .spec-card { position: relative; }
-        .spec-list { list-style: none; margin-top: 15px; }
-        .spec-list li { padding: 8px 0; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
-        .spec-list li b { color: var(--accent); margin-right: 5px; }
+        .specs-section { background: var(--card-bg); padding: 35px; border-radius: 15px; border: 1px solid var(--border-color); margin-bottom: 40px; }
+        .specs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+        .spec-list { list-style: none; margin-top: 20px; }
+        .spec-list li { padding: 10px 0; border-bottom: 1px solid var(--border-color); font-size: 0.95rem; }
+        .spec-list li b { color: var(--accent-color); margin-right: 8px; width: 80px; display: inline-block; }
 
-        .section-header { font-size: 1.5rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 12px; }
+        .section-header { font-size: 1.6rem; margin-bottom: 25px; border-left: 5px solid var(--accent-color); padding-left: 15px; font-weight: 700; }
 
-        /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent); }
-
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
-        
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
-
-        @media (max-width: 850px) { .product-main, .specs-grid { flex-direction: column; } }
+        @media (max-width: 850px) { 
+            .product-main { flex-direction: column; } 
+            .specs-grid { grid-template-columns: 1fr; gap: 30px; }
+        }
     </style>
 </head>
 <body>
@@ -138,16 +97,19 @@
             <nav><ul class="nav-links">
                 <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
                 <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                <li><a href="Product.html" id="nav-products" style="color:var(--accent)">제품</a></li>
+                <li><a href="Product.html" id="nav-products" style="color:var(--accent-color)">제품</a></li>
             </ul></nav>
         </div>
         <div class="controls">
-            <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+            <div class="toggle-container">
+                <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+            </div>
         </div>
     </header>
 
-    <div class="detail-container">
+    <main class="detail-container">
         <h1 class="product-title">Trigger Card</h1>
+        
         <div class="product-main">
             <div class="product-media-side">
                 <div class="main-viewer" id="main-viewer"></div>
@@ -157,18 +119,23 @@
                     <button class="slide-btn next-btn" onclick="scrollThumbs(1)"><i class="fa-solid fa-chevron-right"></i></button>
                 </div>
             </div>
+
             <div class="product-info-side">
                 <table class="info-table">
                     <tr><th>출시일</th><td>유기한 연기</td></tr>
-                    <tr><th>장르</th><td>전략 카드 게임, 액션, FPS</td></tr>
-                    <tr><th>플랫폼</th><td>Steam (Windows)</td></tr>
+                    <tr><th>장르</th><td>전략 카드, 액션, FPS</td></tr>
+                    <tr><th>플랫폼</th><td>itch.io (Windows)</td></tr>
                     <tr><th>엔진</th><td>Unity3D</td></tr>
                     <tr><th>지원 언어</th><td>한국어, 영어</td></tr>
-                    <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" class="email-link">minyangtech.info@gmail.com</a></td></tr>
+                    <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">Email 보내기</a></td></tr>
                 </table>
                 <div>
-                    <a href="https://store.steampowered.com/" target="_blank" class="buy-button"><i class="fa-brands fa-steam"></i> Steam 상점에서 확인하기</a>
-                    <a href="https://minyangtech.n-e.kr/EULA/Trigger_Card.html" target="_blank" class="eula-button"><i class="fa-solid fa-file-contract"></i> EULA 약관 보기</a>
+                    <a href="https://itch.io/" target="_blank" class="buy-button">
+                        <i class="fa-brands fa-itch-io"></i> itch.io에서 확인하기
+                    </a>
+                    <a href="EULA/Trigger_Card.html" target="_blank" class="eula-button">
+                        <i class="fa-solid fa-file-contract"></i> EULA 약관 보기
+                    </a>
                 </div>
             </div>
         </div>
@@ -177,29 +144,29 @@
             <h2 class="section-header">시스템 요구 사항</h2>
             <div class="specs-grid">
                 <div class="spec-card">
-                    <h3 style="color:var(--accent)"><i class="fa-solid fa-microchip"></i> 최소 사양</h3>
+                    <h3 style="color:var(--accent-color)"><i class="fa-solid fa-microchip"></i> 최소 사양</h3>
                     <ul class="spec-list">
-                        <li><b>운영체제:</b> Windows 10 (64-bit)</li>
-                        <li><b>프로세서:</b> i3-6100</li>
-                        <li><b>메모리:</b> 4 GB RAM</li>
-                        <li><b>그래픽:</b> GTX 750 Ti</li>
+                        <li><b>운영체제</b> Windows 10 (64-bit)</li>
+                        <li><b>프로세서</b> Intel Core i3-6100</li>
+                        <li><b>메모리</b> 4 GB RAM</li>
+                        <li><b>그래픽</b> NVIDIA GTX 750 Ti</li>
                     </ul>
                 </div>
                 <div class="spec-card">
-                    <h3 style="color:var(--accent)"><i class="fa-solid fa-gauge-high"></i> 권장 사양</h3>
+                    <h3 style="color:var(--accent-color)"><i class="fa-solid fa-gauge-high"></i> 권장 사양</h3>
                     <ul class="spec-list">
-                        <li><b>운영체제:</b> Windows 11 (64-bit)</li>
-                        <li><b>프로세서:</b> i5-9600K</li>
-                        <li><b>메모리:</b> 8 GB RAM</li>
-                        <li><b>그래픽:</b> GTX 1060</li>
+                        <li><b>운영체제</b> Windows 11 (64-bit)</li>
+                        <li><b>프로세서</b> Intel Core i5-9600K</li>
+                        <li><b>메모리</b> 8 GB RAM</li>
+                        <li><b>그래픽</b> NVIDIA GTX 1060</li>
                     </ul>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <footer>
-        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <h3>저희와 연락하세요!</h3>
         <div class="footer-sns">
             <a href="https://x.com/minyang_tech" target="_blank">
                 <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
@@ -211,28 +178,18 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
-
         <div class="footer-legal">
             <a href="Policy.html">개인정보 처리방침</a>
         </div>
-        
         <div class="footer-copyright">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
     </footer>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         const mediaData = [
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' },
             { type: 'video', url: 'dQw4w9WgXcQ' },
-            { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' }
         ];
