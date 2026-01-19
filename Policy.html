@@ -6,90 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>개인정보 처리방침 - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
     <style>
-        :root { 
-            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
-            --border-color: #eeeeee; --accent: #007bff; --card-bg: #f9f9f9; 
-        }
-        body.dark-mode { 
-            --bg-color: #121212; --text-color: #f0f0f0; --header-bg: #1e1e1e; 
-            --border-color: #333333; --card-bg: #1e1e1e;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: 0.2s; line-height: 1.6; }
+        /* Policy 전용 스타일 */
+        :root { --card-bg: #f9f9f9; }
+        body.dark-mode { --card-bg: #1e1e1e; }
 
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 0 5%; height: 80px; background: var(--header-bg); 
-            border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; 
-        }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 35px; width: auto; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; }
-        
-        .controls { display: flex; align-items: center; gap: 20px; }
-        .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: var(--accent); }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* 본문 스타일 */
-        .content-container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
-        .page-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; text-align: center; color: var(--accent); }
+        .content-container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .page-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; text-align: center; color: var(--accent-color); }
         .last-updated { text-align: center; font-size: 0.9rem; opacity: 0.6; margin-bottom: 50px; }
 
         .policy-section { background: var(--card-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); margin-bottom: 30px; }
-        .section-header { font-size: 1.3rem; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 12px; color: var(--text-color); }
-        .policy-text { font-size: 1rem; color: var(--text-color); opacity: 0.9; margin-bottom: 15px; }
+        .section-header { font-size: 1.3rem; margin-bottom: 20px; border-left: 4px solid var(--accent-color); padding-left: 12px; color: var(--text-color); font-weight: 700; }
+        .policy-text { font-size: 1rem; color: var(--text-color); opacity: 0.9; margin-bottom: 15px; line-height: 1.7; }
         .policy-list { list-style: none; padding-left: 5px; }
-        .policy-list li { margin-bottom: 10px; position: relative; padding-left: 20px; }
-        .policy-list li::before { content: "•"; position: absolute; left: 0; color: var(--accent); font-weight: bold; }
+        .policy-list li { margin-bottom: 10px; position: relative; padding-left: 20px; color: var(--text-color); opacity: 0.9; }
+        .policy-list li::before { content: "•"; position: absolute; left: 0; color: var(--accent-color); font-weight: bold; }
         
-        .contact-box { background: rgba(0, 123, 255, 0.05); border: 1px dashed var(--accent); padding: 20px; border-radius: 10px; margin-top: 10px; }
+        .contact-box { background: rgba(0, 123, 255, 0.05); border: 1px dashed var(--accent-color); padding: 20px; border-radius: 10px; margin-top: 10px; }
+        .contact-box p { margin-bottom: 5px; color: var(--text-color); }
 
-        /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); margin-top: 80px;}
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent); }
-
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
-
-        /* 저작권 문구 스타일 */
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
-
-        @media (max-width: 600px) { .page-title { font-size: 1.8rem; } .policy-section { padding: 25px; } }
+        @media (max-width: 768px) {
+            .page-title { font-size: 1.8rem; }
+            .policy-section { padding: 25px; }
+            .content-container { margin: 20px auto; }
+        }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
-            <nav><ul class="nav-links">
-                <li><a href="NEWS.html">뉴스</a></li>
-                <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="Product.html">제품</a></li>
-            </ul></nav>
+            <a href="index.html" class="logo-link">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html">뉴스</a></li>
+                    <li><a href="AboutUs.html">About Us</a></li>
+                    <li><a href="Product.html">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
-            <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
     </header>
 
-    <div class="content-container">
+    <main class="content-container">
         <h1 class="page-title">개인정보 처리방침</h1>
         <p class="last-updated">시행일: 2025년 12월 22일</p>
 
@@ -134,37 +104,28 @@
         </div>
 
         <div class="policy-section">
-            <h2 class="section-header">6. 정보주체와 법정대리인의 권리·의무 및 행사방법</h2>
-            <p class="policy-text">이용자는 언제든지 회사에 개인정보 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다.</p>
-            <p class="policy-text">권리 행사는 이메일(<a href="mailto:minyangtech.info@gmail.com" style="color:var(--accent)">minyangtech.info@gmail.com</a>)을 통해 서면으로 접수하실 수 있으며, 회사는 이에 대해 지체 없이 조치하겠습니다.</p>
+            <h2 class="section-header">6. 정보주체의 권리 행사 방법</h2>
+            <p class="policy-text">이용자는 언제든지 회사에 개인정보 열람, 정정, 삭제, 처리정지 요구 등의 권리를 행사할 수 있습니다. 권리 행사는 이메일을 통해 접수하실 수 있으며, 회사는 이에 대해 지체 없이 조치하겠습니다.</p>
         </div>
 
         <div class="policy-section">
-            <h2 class="section-header">7. 개인정보 보호책임자 및 고충처리 부서</h2>
+            <h2 class="section-header">7. 개인정보 보호책임자</h2>
             <p class="policy-text">개인정보 처리에 관한 업무를 총괄해서 책임지고, 관련 불만 처리 및 피해 구제를 위하여 아래와 같이 개인정보 보호책임자를 지정하고 있습니다.</p>
             <div class="contact-box">
                 <p><strong>성명:</strong> 진민기</p>
-                <p><strong>연락처:</strong> <a href="mailto:minyangtech.info@gmail.com" style="color:var(--accent)">minyangtech.info@gmail.com</a></p>
+                <p><strong>연락처:</strong> <a href="mailto:minyangtech.info@gmail.com" style="color:var(--accent-color); font-weight: bold;">minyangtech.info@gmail.com</a></p>
             </div>
         </div>
 
         <div class="policy-section">
-            <h2 class="section-header">8. 정보주체의 권익침해에 대한 구제방법</h2>
-            <p class="policy-text">이용자는 개인정보 침해로 인한 구제를 받기 위해 아래의 기관에 분쟁 해결이나 상담을 신청할 수 있습니다.</p>
+            <h2 class="section-header">8. 권익침해 구제방법</h2>
+            <p class="policy-text">개인정보 침해 상담이 필요한 경우 아래 기관에 문의하실 수 있습니다.</p>
             <ul class="policy-list">
-                <li>개인정보분쟁조정위원회 : (국번없이) 1833-6972 (www.kopis.go.kr)</li>
-                <li>개인정보침해신고센터 : (국번없이) 118 (privacy.kisa.or.kr)</li>
-                <li>대검찰청 사이버수사과 : (국번없이) 1301 (www.spo.go.kr)</li>
-                <li>경찰청 사이버수사국 : (국번없이) 182 (ecrm.cyber.go.kr)</li>
+                <li>개인정보분쟁조정위원회 : 1833-6972 (www.kopis.go.kr)</li>
+                <li>개인정보침해신고센터 : 118 (privacy.kisa.or.kr)</li>
             </ul>
         </div>
-
-        <div class="policy-section">
-            <h2 class="section-header">9. 개인정보 처리방침의 변경</h2>
-            <p class="policy-text">본 방침은 시행일로부터 적용되며, 법령 및 방침에 따른 변경 내용이 있을 경우 아래의 경로를 통해 공지합니다.</p>
-            <p class="policy-text">민양테크 웹사이트 및 서비스 중인 게임 내 공지사항</p>
-        </div>
-    </div>
+    </main>
 
     <footer>
         <h3 id="footer-contact">저희와 연락하세요!</h3>
@@ -179,17 +140,9 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
-
         <div class="footer-legal">
-            <a href="Policy.html" style="color:var(--accent); opacity:1;">개인정보 처리방침</a>
+            <a href="Policy.html" style="color:var(--accent-color); opacity:1; font-weight: bold;">개인정보 처리방침</a>
         </div>
-
         <div class="footer-copyright">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
