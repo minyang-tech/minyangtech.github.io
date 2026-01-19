@@ -6,121 +6,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
     <style>
-        :root { 
-            --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; 
-            --border-color: #eeeeee; --accent-color: #007bff; --content-text: #555555;
-            --timeline-line: #e0e0e0; --card-bg: #fdfdfd;
-        }
-        body.dark-mode { 
-            --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; 
-            --border-color: #333333; --content-text: #b0b0b0;
-            --timeline-line: #444444; --card-bg: #1e1e1e;
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s, color 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        /* [Header] */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 40px; width: auto; display: block; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; display: block; line-height: 80px; }
-        
-        .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 40px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); padding: 5px 0; z-index: 1001; }
-        .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; color: var(--text-color); }
-        .lang-menu li:hover { background: var(--border-color); }
-
-        .toggle-container { display: flex; align-items: center; }
-        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #4cd964; }
-        input:checked + .slider:before { transform: translateX(22px); }
-
-        /* [Main Content] */
+        /* AboutUs.html 전용 스타일 */
         main { flex: 1; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
-        .about-section { max-width: 900px; margin: 80px auto; padding: 0 5%; line-height: 1.8; }
-        .about-section h1 { font-size: 3.5rem; margin-bottom: 50px; text-align: center; font-weight: 800; color: var(--text-color); }
-        .about-content { font-size: 1.15rem; color: var(--content-text); text-align: justify; margin-bottom: 100px; }
-        .about-content p { margin-bottom: 30px; }
+        .about-section { max-width: 900px; margin: 60px auto; padding: 0 5%; line-height: 1.8; }
+        .about-section h1 { font-size: clamp(2.5rem, 8vw, 3.5rem); margin-bottom: 40px; text-align: center; font-weight: 800; }
+        .about-content { font-size: 1.1rem; color: var(--content-text); text-align: justify; margin-bottom: 80px; }
+        .about-content p { margin-bottom: 25px; }
         .highlight { color: var(--accent-color); font-weight: 600; }
 
-        /* [Team Section] */
-        .team-title { text-align: center; font-size: 2.5rem; margin-bottom: 50px; font-weight: 700; color: var(--text-color); }
-        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-bottom: 120px; }
-        .team-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px 30px; border-radius: 20px; text-align: center; transition: 0.3s; }
-        .team-card:hover { transform: translateY(-10px); box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .team-card i { font-size: 3rem; color: var(--accent-color); margin-bottom: 20px; }
-        .team-card h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--text-color); }
-        .team-card .role { display: inline-block; padding: 4px 12px; background: var(--accent-color); color: white; border-radius: 15px; font-size: 0.85rem; font-weight: 600; margin-bottom: 15px; }
-        .team-card p { color: var(--content-text); font-size: 1rem; }
+        /* Team Section */
+        .team-title { text-align: center; font-size: 2rem; margin-bottom: 40px; font-weight: 700; }
+        .team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-bottom: 100px; }
+        .team-card { background: var(--card-bg); border: 1px solid var(--border-color); padding: 40px 25px; border-radius: 20px; text-align: center; transition: 0.3s; }
+        .team-card:hover { transform: translateY(-10px); }
+        .team-card i { font-size: 2.5rem; color: var(--accent-color); margin-bottom: 15px; }
+        .team-card h3 { font-size: 1.4rem; margin-bottom: 8px; }
+        .team-card .role { display: inline-block; padding: 4px 12px; background: var(--accent-color); color: white; border-radius: 15px; font-size: 0.8rem; font-weight: 600; margin-bottom: 12px; }
 
-        /* [History] */
-        .history-title { text-align: center; font-size: 2.5rem; margin-bottom: 60px; font-weight: 700; color: var(--text-color); }
-        .timeline-container { position: relative; max-width: 1000px; margin: 100px auto 200px; padding: 0 50px; }
-        .timeline-line { position: absolute; top: 50%; left: 50px; right: 50px; height: 4px; background: var(--timeline-line); transform: translateY(-50%); z-index: 1; }
+        /* History */
+        .history-title { text-align: center; font-size: 2rem; margin-bottom: 50px; font-weight: 700; }
+        .timeline-container { position: relative; max-width: 800px; margin: 0 auto 150px; padding: 0 20px; }
+        .timeline-line { position: absolute; top: 50%; left: 0; right: 0; height: 4px; background: var(--timeline-line); transform: translateY(-50%); z-index: 1; }
         .timeline-points { display: flex; justify-content: space-around; position: relative; z-index: 2; }
-        .year-point { position: relative; cursor: pointer; padding: 20px 0; }
-        .dot { width: 24px; height: 24px; background: var(--bg-color); border: 4px solid var(--accent-color); border-radius: 50%; margin: 0 auto; transition: 0.3s; }
-        .year-point:hover .dot { transform: scale(1.3); background: var(--accent-color); }
-        .year-label { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); font-weight: 800; font-size: 1.4rem; color: var(--text-color); }
+        .year-point { position: relative; cursor: pointer; text-align: center; }
+        .dot { width: 20px; height: 20px; background: var(--bg-color); border: 4px solid var(--accent-color); border-radius: 50%; margin: 0 auto; transition: 0.3s; }
+        .year-label { position: absolute; top: -35px; left: 50%; transform: translateX(-50%); font-weight: 800; font-size: 1.2rem; }
         
         .timeline-info { 
-            position: absolute; top: 60px; left: 50%; transform: translateX(-50%) translateY(10px);
-            width: 280px; background: var(--header-bg); border: 1px solid var(--border-color);
-            padding: 20px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            opacity: 0; visibility: hidden; transition: all 0.3s ease; pointer-events: none; text-align: center;
+            position: absolute; top: 40px; left: 50%; transform: translateX(-50%);
+            width: 250px; background: var(--header-bg); border: 1px solid var(--border-color);
+            padding: 15px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            opacity: 0; visibility: hidden; transition: 0.3s; pointer-events: none;
         }
-        .year-point:hover .timeline-info { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-        .timeline-info h4 { color: var(--accent-color); margin-bottom: 10px; font-size: 1.1rem; }
-        .timeline-info p { font-size: 0.95rem; line-height: 1.5; color: var(--content-text); }
+        .year-point:hover .timeline-info { opacity: 1; visibility: visible; }
 
-        /* [Footer] */
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); }
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent-color); }
-
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
-
+        /* 모바일 대응 (AboutUs 전용) */
         @media (max-width: 768px) {
-            .about-section h1 { font-size: 2.5rem; }
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 13px; }
             .timeline-line { display: none; }
-            .timeline-points { flex-direction: column; gap: 50px; align-items: center; }
-            .timeline-info { position: relative; top: 20px; opacity: 1; visibility: visible; transform: none; width: 100%; }
-            .year-label { position: static; transform: none; margin-bottom: 10px; text-align: center; }
-            .team-grid { grid-template-columns: 1fr; }
+            .timeline-points { flex-direction: column; gap: 40px; }
+            .timeline-info { position: static; opacity: 1; visibility: visible; transform: none; width: 100%; margin-top: 10px; }
+            .year-label { position: static; transform: none; display: block; margin-bottom: 5px; }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
-            <nav><ul class="nav-links">
-                <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
-                <li><a href="AboutUs.html" id="nav-about" style="color:var(--accent-color)">About Us</a></li>
-                <li><a href="Product.html" id="nav-products">제품</a></li>
-            </ul></nav>
+            <a href="index.html" class="logo-link">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about" style="color:var(--accent-color)">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
             <div class="lang-dropdown">
@@ -188,17 +135,9 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
-
         <div class="footer-legal">
             <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
         </div>
-        
         <div class="footer-copyright" id="copyright-text">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
@@ -215,10 +154,7 @@
                 'tl25T': '민양테크의 시작', 'tl25D': '개발팀 \'민양테크\' 설립 및 첫 프로젝트 \'Trigger Card\' 개발 착수',
                 'privacy': '개인정보 처리방침',
                 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.',
-                'content': `
-                    <p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다.</p>
-                    <p>저희는 게임이 단순한 오락을 넘어, <span class="highlight">새로운 세상을 탐험하고, 깊이 있는 감정을 공유하며, 때로는 예상치 못한 영감을 주는 예술 형식</span>이라고 믿습니다.</p>
-                    <p>아름답고 독특한 창의적인 경험을 추구하며, 기존의 틀에 얽매이지 않는 <span class="highlight">과감한 시도와 혁신</span>을 두려워하지 않습니다.`
+                'content': `<p>민양테크는 단순한 게임 개발 스튜디오를 넘어, <span class="highlight">창의적인 아이디어와 기술력을 바탕으로 몰입감 넘치는 인터랙티브 경험을 선사하는 소규모 개발팀</span>입니다.</p><p>저희는 게임이 단순한 오락을 넘어, <span class="highlight">새로운 세상을 탐험하고 영감을 주는 예술 형식</span>이라고 믿습니다.</p>`
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'langLabel': 'Language ▾',
@@ -229,10 +165,7 @@
                 'tl25T': 'The Beginning', 'tl25D': 'Founded MinYang Tech & Commenced development of \'Trigger Card\'',
                 'privacy': 'Privacy Policy',
                 'copyright': 'Copyright © Minyang Tech. All rights reserved.',
-                'content': `
-                    <p>MinYang Tech is a <span class="highlight">small development team that delivers immersive interactive experiences based on creative ideas</span>.</p>
-                    <p>We believe games are an <span class="highlight">art form that allows us to explore new worlds and share profound emotions</span>.</p>
-                    <p>We relentlessly pursue unique experiences, unafraid of <span class="highlight">bold attempts and innovation</span>.`
+                'content': `<p>MinYang Tech is a <span class="highlight">small development team that delivers immersive interactive experiences</span>.</p><p>We believe games are an <span class="highlight">art form that allows us to explore new worlds</span>.</p>`
             }
         };
 
@@ -250,7 +183,6 @@
             localStorage.setItem('selectedLang', lang);
             document.documentElement.lang = lang;
             const t = translations[lang];
-
             document.getElementById('nav-news').textContent = t.news;
             document.getElementById('nav-about').textContent = t.about;
             document.getElementById('nav-products').textContent = t.products;
@@ -263,8 +195,6 @@
             document.getElementById('footer-contact').textContent = t.contact;
             document.getElementById('privacy-link').textContent = t.privacy;
             document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
-            
-            // Team translations
             document.getElementById('team-intro-title').textContent = t.teamTitle;
             document.getElementById('team-member1-name').textContent = t.m1Name;
             document.getElementById('team-member1-role').textContent = t.m1Role;
