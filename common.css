@@ -1,0 +1,116 @@
+/* [Root Variables] */
+:root { 
+    --bg-color: #ffffff; 
+    --text-color: #333333; 
+    --header-bg: #ffffff; 
+    --border-color: #eeeeee; 
+    --card-bg: #f9f9f9; 
+    --footer-bg: #f1f1f1; 
+    --accent-color: #007bff; 
+    --content-text: #555555;
+    --timeline-line: #e0e0e0;
+}
+
+body.dark-mode { 
+    --bg-color: #121212; 
+    --text-color: #e0e0e0; 
+    --header-bg: #1e1e1e; 
+    --border-color: #333333; 
+    --card-bg: #1e1e1e; 
+    --footer-bg: #0a0a0a; 
+    --accent-color: #3391ff; 
+    --content-text: #b0b0b0;
+    --timeline-line: #444444;
+}
+
+/* [Reset & Base] */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Pretendard', sans-serif; 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    transition: background 0.2s, color 0.2s; 
+    overflow-x: hidden; 
+}
+a { text-decoration: none; color: inherit; }
+
+/* [Header] */
+header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 5%; 
+    height: 80px; 
+    background: var(--header-bg); 
+    border-bottom: 1px solid var(--border-color); 
+    position: sticky; 
+    top: 0; 
+    z-index: 1000; 
+}
+.header-left { display: flex; align-items: center; gap: 40px; }
+.logo-link img { height: 40px; width: auto; display: block; }
+.nav-links { display: flex; list-style: none; gap: 30px; }
+.nav-links a { font-weight: 600; font-size: 15px; line-height: 80px; display: block; color: var(--text-color); }
+.nav-links a:hover { color: var(--accent-color); }
+
+/* [Controls & Toggle] */
+.controls { display: flex; align-items: center; gap: 25px; }
+.lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
+.lang-menu { 
+    display: none; 
+    position: absolute; 
+    right: 0; 
+    top: 40px; 
+    background: var(--header-bg); 
+    border: 1px solid var(--border-color); 
+    border-radius: 4px; 
+    list-style: none; 
+    min-width: 100px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+    padding: 5px 0; 
+    z-index: 1001; 
+}
+.lang-dropdown:hover .lang-menu { display: block; }
+.lang-menu li { padding: 10px 15px; color: var(--text-color); }
+.lang-menu li:hover { background: var(--border-color); }
+
+.switch { position: relative; width: 46px; height: 24px; display: inline-block; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { 
+    position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; 
+    background-color: #ccc; transition: .4s; border-radius: 34px; 
+}
+.slider:before { 
+    position: absolute; content: ""; height: 18px; width: 18px; 
+    left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; 
+}
+input:checked + .slider { background-color: #4cd964; }
+input:checked + .slider:before { transform: translateX(22px); }
+
+/* [Footer] */
+footer { 
+    padding: 50px 5%; 
+    text-align: center; 
+    border-top: 1px solid var(--border-color); 
+    background: var(--bg-color); 
+}
+.footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
+.x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
+body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
+.footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
+
+.footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
+.footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
+
+.footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
+.footer-email a:hover { color: var(--accent-color); }
+
+.footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
+.footer-legal a { opacity: 0.6; font-weight: 600; }
+.footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
+
+.footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
+
+/* [Reveal Animation] */
+.reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.reveal.active { opacity: 1; transform: translateY(0); }
