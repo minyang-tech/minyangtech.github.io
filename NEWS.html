@@ -6,97 +6,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEWS - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
     <style>
-        :root { --bg-color: #ffffff; --text-color: #333333; --header-bg: #ffffff; --border-color: #eeeeee; --accent: #007bff; --input-bg: #f5f5f5; }
-        body.dark-mode { --bg-color: #121212; --text-color: #e0e0e0; --header-bg: #1e1e1e; --border-color: #333333; --input-bg: #2a2a2a; }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); transition: background 0.2s; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; height: 80px; background: var(--header-bg); border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 1000; }
-        .header-left { display: flex; align-items: center; gap: 40px; }
-        .logo-link img { height: 40px; width: auto; display: block; }
-        .nav-links { display: flex; list-style: none; gap: 30px; }
-        .nav-links a { text-decoration: none; color: var(--text-color); font-weight: 600; font-size: 15px; line-height: 80px; }
-        .controls { display: flex; align-items: center; gap: 25px; }
-        .lang-dropdown { position: relative; cursor: pointer; font-size: 14px; font-weight: 600; padding: 10px 0; }
-        .lang-menu { display: none; position: absolute; right: 0; top: 35px; background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 4px; list-style: none; min-width: 100px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); z-index: 1001; }
-        .lang-dropdown:hover .lang-menu { display: block; }
-        .lang-menu li { padding: 10px 15px; }
-        .lang-menu li:hover { background: var(--border-color); }
-        .switch { position: relative; display: inline-block; width: 46px; height: 24px; }
-        .switch input { opacity: 0; width: 0; height: 0; }
-        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #333; transition: .4s; border-radius: 34px; }
-        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .slider { background-color: #4cd964; }
-        input:checked + .slider:before { transform: translateX(22px); }
+        /* NEWS 전용 스타일 */
+        :root { --input-bg: #f5f5f5; }
+        body.dark-mode { --input-bg: #2a2a2a; }
 
-        main { flex: 1; }
-        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.6s ease-out; }
-        .reveal.active { opacity: 1; transform: translateY(0); }
-
+        main { flex: 1; padding-bottom: 50px; }
+        
+        /* Filter Section */
         .filter-section { max-width: 1400px; margin: 20px auto; padding: 0 5%; }
         .filter-bar { background: var(--header-bg); border: 1px solid var(--border-color); padding: 15px 25px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
-        .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 12px; border-radius: 6px; outline: none; }
+        .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 8px 12px; border-radius: 6px; outline: none; font-family: inherit; }
         .search-wrapper { position: relative; flex-grow: 1; max-width: 400px; }
         .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
         .search-wrapper input { width: 100%; padding-left: 35px; }
-        .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent); background: transparent; color: var(--accent); font-weight: 600; transition: 0.3s; }
-        .sort-btn:hover { background: var(--accent); color: white; }
+        .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent-color); background: transparent; color: var(--accent-color); font-weight: 600; transition: 0.3s; }
+        .sort-btn:hover { background: var(--accent-color); color: white; }
 
+        /* News List */
         .news-container { max-width: 1400px; margin: 0 auto; padding: 20px 5%; min-height: 400px; }
-        .news-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
         .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .news-card img { width: 100%; height: 180px; object-fit: cover; }
         .news-card-body { padding: 15px; flex-grow: 1; }
         .news-card-body small { color: #888; font-weight: 500; }
-        .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent); line-height: 1.4; }
+        .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent-color); line-height: 1.4; }
 
-        .news-detail { max-width: 800px; margin: 0 auto; background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
-        .btn-back:hover { background: var(--accent); color: white; }
+        /* Detail Page */
+        .news-detail { max-width: 800px; margin: 40px auto; background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
+        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent-color); color: var(--accent-color); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
+        .btn-back:hover { background: var(--accent-color); color: white; }
 
-        footer { padding: 50px 5%; text-align: center; border-top: 1px solid var(--border-color); background: var(--bg-color); margin-top: 50px;}
-        .footer-sns { margin: 20px 0; display: flex; justify-content: center; align-items: center; gap: 30px; }
-        .x-logo-img { height: 32px; width: auto; transition: 0.3s; opacity: 0.7; filter: brightness(0); }
-        .dark-mode .x-logo-img { filter: brightness(0) invert(1); }
-        .footer-sns a:hover .x-logo-img { opacity: 1; transform: scale(1.1); filter: none; }
-        .footer-sns .fa-youtube { font-size: 34px; color: var(--text-color); opacity: 0.7; transition: 0.3s; }
-        .footer-sns a:hover .fa-youtube { opacity: 1; color: #ff0000; transform: scale(1.1); }
-        .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
-        .footer-email a { color: var(--text-color); text-decoration: none; opacity: 0.8; transition: 0.3s; }
-        .footer-email a:hover { opacity: 1; color: var(--accent); }
-        .footer-biz-info { margin-top: 25px; font-size: 12px; line-height: 1.8; opacity: 0.6; }
-        .footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-        .footer-legal a { color: var(--text-color); text-decoration: none; opacity: 0.6; transition: 0.3s; font-weight: 600; }
-        .footer-legal a:hover { opacity: 1; color: var(--accent); text-decoration: underline; }
-        .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
-
-        @media (max-width: 1100px) { .news-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 850px) { .news-grid { grid-template-columns: repeat(2, 1fr); } .filter-bar { flex-direction: column; align-items: stretch; } }
-        @media (max-width: 500px) { .news-grid { grid-template-columns: 1fr; } }
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-bar { flex-direction: column; align-items: stretch; }
+            .search-wrapper { max-width: 100%; }
+            .news-detail { padding: 20px; margin: 20px; }
+            .news-detail h2 { font-size: 1.5rem !important; }
+        }
     </style>
 </head>
 <body>
-    <script>if (localStorage.getItem('darkMode') === 'enabled') document.body.classList.add('dark-mode');</script>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true"></a>
-            <nav><ul class="nav-links">
-                <li><a href="NEWS.html" style="color:var(--accent)">뉴스</a></li>
-                <li><a href="AboutUs.html">About Us</a></li>
-                <li><a href="Product.html">제품</a></li>
-            </ul></nav>
+            <a href="index.html" class="logo-link">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="NEWS.html" id="nav-news" style="color:var(--accent-color)">뉴스</a></li>
+                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                    <li><a href="Product.html" id="nav-products">제품</a></li>
+                </ul>
+            </nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown"><span id="current-lang-label">Language ▾</span><ul class="lang-menu"><li onclick="changeLanguage('en')">English</li><li onclick="changeLanguage('ko')">한국어</li></ul></div>
-            <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
+            <div class="lang-dropdown">
+                <span id="current-lang-label">언어 선택 ▾</span>
+                <ul class="lang-menu">
+                    <li onclick="changeLanguage('en')">English</li>
+                    <li onclick="changeLanguage('ko')">한국어</li>
+                </ul>
+            </div>
+            <div class="toggle-container">
+                <label class="switch">
+                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+            </div>
         </div>
     </header>
 
     <main>
-        <h1 id="page-title" class="reveal" style="text-align: center; padding: 50px 0 20px; font-size: 2.5rem;">뉴스</h1>
+        <h1 id="page-title" class="reveal" style="text-align: center; padding: 50px 0 20px; font-size: 2.5rem;">NEWS</h1>
+        
         <section class="filter-section reveal" id="filter-area">
             <div class="filter-bar">
                 <div class="search-wrapper">
@@ -113,6 +100,7 @@
                 </button>
             </div>
         </section>
+
         <div id="news-content" class="news-container"></div>
     </main>
 
@@ -129,20 +117,24 @@
         <div class="footer-email">
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
-        <div class="footer-biz-info">
-            <p>상호명: 작성예정 | 대표자: 작성예정</p>
-            <p>사업자등록번호: 작성예정 | 통신판매업신고: 작성예정</p>
-            <p>주소: 작성예정</p>
-        </div>
         <div class="footer-legal">
-            <a href="Policy.html">개인정보 처리방침</a>
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
         </div>
-        <div class="footer-copyright">
+        <div class="footer-copyright" id="copyright-text">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
     </footer>
 
     <script>
+        let allNewsData = [];
+        let isDesc = true; 
+        const lang = localStorage.getItem('selectedLang') || 'ko';
+
+        const translations = {
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.', 'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.', 'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'copyright': 'Copyright © Minyang Tech. All rights reserved.' }
+        };
+
         function reveal() {
             const reveals = document.querySelectorAll(".reveal");
             reveals.forEach(el => {
@@ -152,15 +144,6 @@
             });
         }
         window.addEventListener("scroll", reveal);
-
-        let allNewsData = [];
-        let isDesc = true; 
-        const lang = localStorage.getItem('selectedLang') || 'ko';
-
-        const translations = {
-            'ko': { 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.', 'contact': '저희와 연락하세요!' },
-            'en': { 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.', 'contact': 'Contact Us!' }
-        };
 
         async function init() {
             try {
@@ -181,20 +164,18 @@
                 const item = allNewsData.find(n => n.id == detailId);
                 if (item) {
                     let content = lang === 'ko' ? item.content_ko : item.content_en;
-                    
-                    // URL을 찾아 클릭 가능한 링크로 변환 (정규식 사용)
                     const urlRegex = /(https?:\/\/[^\s]+)/g;
                     const linkedContent = content.replace(urlRegex, (url) => {
-                        return `<a href="${url}" target="_blank" style="color:var(--accent); text-decoration:underline; font-weight:bold;">${url}</a>`;
+                        return `<a href="${url}" target="_blank" style="color:var(--accent-color); text-decoration:underline; font-weight:bold;">${url}</a>`;
                     });
 
                     container.innerHTML = `
                         <div class="news-detail reveal">
                             <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${translations[lang].back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
-                            <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
+                            <h2 style="margin: 15px 0 25px; font-size: 2rem; color:var(--text-color);">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
                             <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
-                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; opacity:0.9;">${linkedContent}</div>
+                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; opacity:0.9; color:var(--text-color);">${linkedContent}</div>
                         </div>`;
                 }
             } else {
@@ -214,17 +195,14 @@
                 const title = (lang === 'ko' ? item.title_ko : item.title_en).toLowerCase();
                 const content = (lang === 'ko' ? item.content_ko : item.content_en).toLowerCase();
                 const matchesSearch = title.includes(searchText) || content.includes(searchText);
-                const itemDate = item.date;
-                const matchesStart = !startDate || itemDate >= startDate;
-                const matchesEnd = !endDate || itemDate <= endDate;
+                const matchesStart = !startDate || item.date >= startDate;
+                const matchesEnd = !endDate || item.date <= endDate;
                 return matchesSearch && matchesStart && matchesEnd;
             });
 
             filtered.sort((a, b) => {
-                const dateA = new Date(a.date);
-                const dateB = new Date(b.date);
-                if (dateA - dateB !== 0) return isDesc ? dateB - dateA : dateA - dateB;
-                return isDesc ? b.id - a.id : a.id - b.id;
+                const dateCompare = new Date(b.date) - new Date(a.date);
+                return isDesc ? (dateCompare || b.id - a.id) : (-dateCompare || a.id - b.id);
             });
 
             const container = document.getElementById('news-content');
@@ -233,18 +211,15 @@
                 return;
             }
 
-            let html = '<div class="news-grid">';
-            filtered.forEach(item => {
-                html += `
-                    <div class="news-card reveal" onclick="location.href='NEWS.html?id=${item.id}'">
-                        <img src="${item.image}" alt="news">
-                        <div class="news-card-body">
-                            <small>${item.date}</small>
-                            <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
-                        </div>
-                    </div>`;
-            });
-            container.innerHTML = html + '</div>';
+            container.innerHTML = `<div class="news-grid">` + filtered.map(item => `
+                <div class="news-card reveal" onclick="location.href='NEWS.html?id=${item.id}'">
+                    <img src="${item.image}" alt="news">
+                    <div class="news-card-body">
+                        <small>${item.date}</small>
+                        <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
+                    </div>
+                </div>
+            `).join('') + `</div>`;
             setTimeout(reveal, 50);
         }
 
@@ -255,13 +230,20 @@
         }
 
         function updateStaticUI() {
-            document.getElementById('news-search').placeholder = translations[lang].search;
-            document.getElementById('sort-text').textContent = isDesc ? translations[lang].newest : translations[lang].oldest;
-            document.getElementById('footer-contact').textContent = translations[lang].contact;
+            const t = translations[lang];
+            document.getElementById('nav-news').textContent = t.news;
+            document.getElementById('nav-about').textContent = t.about;
+            document.getElementById('nav-products').textContent = t.products;
+            document.getElementById('news-search').placeholder = t.search;
+            document.getElementById('sort-text').textContent = isDesc ? t.newest : t.oldest;
+            document.getElementById('footer-contact').textContent = t.contact;
             document.getElementById('current-lang-label').textContent = lang === 'ko' ? '한국어 ▾' : 'English ▾';
+            document.getElementById('privacy-link').textContent = t.privacy;
+            document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
         }
 
         function changeLanguage(newLang) { localStorage.setItem('selectedLang', newLang); location.reload(); }
+        
         function toggleDarkMode() { 
             const isDark = document.body.classList.toggle('dark-mode'); 
             localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled'); 
@@ -269,6 +251,7 @@
 
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             init();
