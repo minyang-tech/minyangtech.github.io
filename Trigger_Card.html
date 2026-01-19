@@ -127,18 +127,15 @@
                     <tr><th>플랫폼</th><td>itch.io (Windows)</td></tr>
                     <tr><th>엔진</th><td>Unity3D</td></tr>
                     <tr><th>지원 언어</th><td>한국어, 영어</td></tr>
-                    <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">Email 보내기</a></td></tr>
+                    <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">minyangtech.info@gmail.com</a></td></tr>
                 </table>
-                <div style="margin-top: 20px;">
-                <div class="itch-embed-container" style="width: 100%; overflow: hidden; border-radius: 10px;">
-                <iframe frameborder="0" src="https://itch.io/embed/4210122?border_width=0&amp;bg_color=121212&amp;fg_color=ffffff&amp;link_color=fa5c5c&amp;border_color=121212" width="550" height="165">
-                <a href="https://minyangtech.itch.io/trigger-card">Trigger Card by 민양테크</a></iframe>
-                </iframe>
-                </div>
-    
-                <a href="EULA/Trigger_Card.html" target="_blank" class="eula-button">
-                  <i class="fa-solid fa-file-contract"></i> EULA 약관 보기
-                </a>
+                <div>
+                    <a href="https://minyangtech.itch.io/trigger-card" target="_blank" class="buy-button">
+                        <i class="fa-brands fa-itch-io"></i> itch.io에서 확인하기
+                    </a>
+                    <a href="EULA/Trigger_Card.html" target="_blank" class="eula-button">
+                        <i class="fa-solid fa-file-contract"></i> EULA 약관 보기
+                    </a>
                 </div>
             </div>
         </div>
@@ -201,6 +198,7 @@
 
         function initMedia() {
             const list = document.getElementById('thumb-list');
+            list.innerHTML = ''; // 중복 방지 초기화
             mediaData.forEach((item, i) => {
                 const div = document.createElement('div');
                 div.className = `thumb-item ${i === 0 ? 'active' : ''}`;
@@ -236,7 +234,8 @@
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
-                document.getElementById('dark-mode-toggle').checked = true;
+                const toggle = document.getElementById('dark-mode-toggle');
+                if(toggle) toggle.checked = true;
             }
             initMedia();
         };
