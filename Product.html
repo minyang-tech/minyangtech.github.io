@@ -31,7 +31,8 @@
             text-decoration: none; 
             color: inherit; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
-            display: block; 
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
         
@@ -41,16 +42,17 @@
             border-color: var(--accent-color);
         }
         
-        .product-img-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; }
+        .product-img-wrapper { width: 100%; aspect-ratio: 16/9; overflow: hidden; background: #1a1a1a; }
         .product-img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
         .product-card:hover .product-img { transform: scale(1.05); }
         
-        .product-info { padding: 25px; }
+        .product-info { padding: 25px; flex-grow: 1; display: flex; flex-direction: column; }
         .product-info h3 { font-size: 1.5rem; color: var(--accent-color); margin-bottom: 12px; }
-        .product-info p { font-size: 1rem; opacity: 0.8; line-height: 1.5; margin-bottom: 20px; }
+        .product-info p { font-size: 1rem; opacity: 0.8; line-height: 1.5; margin-bottom: 20px; flex-grow: 1; }
         
         .status-tag { 
             display: inline-block; 
+            align-self: flex-start;
             padding: 6px 14px; 
             border-radius: 30px; 
             font-size: 12px; 
@@ -64,7 +66,7 @@
         /* 모바일 대응 */
         @media (max-width: 768px) {
             .page-title { font-size: 2rem; padding-top: 40px; }
-            .product-grid { gap: 25px; }
+            .product-grid { grid-template-columns: 1fr; gap: 25px; }
             .product-info h3 { font-size: 1.3rem; }
         }
     </style>
@@ -109,11 +111,22 @@
                 </div>
                 <div class="product-info">
                     <h3>Trigger Card</h3>
-                    <p id="product-desc">혁신적인 카드 시스템</p>
+                    <p id="desc-trigger">혁신적인 카드 시스템</p>
                     <span class="status-tag">Coming Soon</span>
                 </div>
             </a>
-            </div>
+
+            <a href="thoth.html" class="product-card reveal">
+                <div class="product-img-wrapper">
+                    <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true" class="product-img" alt="THOTH">
+                </div>
+                <div class="product-info">
+                    <h3>THOTH</h3>
+                    <p id="desc-thoth">여러분과 함께하는 Ai Vtuber</p>
+                    <span class="status-tag">Coming Soon</span>
+                </div>
+            </a>
+        </div>
     </main>
 
     <footer>
@@ -141,13 +154,19 @@
         const translations = {
             'ko': {
                 'news': '뉴스', 'about': 'About Us', 'products': '제품',
-                'title': '제품', 'desc': '혁신적인 카드 시스템', 'lang': '언어 선택 ▾',
+                'title': '제품', 
+                'desc_trigger': '혁신적인 카드 시스템', 
+                'desc_thoth': '여러분과 함께하는 Ai Vtuber',
+                'lang': '언어 선택 ▾',
                 'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침',
                 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.'
             },
             'en': {
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS',
-                'title': 'Products', 'desc': 'Innovative card system', 'lang': 'Language ▾',
+                'title': 'Products', 
+                'desc_trigger': 'Innovative card system', 
+                'desc_thoth': 'Ai Vtuber with you',
+                'lang': 'Language ▾',
                 'contact': 'Contact Us!', 'privacy': 'Privacy Policy',
                 'copyright': 'Copyright © Minyang Tech. All rights reserved.'
             }
@@ -170,7 +189,8 @@
             document.getElementById('nav-about').textContent = t.about;
             document.getElementById('nav-products').textContent = t.products;
             document.getElementById('page-title').textContent = t.title;
-            document.getElementById('product-desc').textContent = t.desc;
+            document.getElementById('desc-trigger').textContent = t.desc_trigger;
+            document.getElementById('desc-thoth').textContent = t.desc_thoth;
             document.getElementById('lang-label').textContent = t.lang;
             document.getElementById('footer-contact').textContent = t.contact;
             document.getElementById('privacy-link').textContent = t.privacy;
