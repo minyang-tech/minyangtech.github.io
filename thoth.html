@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel="icon" href="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THOTH - 민양테크</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="common.css">
+
+    <style>
+        /* 제품 상세 페이지 전용 스타일 */
+        :root { --card-bg: #f9f9f9; }
+        body.dark-mode { --card-bg: #1e1e1e; }
+        
+        .detail-container { max-width: 1100px; margin: 40px auto; padding: 0 20px; min-height: 70vh; }
+        .product-title { font-size: 2.5rem; font-weight: 800; margin-bottom: 30px; text-align: center; color: var(--accent-color); }
+        
+        .product-main { 
+            display: flex; gap: 30px; background: var(--card-bg); 
+            padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); 
+            margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        
+        .product-media-side { flex: 1.4; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
+        .main-viewer { 
+            width: 100%; aspect-ratio: 16 / 9; background: #000; 
+            border-radius: 12px; overflow: hidden; position: relative;
+        }
+        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
+        
+        .thumb-container { position: relative; padding: 0 45px; margin-top: 10px; }
+        .thumb-list { 
+            display: flex; gap: 12px; overflow-x: auto; 
+            padding: 5px 0; scroll-behavior: smooth;
+            -ms-overflow-style: none; scrollbar-width: none;
+        }
+        .thumb-list::-webkit-scrollbar { display: none; }
+
+        .thumb-item { 
+            width: 120px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 8px; 
+            cursor: pointer; opacity: 0.5; transition: 0.3s; border: 2px solid transparent; overflow: hidden;
+        }
+        .thumb-item.active { opacity: 1; border-color: var(--accent-color); transform: scale(1.05); }
+        .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
+
+        .slide-btn { 
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(0,0,0,0.5); color: white; border: none;
+            width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.2s;
+        }
+        .slide-btn:hover { background: var(--accent-color); }
+        .prev-btn { left: 5px; } .next-btn { right: 5px; }
+
+        .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
+        .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
+        
+        /* YouTube 버튼 스타일 */
+        .youtube-button { 
+            display: flex; align-items: center; justify-content: center; gap: 10px; 
+            background: #FF0000; color: #fff; text-decoration: none; padding: 16px; 
+            border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
+        }
+        .youtube-button:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3); }
+
+        @media (max-width: 850px) { 
+            .product-main { flex-direction: column; } 
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" id="nav-news">뉴스</a></li>
+                <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                <li><a href="Product.html" id="nav-products" style="color:var(--accent-color)">제품</a></li>
+            </ul></nav>
+        </div>
+        <div class="controls">
+            <div class="toggle-container">
+                <label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label>
+            </div>
+        </div>
+    </header>
+
+    <main class="detail-container">
+        <h1 class="product-title">THOTH</h1>
+        
+        <div class="product-main">
+            <div class="product-media-side">
+                <div class="main-viewer" id="main-viewer"></div>
+                <div class="thumb-container">
+                    <button class="slide-btn prev-btn" onclick="scrollThumbs(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <div class="thumb-list" id="thumb-list"></div>
+                    <button class="slide-btn next-btn" onclick="scrollThumbs(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="product-info-side">
+                <table class="info-table">
+                    <tr><th>출시일</th><td>2026년 1분기</td></tr>
+                    <tr><th>언어</th><td>Python</td></tr>
+                    <tr><th>기여자</th><td>WhoAsked, Chun.Tank</td></tr>
+                    <tr><th>지원 언어</th><td>한국어, 영어</td></tr>
+                    <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">minyangtech.info@gmail.com</a></td></tr>
+                </table>
+                <div>
+                    <a href="https://youtube.com/@minyangtech" target="_blank" class="youtube-button">
+                        <i class="fa-brands fa-youtube"></i> YouTube 채널 방문하기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <h3>저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+        <div class="footer-legal">
+            <a href="Policy.html">개인정보 처리방침</a>
+        </div>
+        <div class="footer-copyright">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
+    </footer>
+
+    <script>
+        // THOTH 관련 영상 및 이미지 데이터 (추후 실제 데이터로 교체 가능)
+        const mediaData = [
+            { type: 'video', url: 'dQw4w9WgXcQ' }, // 유튜브 영상 ID
+            { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' },
+            { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' }
+        ];
+
+        let currentIndex = 0;
+
+        function initMedia() {
+            const list = document.getElementById('thumb-list');
+            list.innerHTML = ''; 
+            mediaData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = `thumb-item ${i === 0 ? 'active' : ''}`;
+                const img = item.type === 'video' ? `https://img.youtube.com/vi/${item.url}/mqdefault.jpg` : item.url;
+                div.innerHTML = `<img src="${img}">`;
+                div.onclick = () => setMainMedia(i);
+                list.appendChild(div);
+            });
+            setMainMedia(0);
+        }
+
+        function setMainMedia(index) {
+            currentIndex = index;
+            const v = document.getElementById('main-viewer');
+            const item = mediaData[index];
+            v.innerHTML = item.type === 'video' ? 
+                `<iframe src="https://www.youtube.com/embed/${item.url}?autoplay=1&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>` : 
+                `<img src="${item.url}">`;
+            
+            document.querySelectorAll('.thumb-item').forEach((t, i) => t.classList.toggle('active', i === index));
+        }
+
+        function scrollThumbs(dir) {
+            const list = document.getElementById('thumb-list');
+            list.scrollLeft += dir * 150;
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+        }
+
+        window.onload = () => {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const toggle = document.getElementById('dark-mode-toggle');
+                if(toggle) toggle.checked = true;
+            }
+            initMedia();
+        };
+    </script>
+</body>
+</html>
