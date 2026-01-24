@@ -105,9 +105,19 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
 .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
 .footer-email a:hover { color: var(--accent-color); }
 
-.footer-legal { margin-top: 20px; display: flex; justify-content: center; gap: 20px; font-size: 13px; }
-.footer-legal a { opacity: 0.6; font-weight: 600; }
-.footer-legal a:hover { opacity: 1; color: var(--accent-color); text-decoration: underline; }
+/* 이미 적용되어 있는 스타일 */
+.footer-legal { 
+    margin-top: 20px; 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; /* 이 설정 덕분에 탭 사이에 간격이 생깁니다 */
+    font-size: 13px; 
+}
+.footer-legal a:hover { 
+    opacity: 1; 
+    color: var(--accent-color); 
+    text-decoration: underline; 
+}
 
 .footer-copyright { margin-top: 15px; font-size: 12px; font-weight: 500; opacity: 0.7; }
 
