@@ -52,5 +52,14 @@
   "content_ko": "민양테크는 웹사이트에 있던 일부 문제를 해결하고, \n Trigger Card의 EULA를 업데이트하였습니다. 7장이 삭제되었습니다. (기존 8장(관할법원) 섹션이 7장으로 내려왔습니다.) \n Trigger Card 탭의 문제점을 일부 수정하였으며, Steam에서 Itch.io로 수정하였습니다. \n 이용해주셔서 감사합니다. \n 문의 : minyangtech.info@gmail.com",
   "content_en": "Minyang Tech has resolved several issues on the website and updated the EULA for Trigger Card. Section 7 has been removed (the former Section 8 regarding Jurisdiction has been moved down to Section 7). We have fixed some issues in the Trigger Card tab and updated the platform from Steam to itch.io. Thank you for your support. \n Inquiries: minyangtech.info@gmail.com",
   "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
+},
+{
+  "id": 7,
+  "date": "2026-1-25",
+  "title_ko": "2차 창작 가이드라인",
+  "title_en": "Secondary Creation Guidelines",
+  "content_ko": "민양테크는 민양테크가 제작한 제품을 보호하고자 2차 창작 가이드라인을 배포합니다. \n 민양테크가 만든 제품으로 2차 창작을 진행하고자 할 경우, 반드시 해당 가이드라인을 읽어주세요. \n 해당 가이드라인에 위반되는 행위를 할 시 민양테크의 직접적인 제지가 있을 수 있습니다. \n 이용해주셔서 감사합니다. \n 문의 : minyangtech.info@gmail.com",
+  "content_en": "Minyang Tech is releasing these Secondary Creation Guidelines to protect our original products.\nIf you wish to create secondary works based on Minyang Tech's products, please make sure to read these guidelines.\nAny actions that violate these guidelines may be subject to direct intervention by Minyang Tech.\nThank you for your cooperation.\nInquiry: minyangtech.info@gmail.com",
+  "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
 }
 ]
