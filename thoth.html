@@ -59,6 +59,24 @@
         .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
         .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
         
+        /* AI 생성물 명시 박스 스타일 */
+        .ai-disclaimer {
+            margin-top: 10px;
+            padding: 15px;
+            background: rgba(var(--accent-color-rgb, 0, 123, 255), 0.05);
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .ai-disclaimer i { font-size: 1.2rem; color: var(--accent-color); }
+        .ai-disclaimer-text { 
+            font-size: 0.85rem; line-height: 1.5; color: var(--text-color); 
+            font-weight: 500; word-break: keep-all; margin: 0;
+        }
+
         /* YouTube 버튼 스타일 */
         .youtube-button { 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
@@ -111,6 +129,14 @@
                     <tr><th>지원 언어</th><td>한국어, 영어</td></tr>
                     <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">minyangtech.info@gmail.com</a></td></tr>
                 </table>
+
+                <div class="ai-disclaimer">
+                    <i class="fa-solid fa-robot"></i>
+                    <p class="ai-disclaimer-text">
+                        정보통신망법 개정안 (Ai 기본법)에 따라, 본 제품은 Ai가 생성했음을 밝힙니다.
+                    </p>
+                </div>
+
                 <div>
                     <a href="https://youtube.com/@minyangtech" target="_blank" class="youtube-button">
                         <i class="fa-brands fa-youtube"></i> YouTube 채널 방문하기
@@ -134,9 +160,9 @@
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
         <div class="footer-legal">
-    <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
-    <a href="guideline.html" id="guideline-link">가이드라인</a>
-</div>
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+            <a href="guideline.html" id="guideline-link">가이드라인</a>
+        </div>
         <div class="footer-copyright">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
