@@ -125,12 +125,19 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* 📱 모바일 전용 하단 플로팅 내비게이션 & 버튼 */
+/* [Mobile Navigation & Floating Button] */
 @media (max-width: 850px) {
-    /* 1. 상단 내비게이션 숨기기 (선택 사항) */
-    header .nav-links { display: none; }
+    /* 상단 메뉴(뉴스, About Us, 제품)는 숨김 */
+    header .nav-links { 
+        display: none !important; 
+    }
 
-    /* 2. 하단 고정바 스타일 */
+    /* 상단 언어변경/다크모드 컨트롤은 유지 */
+    header .controls { 
+        display: flex !important; 
+    }
+
+    /* 하단 고정바 디자인 */
     .mobile-bottom-nav {
         display: flex;
         position: fixed;
@@ -139,52 +146,52 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
         transform: translateX(-50%);
         width: 92%;
         max-width: 450px;
-        background: var(--card-bg);
+        background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 40px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        z-index: 1000;
+        z-index: 2000;
         justify-content: space-around;
-        padding: 12px 10px;
+        padding: 12px 5px;
     }
 
     .nav-item {
+        flex: 1; /* 균등 배분 */
         display: flex;
         flex-direction: column;
         align-items: center;
         text-decoration: none;
         color: var(--text-color);
-        font-size: 0.75rem;
-        gap: 5px;
+        font-size: 0.7rem;
+        gap: 4px;
         opacity: 0.6;
         transition: 0.3s;
     }
 
-    .nav-item i { font-size: 1.3rem; }
+    .nav-item i { font-size: 1.2rem; }
     .nav-item.active { opacity: 1; color: var(--accent-color); font-weight: bold; }
 
-    /* 3. '2차 창작 신고' 플로팅 버튼 */
+    /* 플로팅 신고 버튼 */
     .report-floating-btn {
         display: flex;
         position: fixed;
         bottom: 95px;
         right: 20px;
-        background: var(--card-bg);
+        background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 8px 14px;
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         text-decoration: none;
         color: var(--text-color);
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         align-items: center;
         gap: 8px;
-        z-index: 999;
-        font-weight: 500;
+        z-index: 1999;
     }
 }
 
-/* PC에서는 숨김 */
+/* PC 버전 대응 */
 @media (min-width: 851px) {
     .mobile-bottom-nav, .report-floating-btn { display: none; }
 }
