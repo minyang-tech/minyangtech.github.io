@@ -125,73 +125,40 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* [Mobile Navigation & Floating Button] */
+/* 모바일 전용 스타일 */
 @media (max-width: 850px) {
-    /* 상단 메뉴(뉴스, About Us, 제품)는 숨김 */
-    header .nav-links { 
-        display: none !important; 
-    }
-
-    /* 상단 언어변경/다크모드 컨트롤은 유지 */
-    header .controls { 
-        display: flex !important; 
-    }
-
-    /* 하단 고정바 디자인 */
+    /* 하단 바를 화면 하단에 '박제' 시키는 핵심 설정 */
     .mobile-bottom-nav {
-        display: flex;
-        position: fixed;
-        bottom: 15px;
+        display: flex !important; /* 모바일에서 강제 노출 */
+        position: fixed !important; /* 스크롤해도 화면 아래에 고정 */
+        bottom: 15px; /* 바닥에서 15px 띄움 */
         left: 50%;
-        transform: translateX(-50%);
+        transform: translateX(-50%); /* 가로 가운데 정렬 */
+        
         width: 92%;
         max-width: 450px;
+        height: 60px; /* 높이 명시 */
         background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 40px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-        z-index: 2000;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        z-index: 9999; /* 다른 요소보다 무조건 위에 배치 */
         justify-content: space-around;
-        padding: 12px 5px;
-    }
-
-    .nav-item {
-        flex: 1; /* 균등 배분 */
-        display: flex;
-        flex-direction: column;
         align-items: center;
-        text-decoration: none;
-        color: var(--text-color);
-        font-size: 0.7rem;
-        gap: 4px;
-        opacity: 0.6;
-        transition: 0.3s;
+        padding: 0 10px;
     }
 
-    .nav-item i { font-size: 1.2rem; }
-    .nav-item.active { opacity: 1; color: var(--accent-color); font-weight: bold; }
-
-    /* 플로팅 신고 버튼 */
+    /* 신고하기 버튼도 화면을 따라오게 고정 */
     .report-floating-btn {
-        display: flex;
-        position: fixed;
-        bottom: 95px;
+        display: flex !important;
+        position: fixed !important; 
+        bottom: 85px; /* 하단 바보다 약간 위 */
         right: 20px;
         background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 8px;
         padding: 8px 14px;
-        font-size: 0.8rem;
-        text-decoration: none;
-        color: var(--text-color);
+        z-index: 9998;
         box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        align-items: center;
-        gap: 8px;
-        z-index: 1999;
     }
-}
-
-/* PC 버전 대응 */
-@media (min-width: 851px) {
-    .mobile-bottom-nav, .report-floating-btn { display: none; }
 }
