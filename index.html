@@ -52,6 +52,20 @@
             .about-image { order: 2; transform: translateY(30px); opacity: 1; margin: 0 auto; }
             .about-text { order: 1; transform: translateY(0); opacity: 1; }
             .about-text h2 { font-size: 1.8rem; }
+            
+            /* index.html에서 하단바가 안따라오는 문제 해결 */
+            .mobile-bottom-nav {
+                position: fixed !important;
+                bottom: 15px !important;
+                display: flex !important;
+                z-index: 10000 !important;
+            }
+            .report-floating-btn {
+                position: fixed !important;
+                bottom: 90px !important;
+                display: flex !important;
+                z-index: 9999 !important;
+            }
         }
 
         @media (max-width: 600px) {
@@ -147,13 +161,36 @@
             <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
         </div>
         <div class="footer-legal">
-    <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
-    <a href="guideline.html" id="guideline-link">가이드라인</a>
-</div>
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+            <a href="guideline.html" id="guideline-link">가이드라인</a>
+        </div>
         <div class="footer-copyright" id="copyright-text">
             <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
         </div>
     </footer>
+
+    <a href="guideline.html" class="report-floating-btn">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> 2차 창작 활동 가이드라인
+    </a>
+
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span>홈</span>
+        </a>
+        <a href="NEWS.html" class="nav-item">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>뉴스</span>
+        </a>
+        <a href="AboutUs.html" class="nav-item">
+            <i class="fa-solid fa-circle-info"></i>
+            <span>About Us</span>
+        </a>
+        <a href="Product.html" class="nav-item">
+            <i class="fa-solid fa-box-archive"></i>
+            <span>제품</span>
+        </a>
+    </nav>
 
     <script>
         const translations = {
@@ -258,27 +295,5 @@
             document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
         };
     </script>
-<a href="guideline.html" class="report-floating-btn">
-    <i class="fa-solid fa-arrow-up-right-from-square"></i> 2차 창작 활동 가이드라인
-</a>
-
-<nav class="mobile-bottom-nav">
-    <a href="index.html" class="nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>홈</span>
-    </a>
-    <a href="NEWS.html" class="nav-item">
-        <i class="fa-solid fa-newspaper"></i>
-        <span>뉴스</span>
-    </a>
-    <a href="AboutUs.html" class="nav-item">
-        <i class="fa-solid fa-circle-info"></i>
-        <span>About Us</span>
-    </a>
-    <a href="Product.html" class="nav-item">
-        <i class="fa-solid fa-box-archive"></i>
-        <span>제품</span>
-    </a>
-</nav>
 </body>
 </html>
