@@ -105,12 +105,11 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
 .footer-email { margin-top: 15px; font-size: 14px; font-weight: 500; }
 .footer-email a:hover { color: var(--accent-color); }
 
-/* 이미 적용되어 있는 스타일 */
 .footer-legal { 
     margin-top: 20px; 
     display: flex; 
     justify-content: center; 
-    gap: 20px; /* 이 설정 덕분에 탭 사이에 간격이 생깁니다 */
+    gap: 20px; 
     font-size: 13px; 
 }
 .footer-legal a:hover { 
@@ -125,40 +124,81 @@ body.dark-mode .x-logo-img { filter: brightness(0) invert(1); }
 .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
 .reveal.active { opacity: 1; transform: translateY(0); }
 
-/* 모바일 전용 스타일 */
+/* [Mobile Navigation & Floating Button] */
 @media (max-width: 850px) {
-    /* 하단 바를 화면 하단에 '박제' 시키는 핵심 설정 */
+    /* 상단 내비게이션 숨김 */
+    header .nav-links { display: none !important; }
+
+    /* 하단 고정바 */
     .mobile-bottom-nav {
-        display: flex !important; /* 모바일에서 강제 노출 */
-        position: fixed !important; /* 스크롤해도 화면 아래에 고정 */
-        bottom: 15px; /* 바닥에서 15px 띄움 */
+        display: flex !important;
+        position: fixed !important;
+        bottom: 15px;
         left: 50%;
-        transform: translateX(-50%); /* 가로 가운데 정렬 */
-        
+        transform: translateX(-50%);
         width: 92%;
         max-width: 450px;
-        height: 60px; /* 높이 명시 */
+        height: 65px;
         background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 40px;
         box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 9999; /* 다른 요소보다 무조건 위에 배치 */
+        z-index: 9999;
         justify-content: space-around;
         align-items: center;
-        padding: 0 10px;
+        padding: 0 5px;
     }
 
-    /* 신고하기 버튼도 화면을 따라오게 고정 */
+    /* 탭 기본 스타일 (파란 빛 제거 버전) */
+    .nav-item {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none;
+        color: var(--text-color);
+        gap: 4px;
+        opacity: 0.8;
+        transition: 0.3s;
+    }
+
+    .nav-item i { font-size: 1.25rem; }
+    
+    .nav-item span {
+        font-size: 0.65rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    /* active 클래스 강조 효과 제거 (텍스트 색상은 유지) */
+    .nav-item.active {
+        opacity: 1;
+        color: var(--text-color) !important;
+        font-weight: 700;
+    }
+
+    /* 2차창작활동 가이드라인 버튼 */
     .report-floating-btn {
         display: flex !important;
-        position: fixed !important; 
-        bottom: 85px; /* 하단 바보다 약간 위 */
+        position: fixed !important;
+        bottom: 90px;
         right: 20px;
         background: var(--header-bg);
         border: 1px solid var(--border-color);
         border-radius: 8px;
-        padding: 8px 14px;
+        padding: 10px 16px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-decoration: none;
+        color: var(--text-color);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        align-items: center;
+        gap: 8px;
         z-index: 9998;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
+}
+
+/* PC 버전에서는 하단 바와 버튼 숨김 */
+@media (min-width: 851px) {
+    .mobile-bottom-nav, .report-floating-btn { display: none; }
 }
