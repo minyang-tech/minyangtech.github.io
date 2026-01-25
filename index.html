@@ -44,26 +44,31 @@
         .more-btn { display: inline-block; margin-top: 40px; padding: 14px 40px; border: 2px solid var(--text-color); color: var(--text-color); text-decoration: none; border-radius: 30px; font-weight: bold; transition: 0.3s; }
         .more-btn:hover { background: var(--text-color); color: var(--bg-color); }
 
-        /* --- Mobile Responsive --- */
+        /* --- Mobile Responsive & Fix --- */
         @media (max-width: 900px) {
             .hero-container { height: 350px; }
             .hero-slide h1 { font-size: 1.8rem; }
             .about-intro-section { flex-direction: column; text-align: center; padding: 60px 5%; gap: 40px; }
-            .about-image { order: 2; transform: translateY(30px); opacity: 1; margin: 0 auto; }
-            .about-text { order: 1; transform: translateY(0); opacity: 1; }
-            .about-text h2 { font-size: 1.8rem; }
-            
-            /* index.html에서 하단바가 안따라오는 문제 해결 */
+            .about-image { order: 2; transform: translateY(30px) !important; opacity: 1 !important; margin: 0 auto; }
+            .about-text { order: 1; transform: translateY(0) !important; opacity: 1 !important; }
+
+            /* 하단바 강제 박제 */
             .mobile-bottom-nav {
+                display: flex !important;
                 position: fixed !important;
                 bottom: 15px !important;
-                display: flex !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                width: 92% !important;
                 z-index: 10000 !important;
             }
+
             .report-floating-btn {
+                display: flex !important;
                 position: fixed !important;
                 bottom: 90px !important;
-                display: flex !important;
+                right: 20px !important;
+                left: auto !important;
                 z-index: 9999 !important;
             }
         }
@@ -77,8 +82,7 @@
         }
     </style>
 </head>
-<body class="reveal">
-    <header>
+<body> <header>
         <div class="header-left">
             <a href="index.html" class="logo-link">
                 <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="민양테크 로고">
