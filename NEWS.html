@@ -14,89 +14,49 @@
     <style>
         :root { --input-bg: #f5f5f5; }
         body.dark-mode { --input-bg: #2a2a2a; }
-        
         main { flex: 1; padding-bottom: 50px; }
-
-        #page-title { 
-            text-align: center; 
-            padding: 40px 0 10px !important; 
-            margin: 0;
-            font-size: 2.5rem; 
-        }
+        #page-title { text-align: center; padding: 40px 0 10px !important; margin: 0; font-size: 2.5rem; }
         
-        .filter-section { 
-            max-width: 1400px; 
-            margin: 0 auto 20px !important; 
-            padding: 0 5%; 
-        }
-
-        .filter-bar { 
-            background: var(--header-bg); 
-            border: 1px solid var(--border-color);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            padding: 15px 25px; 
-            border-radius: 12px; 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 20px; 
-            align-items: center; 
-            justify-content: space-between; 
-        }
-
-        .filter-input { 
-            background: var(--input-bg); 
-            border: 1px solid var(--border-color); 
-            color: var(--text-color); 
-            padding: 10px 12px; 
-            border-radius: 6px; 
-            outline: none; 
-            font-family: inherit; 
-        }
-
+        /* 기존 필터/그리드 스타일 유지 */
+        .filter-section { max-width: 1400px; margin: 0 auto 20px !important; padding: 0 5%; }
+        .filter-bar { background: var(--header-bg); border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 15px 25px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
+        .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 12px; border-radius: 6px; outline: none; font-family: inherit; }
         .search-wrapper { position: relative; flex-grow: 1; max-width: 400px; }
         .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
         .search-wrapper input { width: 100%; padding-left: 35px; }
-
-        .sort-btn { 
-            cursor: pointer; 
-            padding: 8px 15px; 
-            border-radius: 6px; 
-            border: 1px solid var(--accent-color); 
-            background: transparent; 
-            color: var(--accent-color); 
-            font-weight: 600; 
-            transition: 0.3s; 
-        }
+        .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent-color); background: transparent; color: var(--accent-color); font-weight: 600; transition: 0.3s; }
         .sort-btn:hover { background: var(--accent-color); color: white; }
-
+        
         .news-container { max-width: 1400px; margin: 0 auto; padding: 20px 5%; min-height: 400px; }
         .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .news-card { 
-            background: var(--header-bg); 
-            border: 1px solid var(--border-color); 
-            border-radius: 12px; 
-            overflow: hidden; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            display: flex; 
-            flex-direction: column; 
-        }
+        .news-card { background: var(--header-bg); border: 1px solid var(--border-color); border-radius: 12px; overflow: hidden; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; }
         .news-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .news-card img { width: 100%; height: 180px; object-fit: cover; }
         .news-card-body { padding: 15px; flex-grow: 1; }
         .news-card-body small { color: #888; font-weight: 500; }
         .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent-color); line-height: 1.4; }
-
+        
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 모바일 대응 */
+        /* 추가된 댓글창 스타일 */
+        .comment-section { max-width: 900px; margin: 40px auto; padding: 30px 5%; border-top: 2px solid var(--border-color); }
+        .comment-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
+        .comment-form input, .comment-form textarea { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 12px; border-radius: 8px; outline: none; }
+        .comment-form textarea { height: 100px; resize: none; }
+        .comment-submit { background: var(--accent-color); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; align-self: flex-end; width: 120px; transition: 0.3s; }
+        .comment-item { padding: 20px 0; border-bottom: 1px solid var(--border-color); }
+        .comment-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
+        .comment-author { font-weight: bold; color: var(--accent-color); }
+        .comment-date { color: #888; }
+        .comment-text { line-height: 1.6; white-space: pre-wrap; }
+
         @media (max-width: 768px) {
             .nav-links { gap: 15px; }
             .nav-links a { font-size: 13px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .search-wrapper { max-width: 100%; }
-            main { padding-bottom: 120px; } /* 하단바+버튼 공간 */
+            main { padding-bottom: 120px; }
         }
     </style>
 </head>
@@ -152,6 +112,16 @@
         </section>
         
         <div id="news-content" class="news-container reveal"></div>
+
+        <div id="comment-area" class="comment-section reveal" style="display: none;">
+            <h3 id="comment-title" style="margin-bottom: 20px;">댓글</h3>
+            <div class="comment-form">
+                <input type="text" id="comment-nickname" placeholder="닉네임">
+                <textarea id="comment-text" placeholder="내용을 입력하세요"></textarea>
+                <button class="comment-submit" onclick="submitComment()">등록</button>
+            </div>
+            <div id="comment-list"></div>
+        </div>
     </main>
 
     <footer>
@@ -224,7 +194,8 @@
                 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.',
                 'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'guideline': '가이드라인',
                 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.',
-                'floating': '2차 창작 활동 가이드라인'
+                'floating': '2차 창작 활동 가이드라인',
+                'c_title': '댓글', 'c_nick': '닉네임', 'c_text': '내용을 입력하세요', 'c_btn': '등록'
             },
             'en': { 
                 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 
@@ -232,7 +203,8 @@
                 'oldest': 'Oldest', 'no-result': 'No results found.',
                 'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'guideline': 'Guideline',
                 'copyright': 'Copyright © Minyang Tech. All rights reserved.',
-                'floating': 'Secondary Creation Guidelines'
+                'floating': 'Secondary Creation Guidelines',
+                'c_title': 'Comments', 'c_nick': 'Nickname', 'c_text': 'Write a comment...', 'c_btn': 'Post'
             }
         };
 
@@ -241,36 +213,71 @@
                 const res = await fetch('news-data.json');
                 allNewsData = await res.json();
                 render();
-                handleScroll();
             } catch (e) { document.getElementById('news-content').innerHTML = "데이터를 불러올 수 없습니다."; }
         }
 
         function render() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const detailId = urlParams.get('id');
+            const detailId = new URLSearchParams(window.location.search).get('id');
             const container = document.getElementById('news-content');
             const filterArea = document.getElementById('filter-area');
+            const commentArea = document.getElementById('comment-area');
             const t = translations[lang];
 
             if (detailId !== null) {
                 filterArea.style.display = 'none';
+                commentArea.style.display = 'block';
                 const item = allNewsData.find(n => n.id == detailId);
                 if (item) {
-                    let content = lang === 'ko' ? item.content_ko : item.content_en;
                     container.innerHTML = `
                         <div class="news-detail reveal active"> 
                             <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${t.back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
                             <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
                             <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
-                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; color:var(--text-color);">${content}</div>
+                            <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; color:var(--text-color);">${lang === 'ko' ? item.content_ko : item.content_en}</div>
                         </div>`;
+                    loadComments(detailId);
                 }
             } else {
                 filterArea.style.display = 'block';
+                commentArea.style.display = 'none';
                 updateStaticUI();
                 applyFilters();
             }
+        }
+
+        /* 댓글 로직 (새로 추가됨) */
+        function loadComments(newsId) {
+            const list = document.getElementById('comment-list');
+            database.ref('comments/' + newsId).on('value', (snapshot) => {
+                const data = snapshot.val();
+                list.innerHTML = "";
+                if (data) {
+                    Object.values(data).reverse().forEach(c => {
+                        const date = new Date(c.timestamp).toLocaleString();
+                        list.innerHTML += `
+                            <div class="comment-item">
+                                <div class="comment-info">
+                                    <span class="comment-author">${c.nickname}</span>
+                                    <span class="comment-date">${date}</span>
+                                </div>
+                                <div class="comment-text">${c.text}</div>
+                            </div>`;
+                    });
+                }
+            });
+        }
+
+        function submitComment() {
+            const newsId = new URLSearchParams(window.location.search).get('id');
+            const nickname = document.getElementById('comment-nickname').value;
+            const text = document.getElementById('comment-text').value;
+            if(!nickname || !text) return alert("닉네임과 내용을 입력해주세요.");
+            
+            database.ref('comments/' + newsId).push({
+                nickname, text, timestamp: Date.now()
+            });
+            document.getElementById('comment-text').value = "";
         }
 
         function applyFilters() {
@@ -291,15 +298,13 @@
                         <h3>${lang === 'ko' ? item.title_ko : item.title_en}</h3>
                     </div>
                 </div>`).join('') + `</div>`;
-            
             container.classList.add('active');
         }
 
-        function handleScroll() {
-            document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
-            });
-        }
+        function toggleSort() { isDesc = !isDesc; applyFilters(); updateStaticUI(); }
+        function changeLanguage(n) { lang = n; localStorage.setItem('selectedLang', n); updateStaticUI(); render(); }
+        function toggleDarkMode() { const d = document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', d?'enabled':'disabled'); }
+        function handleScroll() { document.querySelectorAll(".reveal").forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active"); }); }
 
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
@@ -307,47 +312,26 @@
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             init();
+            window.addEventListener("scroll", handleScroll);
         };
 
-        window.addEventListener("scroll", handleScroll);
-
-        function toggleSort() { isDesc = !isDesc; applyFilters(); updateStaticUI(); }
-        
-        function changeLanguage(n) { 
-            lang = n;
-            localStorage.setItem('selectedLang', n); 
-            updateStaticUI();
-            render();
-        }
-
-        function toggleDarkMode() { 
-            const d = document.body.classList.toggle('dark-mode'); 
-            localStorage.setItem('darkMode', d?'enabled':'disabled'); 
-        }
-        
         function updateStaticUI() {
             const t = translations[lang];
-            // 네비게이션
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-about').innerText = t.about;
             document.getElementById('nav-products').innerText = t.products;
-            
-            // 필터 & 정렬
-            const searchInput = document.getElementById('news-search');
-            if(searchInput) searchInput.placeholder = t.search;
-            const sortText = document.getElementById('sort-text');
-            if(sortText) sortText.innerText = isDesc ? t.newest : t.oldest;
-            
+            if(document.getElementById('news-search')) document.getElementById('news-search').placeholder = t.search;
+            if(document.getElementById('sort-text')) document.getElementById('sort-text').innerText = isDesc ? t.newest : t.oldest;
             document.getElementById('current-lang-label').innerText = lang === 'ko' ? '한국어 ▾' : 'English ▾';
-
-            // 푸터 & 플로팅
             document.getElementById('footer-contact').innerText = t.contact;
             document.getElementById('privacy-link').innerText = t.privacy;
             document.getElementById('guideline-link').innerText = t.guideline;
             document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
             document.getElementById('floating-text').innerText = t.floating;
-
-            // 하단바
+            document.getElementById('comment-title').innerText = t.c_title;
+            document.getElementById('comment-nickname').placeholder = t.c_nick;
+            document.getElementById('comment-text').placeholder = t.c_text;
+            document.querySelector('.comment-submit').innerText = t.c_btn;
             document.querySelector('.nav-text-home').innerText = t.home;
             document.querySelector('.nav-text-news').innerText = t.news;
             document.querySelector('.nav-text-about').innerText = t.about;
