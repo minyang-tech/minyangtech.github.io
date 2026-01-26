@@ -241,92 +241,94 @@
 
     <script>
         // --- Firebase 설정 ---
-const firebaseConfig = {
-    apiKey: "AIzaSyBO8a1UO_pc9uznJpI6kxDdjwdIlnDLDoI",
-    authDomain: "minyang-news.firebaseapp.com",
-    databaseURL: "https://minyang-news-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "minyang-news",
-    storageBucket: "minyang-news.firebasestorage.app",
-    messagingSenderId: "696256671877",
-    appId: "1:696256671877:web:0c89535f9814c2ae23b9ec"
-};
-firebase.initializeApp(firebaseConfig);
-const database = firebase.database();
+        const firebaseConfig = {
+            apiKey: "AIzaSyBO8a1UO_pc9uznJpI6kxDdjwdIlnDLDoI",
+            authDomain: "minyang-news.firebaseapp.com",
+            databaseURL: "https://minyang-news-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "minyang-news",
+            storageBucket: "minyang-news.firebasestorage.app",
+            messagingSenderId: "696256671877",
+            appId: "1:696256671877:web:0c89535f9814c2ae23b9ec"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
 
-// [수정] 뉴스 페이지와 동일하게 URL 파라미터에서 ID를 가져오거나, 
-// 없을 경우 기본값으로 'THOTH'를 사용합니다.
-const urlParams = new URLSearchParams(window.location.search);
-const productId = urlParams.get('id') || "THOTH"; 
+        // 제품 ID 설정
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get('id') || "THOTH"; 
 
-// --- 댓글 등록 함수 (news.html 스타일) ---
-async function submitComment() {
-    const nickname = document.getElementById('comment-nickname').value.trim();
-    const text = document.getElementById('comment-text').value.trim();
-    const agree = document.getElementById('policy-agree').checked;
+        // --- 댓글 등록 함수 ---
+        async function submitComment() {
+            const nickname = document.getElementById('comment-nickname').value.trim();
+            const text = document.getElementById('comment-text').value.trim();
+            const agree = document.getElementById('policy-agree').checked;
 
-    if(!agree) return alert("개인정보 처리방침에 동의해야 합니다.");
-    if(!nickname || !text) return alert("닉네임과 내용을 입력해주세요.");
+            if(!agree) return alert("개인정보 처리방침에 동의해야 합니다.");
+            if(!nickname || !text) return alert("닉네임과 내용을 입력해주세요.");
 
-    let fullIp = "0.0.0.0";
-    try {
-        const ipRes = await fetch('https://api.ipify.org?format=json', { signal: AbortSignal.timeout(3000) });
-        const ipData = await ipRes.json();
-        fullIp = ipData.ip;
-    } catch(e) { console.warn("IP load failed."); }
+            // 금지어 체크
+            const forbiddenWords = [/http/i, /www/i, /응디/i, /노무/i, /시발/i, /개새끼/i];
+            if (forbiddenWords.some(regex => regex.test(text))) {
+                return alert("부적절한 표현이나 링크가 포함되어 있습니다.");
+            }
 
-    try {
-        // news.html과 동일한 경로 구조(comments/ID) 사용
-        await database.ref('comments/' + productId).push({
-            nickname, 
-            text, 
-            fullIp, 
-            timestamp: Date.now()
-        });
-        document.getElementById('comment-text').value = "";
-        // 등록 후 알림 (선택사항)
-        alert("댓글이 등록되었습니다.");
-    } catch(e) { 
-        alert("댓글 등록 실패"); 
-    }
-}
+            let fullIp = "0.0.0.0";
+            try {
+                const ipRes = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipRes.json();
+                fullIp = ipData.ip;
+            } catch(e) { console.warn("IP load failed."); }
 
-// --- 댓글 불러오기 함수 (news.html 스타일) ---
-function loadComments() {
-    const list = document.getElementById('comment-list');
-    const title = document.getElementById('comment-title');
-
-    database.ref('comments/' + productId).on('value', (snap) => {
-        const data = snap.val();
-        list.innerHTML = "";
-        
-        const count = data ? Object.keys(data).length : 0;
-        title.innerText = `댓글 (${count})`; // 뉴스 페이지처럼 개수 표시
-
-        if(data) {
-            // 최신글이 위로 오게 역순 정렬
-            Object.values(data).reverse().forEach(c => {
-                const maskedIp = c.fullIp ? c.fullIp.split('.').slice(0, 2).join('.') + '.*.*' : '?.?.?.?';
-                const date = new Date(c.timestamp).toLocaleString();
-                
-                const commentDiv = document.createElement('div');
-                commentDiv.className = 'comment-item';
-                commentDiv.innerHTML = `
-                    <div class="comment-info">
-                        <span class="comment-author">${c.nickname}</span>
-                        <span class="comment-ip">(${maskedIp})</span>
-                        <span class="comment-date">${date}</span>
-                    </div>
-                    <div class="comment-text">${c.text}</div>
-                `;
-                list.appendChild(commentDiv);
-            });
-        } else {
-            list.innerHTML = "<p style='text-align:center; color:#888; padding:20px;'>첫 번째 댓글을 남겨보세요!</p>";
+            try {
+                await database.ref('comments/' + productId).push({
+                    nickname, 
+                    text, 
+                    fullIp, 
+                    timestamp: Date.now()
+                });
+                document.getElementById('comment-text').value = "";
+                alert("댓글이 등록되었습니다.");
+            } catch(e) { 
+                alert("댓글 등록 실패"); 
+            }
         }
-    });
-}
 
-        // --- 기존 캐릭터 & 미디어 로직 (수정 금지 준수) ---
+        // --- 댓글 불러오기 함수 ---
+        function loadComments() {
+            const list = document.getElementById('comment-list');
+            const title = document.getElementById('comment-title');
+
+            database.ref('comments/' + productId).on('value', (snap) => {
+                const data = snap.val();
+                list.innerHTML = "";
+                
+                const count = data ? Object.keys(data).length : 0;
+                title.innerText = `댓글 (${count})`;
+
+                if(data) {
+                    Object.values(data).reverse().forEach(c => {
+                        const maskedIp = c.fullIp ? c.fullIp.split('.').slice(0, 2).join('.') + '.*.*' : '?.?.?.?';
+                        const date = new Date(c.timestamp).toLocaleString();
+                        
+                        const commentDiv = document.createElement('div');
+                        commentDiv.className = 'comment-item';
+                        commentDiv.innerHTML = `
+                            <div class="comment-info">
+                                <span class="comment-author">${c.nickname}</span>
+                                <span class="comment-ip">(${maskedIp})</span>
+                                <span class="comment-date">${date}</span>
+                            </div>
+                            <div class="comment-text">${c.text}</div>
+                        `;
+                        list.appendChild(commentDiv);
+                    });
+                } else {
+                    list.innerHTML = "<p style='text-align:center; color:#888; padding:20px;'>첫 번째 댓글을 남겨보세요!</p>";
+                }
+            });
+        }
+
+        // --- 캐릭터 & 미디어 로직 (수정 금지 준수) ---
         const quotes = ["안녕!!!!", "만나서 반가워!!", "불렀어??"];
         let typingTimer = null; 
         let hideTimer = null;   
@@ -397,7 +399,7 @@ function loadComments() {
                 document.getElementById('dark-mode-toggle').checked = true;
             }
             initMedia();
-            loadComments(); // 댓글 불러오기 추가
+            loadComments(); 
         };
     </script>
 </body>
