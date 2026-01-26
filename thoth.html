@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>THOTH - 민양테크</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
     <link rel="stylesheet" href="common.css">
 
     <style>
@@ -21,36 +20,89 @@
             display: flex; gap: 30px; background: var(--card-bg); 
             padding: 25px; border-radius: 15px; border: 1px solid var(--border-color); 
             margin-bottom: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
         }
         
-        .product-media-side { flex: 1.4; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
-        .main-viewer { 
-            width: 100%; aspect-ratio: 16 / 9; background: #000; 
-            border-radius: 12px; overflow: hidden; position: relative;
+        /* --- 캐릭터(토트) 인터랙션 스타일 --- */
+        .character-container {
+            position: absolute;
+            left: -120px; /* 좌측 배치 */
+            bottom: 0;
+            width: 150px;
+            cursor: pointer;
+            z-index: 100;
+            transition: transform 0.1s ease-out;
         }
-        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
-        
-        .thumb-container { position: relative; padding: 0 45px; margin-top: 10px; }
-        .thumb-list { 
-            display: flex; gap: 12px; overflow-x: auto; 
-            padding: 5px 0; scroll-behavior: smooth;
-            -ms-overflow-style: none; scrollbar-width: none;
-        }
-        .thumb-list::-webkit-scrollbar { display: none; }
 
-        .thumb-item { 
-            width: 120px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 8px; 
-            cursor: pointer; opacity: 0.5; transition: 0.3s; border: 2px solid transparent; overflow: hidden;
+        .character-wrapper {
+            position: relative;
+            width: 100%;
         }
+
+        /* 몸체 */
+        .char-body {
+            width: 100%;
+            display: block;
+        }
+
+        /* 눈동자 (이미지 위치에 맞춰 정밀 조정 필요) */
+        .eye {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: #4a6741; /* 눈동자 색상 */
+            border-radius: 50%;
+            top: 48%; /* 캐릭터 눈 위치에 맞게 조정 */
+        }
+        .eye.left { left: 38%; }
+        .eye.right { left: 58%; }
+
+        /* 말풍선 */
+        .bubble {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 10px 15px;
+            border-radius: 15px;
+            border: 2px solid var(--accent-color);
+            font-weight: bold;
+            font-size: 0.9rem;
+            white-space: nowrap;
+            display: none;
+            color: #333;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            border-top: 10px solid var(--accent-color);
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+        }
+
+        /* 튀어오르는 애니메이션 */
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1) translateY(-20px); }
+        }
+        .bounce-anim { animation: bounce 0.4s ease; }
+
+        /* 기존 레이아웃 유지 */
+        .product-media-side { flex: 1.4; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
+        .main-viewer { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; position: relative; }
+        .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
+        .thumb-container { position: relative; padding: 0 45px; margin-top: 10px; }
+        .thumb-list { display: flex; gap: 12px; overflow-x: auto; padding: 5px 0; scroll-behavior: smooth; -ms-overflow-style: none; scrollbar-width: none; }
+        .thumb-list::-webkit-scrollbar { display: none; }
+        .thumb-item { width: 120px; aspect-ratio: 16 / 9; flex-shrink: 0; border-radius: 8px; cursor: pointer; opacity: 0.5; transition: 0.3s; border: 2px solid transparent; overflow: hidden; }
         .thumb-item.active { opacity: 1; border-color: var(--accent-color); transform: scale(1.05); }
         .thumb-item img { width: 100%; height: 100%; object-fit: cover; }
-
-        .slide-btn { 
-            position: absolute; top: 50%; transform: translateY(-50%);
-            background: rgba(0,0,0,0.5); color: white; border: none;
-            width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.2s;
-        }
+        .slide-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: 0.2s; }
         .slide-btn:hover { background: var(--accent-color); }
         .prev-btn { left: 5px; } .next-btn { right: 5px; }
 
@@ -59,36 +111,16 @@
         .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
         .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
         
-        /* AI 생성물 명시 박스 스타일 */
-        .ai-disclaimer {
-            margin-top: 10px;
-            padding: 15px;
-            background: rgba(var(--accent-color-rgb, 0, 123, 255), 0.05);
-            border: 1px solid var(--border-color);
-            border-left: 4px solid var(--accent-color);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .ai-disclaimer { margin-top: 10px; padding: 15px; background: rgba(0, 123, 255, 0.05); border: 1px solid var(--border-color); border-left: 4px solid var(--accent-color); border-radius: 10px; display: flex; align-items: center; gap: 12px; }
         .ai-disclaimer i { font-size: 1.2rem; color: var(--accent-color); }
-        .ai-disclaimer-text { 
-            font-size: 0.85rem; line-height: 1.5; color: var(--text-color); 
-            font-weight: 500; word-break: keep-all; margin: 0;
-        }
-
-        /* YouTube 버튼 스타일 */
-        .youtube-button { 
-            display: flex; align-items: center; justify-content: center; gap: 10px; 
-            background: #FF0000; color: #fff; text-decoration: none; padding: 16px; 
-            border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 10px;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2);
-        }
+        .ai-disclaimer-text { font-size: 0.85rem; line-height: 1.5; color: var(--text-color); font-weight: 500; word-break: keep-all; margin: 0; }
+        .youtube-button { display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF0000; color: #fff; text-decoration: none; padding: 16px; border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 10px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2); }
         .youtube-button:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3); }
 
-        @media (max-width: 850px) { 
-            .product-main { flex-direction: column; } 
+        @media (max-width: 1300px) {
+            .character-container { position: relative; left: 0; margin: 0 auto 20px auto; }
         }
+        @media (max-width: 850px) { .product-main { flex-direction: column; } }
     </style>
 </head>
 <body>
@@ -112,6 +144,15 @@
         <h1 class="product-title">THOTH</h1>
         
         <div class="product-main">
+            <div class="character-container" id="character-thoth" onclick="saySomething()">
+                <div class="bubble" id="char-bubble"></div>
+                <div class="character-wrapper">
+                    <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%ED%86%A0%ED%8A%B8sd_%EB%B0%B0%EA%B2%BD%EC%97%86%EC%9D%8C.png?raw=true" class="char-body" alt="THOTH">
+                    <div class="eye left" id="eye-l"></div>
+                    <div class="eye right" id="eye-r"></div>
+                </div>
+            </div>
+
             <div class="product-media-side">
                 <div class="main-viewer" id="main-viewer"></div>
                 <div class="thumb-container">
@@ -168,15 +209,82 @@
         </div>
     </footer>
 
+    <a href="guideline.html" class="report-floating-btn">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> 2차 창작 활동 가이드라인
+    </a>
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i><span>홈</span>
+        </a>
+        <a href="NEWS.html" class="nav-item">
+            <i class="fa-solid fa-newspaper"></i><span>뉴스</span>
+        </a>
+        <a href="AboutUs.html" class="nav-item">
+            <i class="fa-solid fa-circle-info"></i><span>About Us</span>
+        </a>
+        <a href="Product.html" class="nav-item">
+            <i class="fa-solid fa-box-archive"></i><span>제품</span>
+        </a>
+    </nav>
+
     <script>
-        // THOTH 관련 영상 및 이미지 데이터 (추후 실제 데이터로 교체 가능)
+        // 캐릭터 인터랙션 스크립트
+        const quotes = ["안녕!!!!", "만나서 반가워!!", "불렀어??"];
+        let isTyping = false;
+
+        // 눈동자 움직임 로직
+        document.addEventListener('mousemove', (e) => {
+            const eyes = document.querySelectorAll('.eye');
+            eyes.forEach(eye => {
+                const rect = eye.getBoundingClientRect();
+                const eyeX = rect.left + rect.width / 2;
+                const eyeY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+                const distance = Math.min(3, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 30);
+                
+                const moveX = Math.cos(angle) * distance;
+                const moveY = Math.sin(angle) * distance;
+                
+                eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        // 클릭 시 대사 한글자씩 출력
+        function saySomething() {
+            if (isTyping) return;
+            isTyping = true;
+
+            const char = document.getElementById('character-thoth');
+            const bubble = document.getElementById('char-bubble');
+            
+            // 튀는 애니메이션
+            char.classList.add('bounce-anim');
+            setTimeout(() => char.classList.remove('bounce-anim'), 400);
+
+            const text = quotes[Math.floor(Math.random() * quotes.length)];
+            bubble.innerText = "";
+            bubble.style.display = "block";
+
+            let i = 0;
+            const timer = setInterval(() => {
+                bubble.innerText += text[i];
+                i++;
+                if (i >= text.length) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        bubble.style.display = "none";
+                        isTyping = false;
+                    }, 2000);
+                }
+            }, 100); // 0.1초 간격으로 한글자씩
+        }
+
+        // 기존 미디어 로직
         const mediaData = [
-            { type: 'video', url: 'dQw4w9WgXcQ' }, // 유튜브 영상 ID
+            { type: 'video', url: 'dQw4w9WgXcQ' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EC%B5%9C%EC%A2%85.jpg?raw=true' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' }
         ];
-
-        let currentIndex = 0;
 
         function initMedia() {
             const list = document.getElementById('thumb-list');
@@ -193,20 +301,15 @@
         }
 
         function setMainMedia(index) {
-            currentIndex = index;
             const v = document.getElementById('main-viewer');
             const item = mediaData[index];
             v.innerHTML = item.type === 'video' ? 
                 `<iframe src="https://www.youtube.com/embed/${item.url}?autoplay=1&mute=1" allow="autoplay; encrypted-media" allowfullscreen></iframe>` : 
                 `<img src="${item.url}">`;
-            
             document.querySelectorAll('.thumb-item').forEach((t, i) => t.classList.toggle('active', i === index));
         }
 
-        function scrollThumbs(dir) {
-            const list = document.getElementById('thumb-list');
-            list.scrollLeft += dir * 150;
-        }
+        function scrollThumbs(dir) { document.getElementById('thumb-list').scrollLeft += dir * 150; }
 
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
@@ -216,33 +319,10 @@
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
-                const toggle = document.getElementById('dark-mode-toggle');
-                if(toggle) toggle.checked = true;
+                document.getElementById('dark-mode-toggle').checked = true;
             }
             initMedia();
         };
     </script>
-<a href="guideline.html" class="report-floating-btn">
-    <i class="fa-solid fa-arrow-up-right-from-square"></i> 2차 창작 활동 가이드라인
-</a>
-
-<nav class="mobile-bottom-nav">
-    <a href="index.html" class="nav-item">
-        <i class="fa-solid fa-house"></i>
-        <span>홈</span>
-    </a>
-    <a href="NEWS.html" class="nav-item">
-        <i class="fa-solid fa-newspaper"></i>
-        <span>뉴스</span>
-    </a>
-    <a href="AboutUs.html" class="nav-item">
-        <i class="fa-solid fa-circle-info"></i>
-        <span>About Us</span>
-    </a>
-    <a href="Product.html" class="nav-item">
-        <i class="fa-solid fa-box-archive"></i>
-        <span>제품</span>
-    </a>
-</nav>
 </body>
 </html>
