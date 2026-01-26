@@ -188,6 +188,8 @@
                 const res = await fetch('news-data.json');
                 allNewsData = await res.json();
                 render();
+                // 렌더링 후 애니메이션 체크 (첫 화면에 보이는 요소들 바로 등장)
+                setTimeout(reveal, 100); 
             } catch (e) { document.getElementById('news-content').innerHTML = "데이터를 불러올 수 없습니다."; }
         }
 
@@ -264,7 +266,6 @@
             const isAgreed = document.getElementById('policy-chk').checked;
             if (!text || !isAgreed) return;
 
-            // 필터링 로직 추가 (링크, 욕설 및 비속어, 비하발언 차단)
             const forbiddenWords = [/http/i, /www/i, /응디/i, /노무/i, /MC무현/i, /시발/i, /개새끼/i]; 
             const isForbidden = forbiddenWords.some(regex => regex.test(text));
 
@@ -320,7 +321,7 @@
         function applyFilters() {
             const searchText = document.getElementById('news-search').value.toLowerCase();
             
-            // ID 높은 순서로 정렬하는 로직 추가
+            // ID가 높은 순서대로 정렬 (내림차순)
             const sortedData = [...allNewsData].sort((a, b) => Number(b.id) - Number(a.id));
 
             const filtered = sortedData.filter(item => 
@@ -336,6 +337,9 @@
                     </div>
                 </div>
             `).join('') + `</div>`;
+            
+            // 필터 적용 후에도 화면에 보이면 애니메이션 실행
+            reveal();
         }
 
         function changeLanguage(newLang) { localStorage.setItem('selectedLang', newLang); location.reload(); }
@@ -363,7 +367,8 @@
 
         function reveal() {
             document.querySelectorAll(".reveal").forEach(el => {
-                if (el.getBoundingClientRect().top < window.innerHeight - 100) el.classList.add("active");
+                // 요소를 화면에 바로 보여주는 조건 (상단 여유값 조정)
+                if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active");
             });
         }
         window.addEventListener("scroll", reveal);
