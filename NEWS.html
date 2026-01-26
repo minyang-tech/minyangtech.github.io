@@ -20,11 +20,9 @@
         .filter-section { max-width: 1400px; margin: 0 auto 20px !important; padding: 0 5%; }
         .filter-bar { background: var(--header-bg); border: 1px solid var(--border-color); box-shadow: 0 4px 10px rgba(0,0,0,0.1); padding: 15px 25px; border-radius: 12px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; }
         .filter-input { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 10px 12px; border-radius: 6px; outline: none; font-family: inherit; }
-        
         .search-wrapper { position: relative; flex-grow: 1; max-width: 400px; }
         .search-wrapper i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; }
         .search-wrapper input { width: 100%; padding-left: 35px; }
-        
         .sort-btn { cursor: pointer; padding: 8px 15px; border-radius: 6px; border: 1px solid var(--accent-color); background: transparent; color: var(--accent-color); font-weight: 600; transition: 0.3s; }
         .sort-btn:hover { background: var(--accent-color); color: white; }
         
@@ -40,23 +38,20 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* 댓글창 스타일 */
         .comment-section { max-width: 900px; margin: 40px auto; padding: 30px 5%; border-top: 2px solid var(--border-color); }
         .comment-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
         .comment-form input, .comment-form textarea { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 12px; border-radius: 8px; outline: none; }
-        .comment-form textarea { height: 100px; resize: none; }
         .comment-submit { background: var(--accent-color); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; align-self: flex-end; width: 120px; transition: 0.3s; }
         
         .comment-item { padding: 20px 0; border-bottom: 1px solid var(--border-color); }
-        .comment-info { display: flex; gap: 10px; align-items: center; margin-bottom: 8px; font-size: 0.9rem; }
+        .comment-info { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 0.9rem; }
         .comment-author { font-weight: bold; color: var(--accent-color); }
-        .comment-ip { color: #aaa; font-size: 0.8rem; }
-        .comment-date { color: #888; margin-left: auto; }
+        .comment-ip { color: #888; font-size: 0.8rem; }
+        .comment-date { color: #aaa; margin-left: auto; }
         .comment-text { line-height: 1.6; white-space: pre-wrap; color: var(--text-color); }
 
         @media (max-width: 768px) {
             .filter-bar { flex-direction: column; align-items: stretch; }
-            .search-wrapper { max-width: 100%; }
             main { padding-bottom: 120px; }
         }
     </style>
@@ -64,51 +59,35 @@
 <body>
     <header>
         <div class="header-left">
-            <a href="index.html" class="logo-link">
-                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo">
-            </a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="NEWS.html" id="nav-news" style="color:var(--accent-color)">뉴스</a></li>
-                    <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
-                    <li><a href="Product.html" id="nav-products">제품</a></li>
-                </ul>
-            </nav>
+            <a href="index.html" class="logo-link"><img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%20%ED%85%8C%ED%81%AC.png?raw=true" alt="Logo"></a>
+            <nav><ul class="nav-links">
+                <li><a href="NEWS.html" id="nav-news" style="color:var(--accent-color)">뉴스</a></li>
+                <li><a href="AboutUs.html" id="nav-about">About Us</a></li>
+                <li><a href="Product.html" id="nav-products">제품</a></li>
+            </ul></nav>
         </div>
         <div class="controls">
-            <div class="lang-dropdown">
-                <span id="current-lang-label">언어 선택 ▾</span>
+            <div class="lang-dropdown"><span id="current-lang-label">언어 선택 ▾</span>
                 <ul class="lang-menu">
                     <li onclick="changeLanguage('en')">English</li>
                     <li onclick="changeLanguage('ko')">한국어</li>
                 </ul>
             </div>
-            <div class="toggle-container">
-                <label class="switch">
-                    <input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()">
-                    <span class="slider"></span>
-                </label>
-            </div>
+            <div class="toggle-container"><label class="switch"><input type="checkbox" id="dark-mode-toggle" onclick="toggleDarkMode()"><span class="slider"></span></label></div>
         </div>
     </header>
 
     <main>
         <h1 id="page-title">NEWS</h1>
-        
         <section class="filter-section" id="filter-area">
             <div class="filter-bar">
-                <div class="search-wrapper">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" id="news-search" class="filter-input" placeholder="검색어를 입력하세요..." oninput="applyFilters()">
-                </div>
+                <div class="search-wrapper"><i class="fa-solid fa-magnifying-glass"></i><input type="text" id="news-search" class="filter-input" placeholder="검색어..." oninput="applyFilters()"></div>
                 <div class="filter-group">
                     <input type="date" id="date-start" class="filter-input" onchange="applyFilters()">
                     <span>~</span>
                     <input type="date" id="date-end" class="filter-input" onchange="applyFilters()">
                 </div>
-                <button class="sort-btn" id="sort-toggle" onclick="toggleSort()">
-                    <i class="fa-solid fa-sort"></i> <span id="sort-text">최신순</span>
-                </button>
+                <button class="sort-btn" onclick="toggleSort()"><i class="fa-solid fa-sort"></i> <span id="sort-text">최신순</span></button>
             </div>
         </section>
         
@@ -117,8 +96,8 @@
         <div id="comment-area" class="comment-section reveal" style="display: none;">
             <h3 id="comment-title">댓글</h3>
             <div class="comment-form">
-                <input type="text" id="comment-nickname" maxlength="15">
-                <textarea id="comment-text" maxlength="500"></textarea>
+                <input type="text" id="comment-nickname" placeholder="닉네임">
+                <textarea id="comment-text" placeholder="내용"></textarea>
                 <button class="comment-submit" onclick="submitComment()">등록</button>
             </div>
             <div id="comment-list"></div>
@@ -136,10 +115,10 @@
             <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
             <a href="guideline.html" id="guideline-link">가이드라인</a>
         </div>
-        <div class="footer-copyright" id="copyright-text"></div>
+        <div id="copyright-text" class="footer-copyright"></div>
     </footer>
 
-    <a href="guideline.html" class="report-floating-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> <span id="floating-text"></span></a>
+    <a href="guideline.html" class="report-floating-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> <span id="floating-text">2차 창작 활동 가이드라인</span></a>
 
     <nav class="mobile-bottom-nav">
         <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span class="nav-text-home">홈</span></a>
@@ -156,8 +135,7 @@
             projectId: "minyang-news",
             storageBucket: "minyang-news.firebasestorage.app",
             messagingSenderId: "696256671877",
-            appId: "1:696256671877:web:0c89535f9814c2ae23b9ec",
-            measurementId: "G-N3BZB7YD86"
+            appId: "1:696256671877:web:0c89535f9814c2ae23b9ec"
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
@@ -167,20 +145,8 @@
         let lang = localStorage.getItem('selectedLang') || 'ko';
 
         const translations = {
-            'ko': { 
-                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'home': '홈', 'back': '목록으로', 
-                'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '결과가 없습니다.',
-                'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'guideline': '가이드라인',
-                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.', 'floating': '2차 창작 활동 가이드라인',
-                'c_title': '댓글', 'c_nick': '닉네임', 'c_text': '내용을 입력하세요', 'c_btn': '등록'
-            },
-            'en': { 
-                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 'back': 'Back to List', 
-                'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results.',
-                'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'guideline': 'Guideline',
-                'copyright': 'Copyright © Minyang Tech. All rights reserved.', 'floating': 'Secondary Creation Guidelines',
-                'c_title': 'Comments', 'c_nick': 'Nickname', 'c_text': 'Write a comment...', 'c_btn': 'Post'
-            }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'home': '홈', 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '결과가 없습니다.', 'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'guideline': '가이드라인', 'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.', 'floating': '2차 창작 활동 가이드라인', 'c_title': '댓글', 'c_nick': '닉네임', 'c_text': '내용을 입력하세요', 'c_btn': '등록' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results.', 'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'guideline': 'Guideline', 'copyright': 'Copyright © Minyang Tech. All rights reserved.', 'floating': 'Secondary Creation Guidelines', 'c_title': 'Comments', 'c_nick': 'Nickname', 'c_text': 'Write a comment...', 'c_btn': 'Post' }
         };
 
         async function init() {
@@ -188,7 +154,7 @@
                 const res = await fetch('news-data.json');
                 allNewsData = await res.json();
                 render();
-            } catch (e) { document.getElementById('news-content').innerHTML = "Data Load Error."; }
+            } catch (e) { document.getElementById('news-content').innerHTML = "Data Error."; }
         }
 
         function render() {
@@ -205,9 +171,9 @@
                 if (item) {
                     container.innerHTML = `
                         <div class="news-detail reveal active"> 
-                            <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${t.back}</a>
+                            <a href="NEWS.html" class="btn-back" style="text-decoration:none; color:var(--accent-color); font-weight:bold; display:inline-block; margin-bottom:20px;"><i class="fa-solid fa-arrow-left"></i> ${t.back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
-                            <h2 style="margin: 15px 0 25px; font-size: 2rem; color:var(--accent-color);">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
+                            <h2 style="font-size:2rem; margin:15px 0 25px; color:var(--accent-color);">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
                             <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
                             <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; color:var(--text-color);">${lang === 'ko' ? item.content_ko : item.content_en}</div>
                         </div>`;
@@ -216,9 +182,10 @@
             } else {
                 filterArea.style.display = 'block';
                 commentArea.style.display = 'none';
-                updateStaticUI();
                 applyFilters();
             }
+            updateStaticUI();
+            handleScroll();
         }
 
         async function submitComment() {
@@ -228,16 +195,15 @@
             if(!nickname || !text) return alert("입력란을 채워주세요.");
 
             try {
-                // IP 가져오기 (앞 2마디 추출)
                 const ipRes = await fetch('https://api.ipify.org?format=json');
                 const ipData = await ipRes.json();
-                const ipPart = ipData.ip.split('.').slice(0, 2).join('.') + '.*.*';
+                const fullIp = ipData.ip; // DB에는 풀 IP 저장
 
-                database.ref('comments/' + newsId).push({
-                    nickname, text, ip: ipPart, timestamp: Date.now()
+                await database.ref('comments/' + newsId).push({
+                    nickname, text, fullIp, timestamp: Date.now()
                 });
                 document.getElementById('comment-text').value = "";
-            } catch(e) { alert("댓글 등록 실패"); }
+            } catch(e) { alert("전송 실패"); }
         }
 
         function loadComments(newsId) {
@@ -247,11 +213,13 @@
                 list.innerHTML = "";
                 if(data) {
                     Object.values(data).reverse().forEach(c => {
+                        // 표시할 때만 앞 2자리 노출
+                        const maskedIp = c.fullIp ? c.fullIp.split('.').slice(0, 2).join('.') + '.*.*' : '?.?.?.?';
                         list.innerHTML += `
                             <div class="comment-item">
                                 <div class="comment-info">
                                     <span class="comment-author">${c.nickname}</span>
-                                    <span class="comment-ip">(${c.ip || '0.0.*.*'})</span>
+                                    <span class="comment-ip">(${maskedIp})</span>
                                     <span class="comment-date">${new Date(c.timestamp).toLocaleString()}</span>
                                 </div>
                                 <div class="comment-text">${c.text}</div>
@@ -278,7 +246,7 @@
             const container = document.getElementById('news-content');
             
             if(filtered.length === 0) {
-                container.innerHTML = `<p style="text-align:center; padding:50px; color:#888;">${translations[lang]['no-result']}</p>`;
+                container.innerHTML = `<p style="text-align:center; padding:50px;">${translations[lang]['no-result']}</p>`;
                 return;
             }
 
@@ -294,7 +262,7 @@
         }
 
         function toggleSort() { isDesc = !isDesc; applyFilters(); updateStaticUI(); }
-        function changeLanguage(n) { lang = n; localStorage.setItem('selectedLang', n); updateStaticUI(); render(); }
+        function changeLanguage(n) { lang = n; localStorage.setItem('selectedLang', n); render(); }
         function toggleDarkMode() { const d = document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', d?'enabled':'disabled'); }
         function handleScroll() { document.querySelectorAll(".reveal").forEach(el => { if (el.getBoundingClientRect().top < window.innerHeight - 50) el.classList.add("active"); }); }
 
