@@ -15,15 +15,13 @@
         :root { --input-bg: #f5f5f5; }
         body.dark-mode { --input-bg: #2a2a2a; }
         
-        main { flex: 1; padding-bottom: 50px; }
+        main { flex: 1; padding-bottom: 100px; } /* 하단바 공간 확보 */
 
-        /* [수정] 타이틀 여백 대폭 축소 및 애니메이션 제거 */
         #page-title { 
             text-align: center; 
             padding: 40px 0 10px !important; 
             margin: 0;
             font-size: 2.5rem; 
-            /* reveal 클래스를 빼서 즉시 보이게 함 */
         }
         
         .filter-section { 
@@ -89,33 +87,49 @@
         .news-card-body small { color: #888; font-weight: 500; }
         .news-card-body h3 { font-size: 1.1rem; margin-top: 8px; color: var(--accent-color); line-height: 1.4; }
 
-        /* [필수] reveal 애니메이션 스타일 정의 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
-        }
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- Mobile Bottom Nav (추가됨) --- */
+        .mobile-bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 92%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 40px;
+            justify-content: space-around;
+            padding: 12px 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            z-index: 10000;
         }
 
-        /* 상세 페이지 및 모달은 기존과 동일 */
-        .news-detail { max-width: 800px; margin: 40px auto; background: var(--header-bg); padding: 40px; border-radius: 15px; border: 1px solid var(--border-color); }
-        .btn-back { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 25px; padding: 10px 20px; border: 1px solid var(--accent-color); color: var(--accent-color); text-decoration: none; border-radius: 6px; font-weight: 600; transition: 0.3s; }
-        .btn-back:hover { background: var(--accent-color); color: white; }
-        .comment-section { margin-top: 50px; border-top: 1px solid var(--border-color); padding-top: 30px; }
-        .comment-input-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; position: relative; }
-        .comment-input-area textarea { width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); resize: none; font-family: inherit; }
-        .comment-submit-btn { align-self: flex-end; padding: 10px 25px; background: var(--accent-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
-        .comment-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
-        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; }
-        .modal-content { background: var(--header-bg); padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; position: relative; text-align: center; color: var(--text-color); border: 1px solid var(--border-color); }
-        .modal-close { position: absolute; top: 15px; left: 15px; cursor: pointer; font-size: 1.2rem; color: #888; }
-        .comment-item { padding: 15px 0; border-bottom: 1px solid var(--border-color); }
-        .comment-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
-        .comment-author { font-weight: bold; color: var(--accent-color); }
-        .comment-text { line-height: 1.6; white-space: pre-wrap; color: var(--text-color); }
+        body.dark-mode .mobile-bottom-nav {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: #888;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.75rem;
+            gap: 4px;
+            transition: 0.3s;
+        }
+
+        .nav-item i { font-size: 1.2rem; }
+        .nav-item.active { color: var(--accent-color); }
+
+        @media (max-width: 900px) {
+            .mobile-bottom-nav { display: flex !important; }
+        }
 
         @media (max-width: 768px) {
             .filter-bar { flex-direction: column; align-items: stretch; }
@@ -177,8 +191,26 @@
         <div id="news-content" class="news-container reveal"></div>
     </main>
 
+    <nav class="mobile-bottom-nav">
+        <a href="index.html" class="nav-item">
+            <i class="fa-solid fa-house"></i>
+            <span class="nav-text-home">홈</span>
+        </a>
+        <a href="NEWS.html" class="nav-item active">
+            <i class="fa-solid fa-newspaper"></i>
+            <span class="nav-text-news">뉴스</span>
+        </a>
+        <a href="AboutUs.html" class="nav-item">
+            <i class="fa-solid fa-circle-info"></i>
+            <span class="nav-text-about">About Us</span>
+        </a>
+        <a href="Product.html" class="nav-item">
+            <i class="fa-solid fa-box-archive"></i>
+            <span class="nav-text-products">제품</span>
+        </a>
+    </nav>
+
     <script>
-        // (스크립트 부분은 이전과 동일하되, reveal 체크 로직 유지)
         const firebaseConfig = {
             apiKey: "AIzaSyBO8a1UO_pc9uznJpI6kxDdjwdIlnDLDoI",
             authDomain: "minyang-news.firebaseapp.com",
@@ -191,15 +223,14 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const ServerValue = firebase.database.ServerValue;
 
         let allNewsData = [];
         let isDesc = true;
         const lang = localStorage.getItem('selectedLang') || 'ko';
 
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.', 'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'comment-title': '댓글', 'comment-placeholder': '댓글을 입력하려면 여기를 클릭하세요 (개인정보 동의 필요)', 'comment-btn': '등록', 'comment-empty': '첫 번째 댓글을 남겨보세요!' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.', 'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'comment-title': 'Comments', 'comment-placeholder': 'Click here to write (Policy Agreement required)', 'comment-btn': 'Post', 'comment-empty': 'Be the first to comment!' }
+            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'home': '홈', 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.' },
+            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.' }
         };
 
         async function init() {
@@ -207,7 +238,7 @@
                 const res = await fetch('news-data.json');
                 allNewsData = await res.json();
                 render();
-                handleScroll(); // 로드 시점에도 스크롤 체크 한 번 실행
+                handleScroll();
             } catch (e) { document.getElementById('news-content').innerHTML = "데이터를 불러올 수 없습니다."; }
         }
 
@@ -224,15 +255,12 @@
                 if (item) {
                     let content = lang === 'ko' ? item.content_ko : item.content_en;
                     container.innerHTML = `
-                        <div class="news-detail reveal active"> <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${t.back}</a>
+                        <div class="news-detail reveal active"> 
+                            <a href="NEWS.html" class="btn-back"><i class="fa-solid fa-arrow-left"></i> ${t.back}</a>
                             <p style="color:#888; font-weight:600;">${item.date}</p>
                             <h2 style="margin: 15px 0 25px; font-size: 2rem;">${lang === 'ko' ? item.title_ko : item.title_en}</h2>
                             <img src="${item.image}" style="width:100%; border-radius:12px; margin-bottom:30px;" onerror="this.style.display='none'">
                             <div style="line-height:1.8; white-space:pre-wrap; font-size:1.1rem; color:var(--text-color);">${content}</div>
-                            <section class="comment-section">
-                                <h3>${t['comment-title']} (<span id="comment-count-text">0</span>)</h3>
-                                <div id="comment-list"></div>
-                            </section>
                         </div>`;
                 }
             } else {
@@ -261,7 +289,6 @@
                     </div>
                 </div>`).join('') + `</div>`;
             
-            // 필터링 후 목록도 즉시 활성화
             container.classList.add('active');
         }
 
@@ -281,10 +308,10 @@
 
         window.addEventListener("scroll", handleScroll);
 
-        // 정렬, 언어 변경 함수들 (기존과 동일)
         function toggleSort() { isDesc = !isDesc; applyFilters(); updateStaticUI(); }
         function changeLanguage(n) { localStorage.setItem('selectedLang', n); location.reload(); }
         function toggleDarkMode() { const d = document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', d?'enabled':'disabled'); }
+        
         function updateStaticUI() {
             const t = translations[lang];
             document.getElementById('nav-news').innerText = t.news;
@@ -292,6 +319,13 @@
             document.getElementById('nav-products').innerText = t.products;
             document.getElementById('news-search').placeholder = t.search;
             document.getElementById('sort-text').innerText = isDesc ? t.newest : t.oldest;
+            document.getElementById('current-lang-label').innerText = lang === 'ko' ? '한국어 ▾' : 'English ▾';
+
+            // 하단바 언어 대응
+            document.querySelector('.nav-text-home').innerText = t.home;
+            document.querySelector('.nav-text-news').innerText = t.news;
+            document.querySelector('.nav-text-about').innerText = t.about;
+            document.querySelector('.nav-text-products').innerText = t.products;
         }
     </script>
 </body>
