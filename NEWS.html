@@ -15,7 +15,7 @@
         :root { --input-bg: #f5f5f5; }
         body.dark-mode { --input-bg: #2a2a2a; }
         
-        main { flex: 1; padding-bottom: 100px; } /* 하단바 공간 확보 */
+        main { flex: 1; padding-bottom: 50px; }
 
         #page-title { 
             text-align: center; 
@@ -90,50 +90,13 @@
         .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
         .reveal.active { opacity: 1; transform: translateY(0); }
 
-        /* --- Mobile Bottom Nav (추가됨) --- */
-        .mobile-bottom-nav {
-            display: none;
-            position: fixed;
-            bottom: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 92%;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            justify-content: space-around;
-            padding: 12px 10px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            z-index: 10000;
-        }
-
-        body.dark-mode .mobile-bottom-nav {
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-item {
-            text-decoration: none;
-            color: #888;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-size: 0.75rem;
-            gap: 4px;
-            transition: 0.3s;
-        }
-
-        .nav-item i { font-size: 1.2rem; }
-        .nav-item.active { color: var(--accent-color); }
-
-        @media (max-width: 900px) {
-            .mobile-bottom-nav { display: flex !important; }
-        }
-
+        /* 모바일 대응 */
         @media (max-width: 768px) {
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 13px; }
             .filter-bar { flex-direction: column; align-items: stretch; }
             .search-wrapper { max-width: 100%; }
+            main { padding-bottom: 120px; } /* 하단바+버튼 공간 */
         }
     </style>
 </head>
@@ -191,6 +154,32 @@
         <div id="news-content" class="news-container reveal"></div>
     </main>
 
+    <footer>
+        <h3 id="footer-contact">저희와 연락하세요!</h3>
+        <div class="footer-sns">
+            <a href="https://x.com/minyang_tech" target="_blank">
+                <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/logo-white.png?raw=true" class="x-logo-img" alt="X Logo">
+            </a>
+            <a href="https://www.youtube.com/@minyangtech" target="_blank">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+        </div>
+        <div class="footer-email">
+            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
+        </div>
+        <div class="footer-legal">
+            <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
+            <a href="guideline.html" id="guideline-link">가이드라인</a>
+        </div>
+        <div class="footer-copyright" id="copyright-text">
+            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
+        </div>
+    </footer>
+
+    <a href="guideline.html" class="report-floating-btn">
+        <i class="fa-solid fa-arrow-up-right-from-square"></i> <span id="floating-text">2차 창작 활동 가이드라인</span>
+    </a>
+
     <nav class="mobile-bottom-nav">
         <a href="index.html" class="nav-item">
             <i class="fa-solid fa-house"></i>
@@ -226,11 +215,25 @@
 
         let allNewsData = [];
         let isDesc = true;
-        const lang = localStorage.getItem('selectedLang') || 'ko';
+        let lang = localStorage.getItem('selectedLang') || 'ko';
 
         const translations = {
-            'ko': { 'news': '뉴스', 'about': 'About Us', 'products': '제품', 'home': '홈', 'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.' },
-            'en': { 'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 'oldest': 'Oldest', 'no-result': 'No results found.' }
+            'ko': { 
+                'news': '뉴스', 'about': 'About Us', 'products': '제품', 'home': '홈', 
+                'back': '목록으로', 'search': '검색어를 입력하세요...', 'newest': '최신순', 
+                'oldest': '오래된순', 'no-result': '검색 결과가 없습니다.',
+                'contact': '저희와 연락하세요!', 'privacy': '개인정보 처리방침', 'guideline': '가이드라인',
+                'copyright': '민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.',
+                'floating': '2차 창작 활동 가이드라인'
+            },
+            'en': { 
+                'news': 'NEWS', 'about': 'ABOUT US', 'products': 'PRODUCTS', 'home': 'HOME', 
+                'back': 'Back to List', 'search': 'Search news...', 'newest': 'Newest', 
+                'oldest': 'Oldest', 'no-result': 'No results found.',
+                'contact': 'Contact Us!', 'privacy': 'Privacy Policy', 'guideline': 'Guideline',
+                'copyright': 'Copyright © Minyang Tech. All rights reserved.',
+                'floating': 'Secondary Creation Guidelines'
+            }
         };
 
         async function init() {
@@ -309,19 +312,42 @@
         window.addEventListener("scroll", handleScroll);
 
         function toggleSort() { isDesc = !isDesc; applyFilters(); updateStaticUI(); }
-        function changeLanguage(n) { localStorage.setItem('selectedLang', n); location.reload(); }
-        function toggleDarkMode() { const d = document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', d?'enabled':'disabled'); }
+        
+        function changeLanguage(n) { 
+            lang = n;
+            localStorage.setItem('selectedLang', n); 
+            updateStaticUI();
+            render();
+        }
+
+        function toggleDarkMode() { 
+            const d = document.body.classList.toggle('dark-mode'); 
+            localStorage.setItem('darkMode', d?'enabled':'disabled'); 
+        }
         
         function updateStaticUI() {
             const t = translations[lang];
+            // 네비게이션
             document.getElementById('nav-news').innerText = t.news;
             document.getElementById('nav-about').innerText = t.about;
             document.getElementById('nav-products').innerText = t.products;
-            document.getElementById('news-search').placeholder = t.search;
-            document.getElementById('sort-text').innerText = isDesc ? t.newest : t.oldest;
+            
+            // 필터 & 정렬
+            const searchInput = document.getElementById('news-search');
+            if(searchInput) searchInput.placeholder = t.search;
+            const sortText = document.getElementById('sort-text');
+            if(sortText) sortText.innerText = isDesc ? t.newest : t.oldest;
+            
             document.getElementById('current-lang-label').innerText = lang === 'ko' ? '한국어 ▾' : 'English ▾';
 
-            // 하단바 언어 대응
+            // 푸터 & 플로팅
+            document.getElementById('footer-contact').innerText = t.contact;
+            document.getElementById('privacy-link').innerText = t.privacy;
+            document.getElementById('guideline-link').innerText = t.guideline;
+            document.getElementById('copyright-text').innerHTML = `<p>${t.copyright}</p>`;
+            document.getElementById('floating-text').innerText = t.floating;
+
+            // 하단바
             document.querySelector('.nav-text-home').innerText = t.home;
             document.querySelector('.nav-text-news').innerText = t.news;
             document.querySelector('.nav-text-about').innerText = t.about;
