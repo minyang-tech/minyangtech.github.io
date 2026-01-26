@@ -229,7 +229,7 @@
             }
         }
 
-        // 동의 로직
+        // --- 수정된 동의 및 저장 로직 ---
         function checkPolicy() {
             const isAgreed = document.getElementById('policy-chk').checked;
             if(!isAgreed) {
@@ -240,7 +240,6 @@
 
         function closePolicyModal() {
             document.getElementById('policy-modal').style.display = 'none';
-            // 닫았을 때 체크가 안 되어 있으면 입력 방해
             if(!document.getElementById('policy-chk').checked) {
                 document.getElementById('comment-input').value = "";
                 document.getElementById('comment-input').placeholder = "동의가 필요합니다.";
@@ -263,22 +262,26 @@
         async function addComment(newsId) {
             const input = document.getElementById('comment-input');
             const text = input.value.trim();
-            if (!text) return;
+            const isAgreed = document.getElementById('policy-chk').checked; // 동의 상태 확인
+            if (!text || !isAgreed) return;
 
-            let userIp = "?.?.***";
+            let userIp = "?.?.***.***";
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
                 const ipData = await response.json();
-                userIp = ipData.ip.split('.').slice(0,2).join('.') + ".***";
+                const parts = ipData.ip.split('.');
+                userIp = `${parts[0]}.${parts[1]}.***.***`; // 수집 단계에서 마스킹 처리
             } catch (e) {}
 
             database.ref(`comments/news_${newsId}`).push({
                 text: text,
                 ip: userIp,
+                policyAgreed: true, // Firebase 콘솔에 동의 여부 저장
                 timestamp: ServerValue.TIMESTAMP,
                 displayDate: new Date().toLocaleString()
             }).then(() => { input.value = ""; });
         }
+        // -----------------------------
 
         function loadComments(newsId) {
             database.ref(`comments/news_${newsId}`).on('value', (snapshot) => {
