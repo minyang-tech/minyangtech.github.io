@@ -23,15 +23,13 @@
             position: relative;
         }
         
-        /* --- 캐릭터(토트) 인터랙션 스타일 --- */
+        /* --- 캐릭터(토트) 위치 수정 (정보창 위로) --- */
         .character-container {
-            position: absolute;
-            left: -120px; /* 좌측 배치 */
-            bottom: 0;
-            width: 150px;
+            width: 120px;
+            margin: 0 auto 10px auto; /* 정보창 위 중앙 배치 */
             cursor: pointer;
+            position: relative;
             z-index: 100;
-            transition: transform 0.1s ease-out;
         }
 
         .character-wrapper {
@@ -39,36 +37,23 @@
             width: 100%;
         }
 
-        /* 몸체 */
         .char-body {
             width: 100%;
             display: block;
         }
 
-        /* 눈동자 (이미지 위치에 맞춰 정밀 조정 필요) */
-        .eye {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #4a6741; /* 눈동자 색상 */
-            border-radius: 50%;
-            top: 48%; /* 캐릭터 눈 위치에 맞게 조정 */
-        }
-        .eye.left { left: 38%; }
-        .eye.right { left: 58%; }
-
-        /* 말풍선 */
+        /* 말풍선 위치 수정 */
         .bubble {
             position: absolute;
-            top: -60px;
+            top: -50px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
-            padding: 10px 15px;
-            border-radius: 15px;
+            padding: 8px 12px;
+            border-radius: 12px;
             border: 2px solid var(--accent-color);
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             white-space: nowrap;
             display: none;
             color: #333;
@@ -85,10 +70,9 @@
             border-right: 8px solid transparent;
         }
 
-        /* 튀어오르는 애니메이션 */
         @keyframes bounce {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1) translateY(-20px); }
+            50% { transform: scale(1.1) translateY(-10px); }
         }
         .bounce-anim { animation: bounce 0.4s ease; }
 
@@ -106,7 +90,7 @@
         .slide-btn:hover { background: var(--accent-color); }
         .prev-btn { left: 5px; } .next-btn { right: 5px; }
 
-        .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 20px; }
+        .product-info-side { flex: 1; display: flex; flex-direction: column; justify-content: flex-start; gap: 10px; }
         .info-table { width: 100%; border-collapse: collapse; }
         .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
         .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
@@ -117,9 +101,6 @@
         .youtube-button { display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF0000; color: #fff; text-decoration: none; padding: 16px; border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 10px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2); }
         .youtube-button:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3); }
 
-        @media (max-width: 1300px) {
-            .character-container { position: relative; left: 0; margin: 0 auto 20px auto; }
-        }
         @media (max-width: 850px) { .product-main { flex-direction: column; } }
     </style>
 </head>
@@ -144,15 +125,6 @@
         <h1 class="product-title">THOTH</h1>
         
         <div class="product-main">
-            <div class="character-container" id="character-thoth" onclick="saySomething()">
-                <div class="bubble" id="char-bubble"></div>
-                <div class="character-wrapper">
-                    <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%ED%86%A0%ED%8A%B8sd_%EB%B0%B0%EA%B2%BD%EC%97%86%EC%9D%8C.png?raw=true" class="char-body" alt="THOTH">
-                    <div class="eye left" id="eye-l"></div>
-                    <div class="eye right" id="eye-r"></div>
-                </div>
-            </div>
-
             <div class="product-media-side">
                 <div class="main-viewer" id="main-viewer"></div>
                 <div class="thumb-container">
@@ -163,6 +135,13 @@
             </div>
 
             <div class="product-info-side">
+                <div class="character-container" id="character-thoth" onclick="saySomething()">
+                    <div class="bubble" id="char-bubble"></div>
+                    <div class="character-wrapper">
+                        <img src="https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%ED%86%A0%ED%8A%B8sd_%EB%B0%B0%EA%B2%BD%EC%97%86%EC%9D%8C.png?raw=true" class="char-body" alt="THOTH">
+                    </div>
+                </div>
+
                 <table class="info-table">
                     <tr><th>출시일</th><td>2026년 1분기</td></tr>
                     <tr><th>언어</th><td>Python</td></tr>
@@ -228,58 +207,43 @@
     </nav>
 
     <script>
-        // 캐릭터 인터랙션 스크립트
         const quotes = ["안녕!!!!", "만나서 반가워!!", "불렀어??"];
-        let isTyping = false;
+        let typingTimer = null; // 타이머 관리를 위한 변수
+        let hideTimer = null;   // 말풍선 숨기기 타이머
 
-        // 눈동자 움직임 로직
-        document.addEventListener('mousemove', (e) => {
-            const eyes = document.querySelectorAll('.eye');
-            eyes.forEach(eye => {
-                const rect = eye.getBoundingClientRect();
-                const eyeX = rect.left + rect.width / 2;
-                const eyeY = rect.top + rect.height / 2;
-                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-                const distance = Math.min(3, Math.hypot(e.clientX - eyeX, e.clientY - eyeY) / 30);
-                
-                const moveX = Math.cos(angle) * distance;
-                const moveY = Math.sin(angle) * distance;
-                
-                eye.style.transform = `translate(${moveX}px, ${moveY}px)`;
-            });
-        });
-
-        // 클릭 시 대사 한글자씩 출력
         function saySomething() {
-            if (isTyping) return;
-            isTyping = true;
+            // 1. 기존 동작 초기화 (누르면 바로 새 대사가 나오게 함)
+            if (typingTimer) clearInterval(typingTimer);
+            if (hideTimer) clearTimeout(hideTimer);
 
             const char = document.getElementById('character-thoth');
             const bubble = document.getElementById('char-bubble');
             
-            // 튀는 애니메이션
+            // 튀는 애니메이션 (중복 실행 가능하도록 처리)
+            char.classList.remove('bounce-anim');
+            void char.offsetWidth; // 리플로우 강제 발생시켜 애니메이션 초기화
             char.classList.add('bounce-anim');
-            setTimeout(() => char.classList.remove('bounce-anim'), 400);
 
             const text = quotes[Math.floor(Math.random() * quotes.length)];
             bubble.innerText = "";
             bubble.style.display = "block";
 
+            // 2. 한 글자씩 출력 로직
             let i = 0;
-            const timer = setInterval(() => {
+            typingTimer = setInterval(() => {
                 bubble.innerText += text[i];
                 i++;
                 if (i >= text.length) {
-                    clearInterval(timer);
-                    setTimeout(() => {
+                    clearInterval(typingTimer);
+                    // 3. 출력이 끝난 후 2초 뒤에 숨김
+                    hideTimer = setTimeout(() => {
                         bubble.style.display = "none";
-                        isTyping = false;
                     }, 2000);
                 }
-            }, 100); // 0.1초 간격으로 한글자씩
+            }, 80); // 속도를 약간 높였습니다 (0.08초)
         }
 
-        // 기존 미디어 로직
+        // 기존 미디어 로직 (변경 없음)
         const mediaData = [
             { type: 'video', url: 'dQw4w9WgXcQ' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EC%B5%9C%EC%A2%85.jpg?raw=true' },
