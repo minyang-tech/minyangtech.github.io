@@ -26,60 +26,33 @@
             position: relative;
         }
         
-        /* --- 캐릭터(토트) 위치 수정 (정보창 위로) --- */
+        /* 캐릭터(토트) 스타일 */
         .character-container {
             width: 120px;
-            margin: 0 auto 10px auto; /* 정보창 위 중앙 배치 */
+            margin: 0 auto 10px auto;
             cursor: pointer;
             position: relative;
             z-index: 100;
         }
-
-        .character-wrapper {
-            position: relative;
-            width: 100%;
-        }
-
-        .char-body {
-            width: 100%;
-            display: block;
-        }
-
-        /* 말풍선 위치 수정 */
+        .character-wrapper { position: relative; width: 100%; }
+        .char-body { width: 100%; display: block; }
         .bubble {
-            position: absolute;
-            top: -50px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 8px 12px;
-            border-radius: 12px;
-            border: 2px solid var(--accent-color);
-            font-weight: bold;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            display: none;
-            color: #333;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
+            background: white; padding: 8px 12px; border-radius: 12px;
+            border: 2px solid var(--accent-color); font-weight: bold; font-size: 0.85rem;
+            white-space: nowrap; display: none; color: #333; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
         .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-top: 10px solid var(--accent-color);
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            border-top: 10px solid var(--accent-color); border-left: 8px solid transparent; border-right: 8px solid transparent;
         }
-
         @keyframes bounce {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.1) translateY(-10px); }
         }
         .bounce-anim { animation: bounce 0.4s ease; }
 
-        /* 기존 레이아웃 유지 */
+        /* 미디어 레이아웃 */
         .product-media-side { flex: 1.4; display: flex; flex-direction: column; gap: 15px; min-width: 0; }
         .main-viewer { width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; position: relative; }
         .main-viewer img, .main-viewer iframe { width: 100%; height: 100%; object-fit: cover; border: none; }
@@ -104,21 +77,27 @@
         .youtube-button { display: flex; align-items: center; justify-content: center; gap: 10px; background: #FF0000; color: #fff; text-decoration: none; padding: 16px; border-radius: 10px; font-weight: 700; transition: 0.3s; margin-top: 10px; box-shadow: 0 4px 15px rgba(255, 0, 0, 0.2); }
         .youtube-button:hover { background: #cc0000; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3); }
 
-        /* --- 댓글 섹션 스타일 --- */
-        .comment-section { max-width: 1100px; margin: 40px auto; padding: 30px 20px; border-top: 2px solid var(--border-color); }
-        .comment-form { display: flex; flex-direction: column; gap: 12px; margin-bottom: 40px; }
-        .comment-form input, .comment-form textarea { background: var(--input-bg); border: 1px solid var(--border-color); color: var(--text-color); padding: 12px; border-radius: 8px; outline: none; font-family: inherit; }
-        .comment-submit { background: var(--accent-color); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; align-self: flex-end; width: 120px; transition: 0.3s; }
-        .comment-submit:hover { opacity: 0.8; }
-        .comment-policy { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; color: var(--text-color); }
-        .comment-policy input { width: auto; }
-        .comment-policy a { color: var(--accent-color); text-decoration: underline; }
-        .comment-item { padding: 20px 0; border-bottom: 1px solid var(--border-color); }
-        .comment-info { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; font-size: 0.9rem; }
+        /* --- 댓글 섹션 스타일 (Trigger Card 스타일 적용) --- */
+        .section-header { font-size: 1.6rem; margin-bottom: 25px; border-left: 5px solid var(--accent-color); padding-left: 15px; font-weight: 700; }
+        .comment-section { margin-top: 50px; border-top: 2px solid var(--border-color); padding-top: 40px; margin-bottom: 80px; }
+        .comment-input-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; position: relative; }
+        .comment-input-area textarea { width: 100%; height: 100px; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); resize: none; font-family: inherit; }
+        .comment-submit-btn { align-self: flex-end; padding: 10px 25px; background: var(--accent-color); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .comment-submit-btn:disabled { background: #ccc; cursor: not-allowed; }
+        .comment-item { padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .comment-meta { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.9rem; }
         .comment-author { font-weight: bold; color: var(--accent-color); }
-        .comment-ip { color: #888; font-size: 0.8rem; }
-        .comment-date { color: #aaa; margin-left: auto; }
+        .comment-date { color: #888; }
         .comment-text { line-height: 1.6; white-space: pre-wrap; color: var(--text-color); }
+
+        /* 동의 모달 */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; }
+        .modal-content { background: var(--card-bg); padding: 30px; border-radius: 12px; width: 90%; max-width: 400px; position: relative; text-align: center; color: var(--text-color); border: 1px solid var(--border-color); }
+        .modal-close { position: absolute; top: 15px; left: 15px; cursor: pointer; font-size: 1.2rem; color: #888; }
+        .modal-content h4 { margin-bottom: 20px; font-size: 1.1rem; }
+        .policy-link { color: var(--accent-color); text-decoration: underline; font-weight: bold; }
+        .checkbox-group { margin: 20px 0; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .checkbox-group input { width: 18px; height: 18px; cursor: pointer; }
 
         @media (max-width: 850px) { .product-main { flex-direction: column; } }
     </style>
@@ -171,9 +150,7 @@
 
                 <div class="ai-disclaimer">
                     <i class="fa-solid fa-robot"></i>
-                    <p class="ai-disclaimer-text">
-                        정보통신망법 개정안 (Ai 기본법)에 따라, 본 제품은 Ai가 생성했음을 밝힙니다.
-                    </p>
+                    <p class="ai-disclaimer-text">정보통신망법 개정안 (Ai 기본법)에 따라, 본 제품은 Ai가 생성했음을 밝힙니다.</p>
                 </div>
 
                 <div>
@@ -184,20 +161,28 @@
             </div>
         </div>
 
-        <div class="comment-section">
-            <h3 id="comment-title">댓글</h3>
-            <div class="comment-form">
-                <input type="text" id="comment-nickname" placeholder="닉네임">
-                <textarea id="comment-text" placeholder="내용을 입력하세요"></textarea>
-                <div class="comment-policy">
-                    <input type="checkbox" id="policy-agree">
-                    <label for="policy-agree"><a href="Policy.html" target="_blank">개인정보 처리방침</a>에 동의합니다.</label>
-                </div>
-                <button class="comment-submit" onclick="submitComment()">등록</button>
+        <section class="comment-section">
+            <h2 class="section-header">댓글 (<span id="comment-count-text">0</span>)</h2>
+            <div class="comment-input-area">
+                <textarea id="comment-input" placeholder="댓글을 입력하려면 여기를 클릭하세요 (개인정보 동의 필요)" onclick="checkPolicy()"></textarea>
+                <button id="submit-btn" class="comment-submit-btn" onclick="addComment('THOTH')" disabled>등록</button>
             </div>
             <div id="comment-list"></div>
-        </div>
+        </section>
     </main>
+
+    <div id="policy-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closePolicyModal()"><i class="fa-solid fa-xmark"></i></span>
+            <h4>댓글 작성 안내</h4>
+            <p>댓글 작성 시 <a href="Policy.html" target="_blank" class="policy-link">개인정보 처리방침</a>에 따라 IP 주소의 일부가 수집 및 공개됨에 동의하십니까?</p>
+            <div class="checkbox-group">
+                <input type="checkbox" id="policy-chk" onchange="toggleCommentInput()">
+                <label for="policy-chk">동의합니다</label>
+            </div>
+            <p style="font-size:0.8rem; color:#888;">(동의해야 댓글 작성이 가능합니다)</p>
+        </div>
+    </div>
 
     <footer>
         <h3>저희와 연락하세요!</h3>
@@ -209,38 +194,26 @@
                 <i class="fa-brands fa-youtube"></i>
             </a>
         </div>
-        <div class="footer-email">
-            <a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a>
-        </div>
+        <div class="footer-email"><a href="mailto:minyangtech.info@gmail.com">minyangtech.info@gmail.com</a></div>
         <div class="footer-legal">
             <a href="Policy.html" id="privacy-link">개인정보 처리방침</a>
             <a href="guideline.html" id="guideline-link">가이드라인</a>
         </div>
-        <div class="footer-copyright">
-            <p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p>
-        </div>
+        <div class="footer-copyright"><p>민양테크가 제작한 모든 제품의 저작권은 민양테크에 있습니다.</p></div>
     </footer>
 
     <a href="guideline.html" class="report-floating-btn">
         <i class="fa-solid fa-arrow-up-right-from-square"></i> 2차 창작 활동 가이드라인
     </a>
     <nav class="mobile-bottom-nav">
-        <a href="index.html" class="nav-item">
-            <i class="fa-solid fa-house"></i><span>홈</span>
-        </a>
-        <a href="NEWS.html" class="nav-item">
-            <i class="fa-solid fa-newspaper"></i><span>뉴스</span>
-        </a>
-        <a href="AboutUs.html" class="nav-item">
-            <i class="fa-solid fa-circle-info"></i><span>About Us</span>
-        </a>
-        <a href="Product.html" class="nav-item">
-            <i class="fa-solid fa-box-archive"></i><span>제품</span>
-        </a>
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>홈</span></a>
+        <a href="NEWS.html" class="nav-item"><i class="fa-solid fa-newspaper"></i><span>뉴스</span></a>
+        <a href="AboutUs.html" class="nav-item"><i class="fa-solid fa-circle-info"></i><span>About Us</span></a>
+        <a href="Product.html" class="nav-item"><i class="fa-solid fa-box-archive"></i><span>제품</span></a>
     </nav>
 
     <script>
-        // --- Firebase 설정 ---
+        // --- Firebase 및 초기 설정 ---
         const firebaseConfig = {
             apiKey: "AIzaSyBO8a1UO_pc9uznJpI6kxDdjwdIlnDLDoI",
             authDomain: "minyang-news.firebaseapp.com",
@@ -252,107 +225,25 @@
         };
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
+        const ServerValue = firebase.database.ServerValue;
 
-        // 제품 ID 설정
-        const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id') || "THOTH"; 
-
-        // --- 댓글 등록 함수 ---
-        async function submitComment() {
-            const nickname = document.getElementById('comment-nickname').value.trim();
-            const text = document.getElementById('comment-text').value.trim();
-            const agree = document.getElementById('policy-agree').checked;
-
-            if(!agree) return alert("개인정보 처리방침에 동의해야 합니다.");
-            if(!nickname || !text) return alert("닉네임과 내용을 입력해주세요.");
-
-            // 금지어 체크
-            const forbiddenWords = [/http/i, /www/i, /응디/i, /노무/i, /시발/i, /개새끼/i];
-            if (forbiddenWords.some(regex => regex.test(text))) {
-                return alert("부적절한 표현이나 링크가 포함되어 있습니다.");
-            }
-
-            let fullIp = "0.0.0.0";
-            try {
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                fullIp = ipData.ip;
-            } catch(e) { console.warn("IP load failed."); }
-
-            try {
-                await database.ref('comments/' + productId).push({
-                    nickname, 
-                    text, 
-                    fullIp, 
-                    timestamp: Date.now()
-                });
-                document.getElementById('comment-text').value = "";
-                alert("댓글이 등록되었습니다.");
-            } catch(e) { 
-                alert("댓글 등록 실패"); 
-            }
-        }
-
-        // --- 댓글 불러오기 함수 ---
-        function loadComments() {
-            const list = document.getElementById('comment-list');
-            const title = document.getElementById('comment-title');
-
-            database.ref('comments/' + productId).on('value', (snap) => {
-                const data = snap.val();
-                list.innerHTML = "";
-                
-                const count = data ? Object.keys(data).length : 0;
-                title.innerText = `댓글 (${count})`;
-
-                if(data) {
-                    Object.values(data).reverse().forEach(c => {
-                        const maskedIp = c.fullIp ? c.fullIp.split('.').slice(0, 2).join('.') + '.*.*' : '?.?.?.?';
-                        const date = new Date(c.timestamp).toLocaleString();
-                        
-                        const commentDiv = document.createElement('div');
-                        commentDiv.className = 'comment-item';
-                        commentDiv.innerHTML = `
-                            <div class="comment-info">
-                                <span class="comment-author">${c.nickname}</span>
-                                <span class="comment-ip">(${maskedIp})</span>
-                                <span class="comment-date">${date}</span>
-                            </div>
-                            <div class="comment-text">${c.text}</div>
-                        `;
-                        list.appendChild(commentDiv);
-                    });
-                } else {
-                    list.innerHTML = "<p style='text-align:center; color:#888; padding:20px;'>첫 번째 댓글을 남겨보세요!</p>";
-                }
-            });
-        }
-
-        // --- 캐릭터 & 미디어 로직 (수정 금지 준수) ---
+        // --- 캐릭터 & 미디어 로직 (기존 코드 유지) ---
         const quotes = ["안녕!!!!", "만나서 반가워!!", "불렀어??"];
-        let typingTimer = null; 
-        let hideTimer = null;   
-
+        let typingTimer = null, hideTimer = null;
         function saySomething() {
             if (typingTimer) clearInterval(typingTimer);
             if (hideTimer) clearTimeout(hideTimer);
             const char = document.getElementById('character-thoth');
             const bubble = document.getElementById('char-bubble');
-            char.classList.remove('bounce-anim');
-            void char.offsetWidth; 
-            char.classList.add('bounce-anim');
+            char.classList.remove('bounce-anim'); void char.offsetWidth; char.classList.add('bounce-anim');
             const text = quotes[Math.floor(Math.random() * quotes.length)];
-            bubble.innerText = "";
-            bubble.style.display = "block";
+            bubble.innerText = ""; bubble.style.display = "block";
             let i = 0;
             typingTimer = setInterval(() => {
-                bubble.innerText += text[i];
-                i++;
+                bubble.innerText += text[i]; i++;
                 if (i >= text.length) {
                     clearInterval(typingTimer);
-                    hideTimer = setTimeout(() => {
-                        bubble.style.display = "none";
-                    }, 2000);
+                    hideTimer = setTimeout(() => { bubble.style.display = "none"; }, 2000);
                 }
             }, 80);
         }
@@ -362,7 +253,6 @@
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EC%B5%9C%EC%A2%85.jpg?raw=true' },
             { type: 'image', url: 'https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true' }
         ];
-
         function initMedia() {
             const list = document.getElementById('thumb-list');
             list.innerHTML = ''; 
@@ -376,7 +266,6 @@
             });
             setMainMedia(0);
         }
-
         function setMainMedia(index) {
             const v = document.getElementById('main-viewer');
             const item = mediaData[index];
@@ -385,8 +274,73 @@
                 `<img src="${item.url}">`;
             document.querySelectorAll('.thumb-item').forEach((t, i) => t.classList.toggle('active', i === index));
         }
-
         function scrollThumbs(dir) { document.getElementById('thumb-list').scrollLeft += dir * 150; }
+
+        // --- 댓글 기능 로직 (Trigger Card에서 가져옴) ---
+        function checkPolicy() {
+            const isAgreed = document.getElementById('policy-chk').checked;
+            if(!isAgreed) {
+                document.getElementById('policy-modal').style.display = 'flex';
+                document.getElementById('comment-input').blur();
+            }
+        }
+        function closePolicyModal() { document.getElementById('policy-modal').style.display = 'none'; }
+        function toggleCommentInput() {
+            const isAgreed = document.getElementById('policy-chk').checked;
+            const input = document.getElementById('comment-input');
+            const btn = document.getElementById('submit-btn');
+            if(isAgreed) {
+                input.placeholder = "댓글을 입력하세요...";
+                btn.disabled = false;
+                document.getElementById('policy-modal').style.display = 'none';
+            } else { btn.disabled = true; }
+        }
+        async function addComment(productId) {
+            const input = document.getElementById('comment-input');
+            const text = input.value.trim();
+            const isAgreed = document.getElementById('policy-chk').checked;
+            if (!text || !isAgreed) return;
+            const forbiddenWords = [/http/i, /www/i, /응디/i, /노무/i, /MC무현/i, /시발/i, /개새끼/i]; 
+            if (forbiddenWords.some(regex => regex.test(text))) {
+                alert("부적절한 표현이나 링크가 포함되어 있어 댓글을 게시할 수 없습니다.");
+                input.value = ""; return;
+            }
+            let userIp = "unknown";
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const ipData = await response.json();
+                userIp = ipData.ip; 
+            } catch (e) {}
+            database.ref(`comments/product_${productId}`).push({
+                text: text,
+                ip: userIp, 
+                policyAgreed: true,
+                timestamp: ServerValue.TIMESTAMP,
+                displayDate: new Date().toLocaleString()
+            }).then(() => { input.value = ""; });
+        }
+        function loadComments(productId) {
+            database.ref(`comments/product_${productId}`).on('value', (snapshot) => {
+                const list = document.getElementById('comment-list');
+                const data = snapshot.val();
+                const comments = data ? Object.values(data) : [];
+                document.getElementById('comment-count-text').innerText = comments.length;
+                list.innerHTML = comments.reverse().map(c => {
+                    let maskedIp = "?.?.***.***";
+                    if(c.ip && c.ip.includes('.')) {
+                        const parts = c.ip.split('.');
+                        maskedIp = `${parts[0]}.${parts[1]}.***.***`;
+                    }
+                    return `<div class="comment-item">
+                        <div class="comment-meta">
+                            <span class="comment-author">익명(${maskedIp})</span>
+                            <span class="comment-date">${c.displayDate}</span>
+                        </div>
+                        <div class="comment-text">${c.text}</div>
+                    </div>`;
+                }).join('') || `<p style="text-align:center; padding:20px; opacity:0.5;">첫 번째 댓글을 남겨보세요!</p>`;
+            });
+        }
 
         function toggleDarkMode() {
             const isDark = document.body.classList.toggle('dark-mode');
@@ -396,10 +350,10 @@
         window.onload = () => {
             if (localStorage.getItem('darkMode') === 'enabled') {
                 document.body.classList.add('dark-mode');
-                document.getElementById('dark-mode-toggle').checked = true;
+                if(document.getElementById('dark-mode-toggle')) document.getElementById('dark-mode-toggle').checked = true;
             }
             initMedia();
-            loadComments(); 
+            loadComments('THOTH');
         };
     </script>
 </body>
