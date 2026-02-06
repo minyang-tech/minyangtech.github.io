@@ -62,7 +62,6 @@
         .info-table th { text-align: left; padding: 15px 0; color: var(--accent-color); border-bottom: 1px solid var(--border-color); white-space: nowrap; font-size: 0.9rem; }
         .info-table td { padding: 15px 10px; border-bottom: 1px solid var(--border-color); font-weight: 600; font-size: 1rem; }
         
-        /* itch.io 버튼 스타일 */
         .buy-button { 
             display: flex; align-items: center; justify-content: center; gap: 10px; 
             background: #fa5c5c; color: #fff; text-decoration: none; padding: 16px; 
@@ -87,18 +86,17 @@
 
         .section-header { font-size: 1.6rem; margin-bottom: 25px; border-left: 5px solid var(--accent-color); padding-left: 15px; font-weight: 700; }
 
-        /* --- 좋아요/싫어요 섹션 스타일 (댓글 대체) --- */
+        /* --- 좋아요/싫어요 섹션 스타일 --- */
         .reaction-section { margin-top: 50px; border-top: 2px solid var(--border-color); padding: 40px 0; margin-bottom: 80px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
         .reaction-buttons { display: flex; gap: 20px; }
         .reaction-btn { 
             display: flex; align-items: center; gap: 10px; padding: 15px 30px; 
             border-radius: 50px; border: 1px solid var(--border-color); 
             background: var(--input-bg); color: var(--text-color); 
-            cursor: pointer; font-weight: 700; transition: 0.3s; font-family: inherit; font-size: 1.1rem;
+            cursor: pointer; font-weight: 700; transition: 0.2s; font-family: inherit; font-size: 1.1rem;
         }
-        .reaction-btn:hover:not(:disabled) { border-color: var(--accent-color); color: var(--accent-color); transform: translateY(-3px); }
-        .reaction-btn.voted { background: var(--accent-color); color: white; border-color: var(--accent-color); }
-        .reaction-btn:disabled { opacity: 0.7; cursor: default; }
+        .reaction-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
+        .reaction-btn.voted { background: var(--accent-color) !important; color: white !important; border-color: var(--accent-color); transform: scale(1.05); }
         .count-val { font-size: 1.2rem; }
 
         @media (max-width: 850px) { 
@@ -223,7 +221,7 @@
             authDomain: "minyang-news.firebaseapp.com",
             databaseURL: "https://minyang-news-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "minyang-news",
-            storageBucket: "minyang-news.firebasedatabase.app",
+            storageBucket: "minyang-news.firebasestorage.app",
             messagingSenderId: "696256671877",
             appId: "1:696256671877:web:0c89535f9814c2ae23b9ec",
             measurementId: "G-N3BZB7YD86"
@@ -270,34 +268,59 @@
             list.scrollLeft += dir * 150;
         }
 
-        // --- 좋아요/싫어요 로직 ---
+        // --- 좋아요/싫어요 낙관적 업데이트 로직 ---
         function loadReactions(productId) {
             const ref = database.ref(`reactions/product_${productId}`);
             ref.on('value', (snapshot) => {
                 const data = snapshot.val() || { like: 0, dislike: 0 };
-                document.getElementById('count-like').innerText = data.like || 0;
-                document.getElementById('count-dislike').innerText = data.dislike || 0;
+                const likeEl = document.getElementById('count-like');
+                const dislikeEl = document.getElementById('count-dislike');
+                if(likeEl) likeEl.innerText = data.like || 0;
+                if(dislikeEl) dislikeEl.innerText = data.dislike || 0;
 
-                const voted = localStorage.getItem(`voted_prod_${productId}`);
-                if (voted) {
-                    document.getElementById('btn-like').disabled = true;
-                    document.getElementById('btn-dislike').disabled = true;
-                    document.getElementById(`btn-${voted}`).classList.add('voted');
-                }
+                updateButtonStyles(productId);
             });
         }
 
-        function handleReaction(productId, type) {
-            if (localStorage.getItem(`voted_prod_${productId}`)) return;
+        function updateButtonStyles(productId) {
+            const voted = localStorage.getItem(`voted_prod_${productId}`);
+            const btnLike = document.getElementById('btn-like');
+            const btnDislike = document.getElementById('btn-dislike');
+            
+            if(btnLike && btnDislike) {
+                btnLike.classList.remove('voted');
+                btnDislike.classList.remove('voted');
+                if(voted === 'like') btnLike.classList.add('voted');
+                if(voted === 'dislike') btnDislike.classList.add('voted');
+            }
+        }
 
-            const ref = database.ref(`reactions/product_${productId}/${type}`);
-            ref.transaction((current) => {
-                return (current || 0) + 1;
-            }, (error, committed) => {
-                if (committed) {
-                    localStorage.setItem(`voted_prod_${productId}`, type);
-                }
-            });
+        function handleReaction(productId, type) {
+            const storageKey = `voted_prod_${productId}`;
+            const previousType = localStorage.getItem(storageKey);
+            const refBase = database.ref(`reactions/product_${productId}`);
+
+            // 1. 즉시 UI 강조 업데이트 (낙관적)
+            if (previousType === type) {
+                localStorage.removeItem(storageKey);
+            } else {
+                localStorage.setItem(storageKey, type);
+            }
+            updateButtonStyles(productId);
+
+            // 2. Firebase 데이터 처리
+            if (previousType === type) {
+                // 취소
+                refBase.child(type).transaction(curr => (curr || 1) - 1);
+            } else {
+                // 변경 또는 신규 투표
+                refBase.transaction(data => {
+                    if (!data) data = { like: 0, dislike: 0 };
+                    if (previousType) data[previousType] = Math.max(0, (data[previousType] || 1) - 1);
+                    data[type] = (data[type] || 0) + 1;
+                    return data;
+                });
+            }
         }
 
         function toggleDarkMode() {
@@ -312,7 +335,7 @@
                 if(toggle) toggle.checked = true;
             }
             initMedia();
-            loadReactions('trigger_card'); // 제품 전용 ID로 반응 로드
+            loadReactions('trigger_card'); 
         };
     </script>
 
