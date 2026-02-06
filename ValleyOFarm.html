@@ -79,6 +79,18 @@
 
         .section-header { font-size: 1.6rem; margin-bottom: 25px; border-left: 5px solid var(--accent-color); padding-left: 15px; font-weight: 700; }
 
+        /* --- 좋아요/싫어요 섹션 스타일 --- */
+        .reaction-container { display: flex; justify-content: center; gap: 20px; margin: 15px 0; }
+        .reaction-btn { 
+            display: flex; align-items: center; gap: 10px; padding: 12px 25px; 
+            border-radius: 50px; border: 1px solid var(--border-color); 
+            background: var(--input-bg); color: var(--text-color); 
+            cursor: pointer; font-weight: 700; transition: 0.3s; font-family: inherit;
+        }
+        .reaction-btn:hover:not(:disabled) { border-color: var(--accent-color); color: var(--accent-color); }
+        .reaction-btn.voted { background: var(--accent-color); color: white; border-color: var(--accent-color); }
+        .reaction-btn:disabled { opacity: 0.7; cursor: default; }
+
         /* 댓글 섹션 스타일 */
         .comment-section { margin-top: 50px; border-top: 2px solid var(--border-color); padding-top: 40px; margin-bottom: 80px; }
         .comment-input-area { display: flex; flex-direction: column; gap: 10px; margin-bottom: 30px; position: relative; }
@@ -146,6 +158,16 @@
                     <tr><th>지원 언어</th><td>한국어, 영어 외 다수</td></tr>
                     <tr><th>문의하기</th><td><a href="mailto:minyangtech.info@gmail.com" style="color:inherit; text-decoration:none;">minyangtech.info@gmail.com</a></td></tr>
                 </table>
+
+                <div class="reaction-container">
+                    <button id="btn-like" class="reaction-btn" onclick="handleReaction('valley_o_farm', 'like')">
+                        <i class="fa-solid fa-thumbs-up"></i> <span id="count-like">0</span>
+                    </button>
+                    <button id="btn-dislike" class="reaction-btn" onclick="handleReaction('valley_o_farm', 'dislike')">
+                        <i class="fa-solid fa-thumbs-down"></i> <span id="count-dislike">0</span>
+                    </button>
+                </div>
+
                 <div>
                     <a href="https://play.google.com/store" target="_blank" class="buy-button">
                         <i class="fa-brands fa-google-play"></i> 구글 안드로이드 스토어로 가기
@@ -160,7 +182,7 @@
                 <div class="spec-card">
                     <h3 style="color:var(--accent-color)"><i class="fa-solid fa-mobile-screen"></i> 최소 사양</h3>
                     <ul class="spec-list">
-                        <li><b>운영체제</b> Android10 이상 </li>
+                        <li><b>운영체제</b> Android 10 이상 </li>
                         <li><b>프로세서</b> [알수없음]</li>
                         <li><b>메모리</b> [알수없음]</li>
                         <li><b>저장 용량</b> [알수없음]</li>
@@ -169,7 +191,7 @@
                 <div class="spec-card">
                     <h3 style="color:var(--accent-color)"><i class="fa-solid fa-bolt"></i> 권장 사양</h3>
                     <ul class="spec-list">
-                        <li><b>운영체제</b> Android14 이상 </li>
+                        <li><b>운영체제</b> Android 14 이상 </li>
                         <li><b>프로세서</b> [알수없음]</li>
                         <li><b>메모리</b> [알수없음]</li>
                         <li><b>저장 용량</b> [알수없음]</li>
@@ -276,6 +298,37 @@
             list.scrollLeft += dir * 150;
         }
 
+        /* --- 좋아요/싫어요 로직 --- */
+        function loadReactions(productId) {
+            const ref = database.ref(`reactions/product_${productId}`);
+            ref.on('value', (snapshot) => {
+                const data = snapshot.val() || { like: 0, dislike: 0 };
+                document.getElementById('count-like').innerText = data.like || 0;
+                document.getElementById('count-dislike').innerText = data.dislike || 0;
+
+                const voted = localStorage.getItem(`voted_prod_${productId}`);
+                if (voted) {
+                    document.getElementById('btn-like').disabled = true;
+                    document.getElementById('btn-dislike').disabled = true;
+                    document.getElementById(`btn-${voted}`).classList.add('voted');
+                }
+            });
+        }
+
+        function handleReaction(productId, type) {
+            if (localStorage.getItem(`voted_prod_${productId}`)) return;
+
+            const ref = database.ref(`reactions/product_${productId}/${type}`);
+            ref.transaction((current) => {
+                return (current || 0) + 1;
+            }, (error, committed) => {
+                if (committed) {
+                    localStorage.setItem(`voted_prod_${productId}`, type);
+                }
+            });
+        }
+
+        /* --- 댓글 로직 --- */
         function checkPolicy() {
             const isAgreed = document.getElementById('policy-chk').checked;
             if(!isAgreed) {
@@ -314,7 +367,7 @@
                 return;
             }
 
-            let userIp = "unknown";
+            let userIp = "?.?.***.***";
             try {
                 const response = await fetch('https://api.ipify.org?format=json');
                 const ipData = await response.json();
@@ -363,6 +416,7 @@
             }
             initMedia();
             loadComments('valley_o_farm');
+            loadReactions('valley_o_farm'); // 좋아요 데이터 로드
         };
     </script>
 
