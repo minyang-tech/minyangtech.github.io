@@ -40,9 +40,9 @@
 
         /* Reaction Styles */
         .reaction-section { margin-top: 50px; border-top: 1px solid var(--border-color); padding-top: 30px; display: flex; justify-content: center; gap: 20px; }
-        .reaction-btn { display: flex; align-items: center; gap: 10px; padding: 12px 25px; border-radius: 50px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); cursor: pointer; font-weight: 600; transition: 0.3s; font-family: inherit; }
+        .reaction-btn { display: flex; align-items: center; gap: 10px; padding: 12px 25px; border-radius: 50px; border: 1px solid var(--border-color); background: var(--input-bg); color: var(--text-color); cursor: pointer; font-weight: 600; transition: 0.2s; font-family: inherit; }
         .reaction-btn:hover { border-color: var(--accent-color); color: var(--accent-color); }
-        .reaction-btn.voted { background: var(--accent-color) !important; color: white !important; border-color: var(--accent-color); }
+        .reaction-btn.voted { background: var(--accent-color) !important; color: white !important; border-color: var(--accent-color); transform: scale(1.05); }
         .count-val { font-size: 1.1rem; }
 
         @media (max-width: 768px) {
@@ -185,19 +185,30 @@
             const ref = database.ref(`reactions/news_${newsId}`);
             ref.on('value', (snapshot) => {
                 const data = snapshot.val() || { like: 0, dislike: 0 };
-                document.getElementById('count-like').innerText = data.like || 0;
-                document.getElementById('count-dislike').innerText = data.dislike || 0;
                 
-                const voted = localStorage.getItem(`voted_news_${newsId}`);
-                const btnLike = document.getElementById('btn-like');
-                const btnDislike = document.getElementById('btn-dislike');
+                // 숫자는 서버 데이터를 그대로 반영
+                const likeEl = document.getElementById('count-like');
+                const dislikeEl = document.getElementById('count-dislike');
+                if(likeEl) likeEl.innerText = data.like || 0;
+                if(dislikeEl) dislikeEl.innerText = data.dislike || 0;
                 
-                if(btnLike && btnDislike) {
-                    btnLike.classList.remove('voted');
-                    btnDislike.classList.remove('voted');
-                    if(voted) document.getElementById(`btn-${voted}`).classList.add('voted');
-                }
+                // 버튼 강조 효과 동기화
+                updateButtonStyles(newsId);
             });
+        }
+
+        // 버튼 스타일만 따로 즉시 업데이트하는 함수
+        function updateButtonStyles(newsId) {
+            const voted = localStorage.getItem(`voted_news_${newsId}`);
+            const btnLike = document.getElementById('btn-like');
+            const btnDislike = document.getElementById('btn-dislike');
+            
+            if(btnLike && btnDislike) {
+                btnLike.classList.remove('voted');
+                btnDislike.classList.remove('voted');
+                if(voted === 'like') btnLike.classList.add('voted');
+                if(voted === 'dislike') btnDislike.classList.add('voted');
+            }
         }
 
         function handleReaction(newsId, type) {
@@ -205,22 +216,25 @@
             const previousType = localStorage.getItem(storageKey);
             const refBase = database.ref(`reactions/news_${newsId}`);
 
-            // 토글: 동일 버튼 클릭 시 취소
+            // [핵심] 클릭하자마자 UI 강조 효과를 즉시 변경 (낙관적 업데이트)
+            if (previousType === type) {
+                localStorage.removeItem(storageKey);
+            } else {
+                localStorage.setItem(storageKey, type);
+            }
+            updateButtonStyles(newsId); // 서버 응답 전에 미리 색칠
+
+            // 실제 데이터 처리는 비동기로 실행
             if (previousType === type) {
                 refBase.child(type).transaction(curr => (curr || 1) - 1);
-                localStorage.removeItem(storageKey);
-                return;
+            } else {
+                refBase.transaction(data => {
+                    if (!data) data = { like: 0, dislike: 0 };
+                    if (previousType) data[previousType] = Math.max(0, (data[previousType] || 1) - 1);
+                    data[type] = (data[type] || 0) + 1;
+                    return data;
+                });
             }
-
-            // 변경 또는 신규 투표
-            refBase.transaction(data => {
-                if (!data) data = { like: 0, dislike: 0 };
-                if (previousType) data[previousType] = Math.max(0, (data[previousType] || 1) - 1);
-                data[type] = (data[type] || 0) + 1;
-                return data;
-            }, (err, committed) => {
-                if (committed) localStorage.setItem(storageKey, type);
-            });
         }
 
         function applyFilters() {
