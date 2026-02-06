@@ -70,5 +70,14 @@
   "content_ko": "안녕하세요 고객여러분? \n 민양테크입니다. \n \n 민양테크는 뉴스에 '댓글' 기능을 추가하며, 개인정보 처리방침이 수정되었습니다. \n 민양테크를 이용해주시는 여러분들이 댓글을 다실려면, \n 개인정보 처리방침에 반드시 동의해야합니다. \n 이용해주셔서 감사합니다. \n 문의 : minyangtech.info@gmail.com",
   "content_en": "Hello, valued customers.\nThis is Minyang Tech.\n\nWe have updated our Privacy Policy as a new 'Comments' feature has been added to our News section.\nTo post comments on Minyang Tech's website, you must agree to the updated Privacy Policy.\nThank you for using our services.\nInquiry: minyangtech.info@gmail.com",
   "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
+},
+  {
+  "id": 9,
+  "date": "2026-2-6",
+  "title_ko": "개인정보 처리방침 수정",
+  "title_en": "Privacy Policy Update",
+  "content_ko": "안녕하세요 고객여러분? \n 민양테크입니다. \n \n 민양테크는 개인정보보호법과 내부 결정으로, 댓글 기능을 제거하게 되었습니다. \n 이에따라, 개인정보 처리방침이 수정되었으며, 기존 댓글 기능은 '좋아요'로 수정되었습니다. \n 이용해주셔서 감사합니다. \n 문의 : minyangtech.info@gmail.com",
+  "content_en": "Dear Valued Customers,\n This is Minyang Tech.\n \n In compliance with the Personal Information Protection Act and following our internal policy, we have decided to discontinue the comment feature on our platform.\n Accordingly, our Privacy Policy has been updated, and the existing comment section has been replaced with a 'Like' feature.\n Thank you for your continued support and understanding.\n Contact: minyangtech.info@gmail.com",
+  "image": "https://github.com/minyangtech/minyangtech.github.io/blob/main/image/%EB%AF%BC%EC%96%91%ED%85%8C%ED%81%AC%20%EB%B0%94%ED%83%95%ED%99%94%EB%A9%B4.png?raw=true"
 }
 ]
